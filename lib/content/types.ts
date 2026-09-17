@@ -20,7 +20,7 @@ export interface LocaleRichText {
 
 export interface ImageAsset {
   src: string
-  alt: LocaleString
+  alt?: LocaleString
 }
 
 export type Accent = 'accent1' | 'accent2' | 'accent3' | 'accent4'
@@ -30,9 +30,9 @@ export interface VideoClip {
   source: 'upload' | 'youtube'
   file?: string
   youtubeUrl?: string
-  poster: ImageAsset
+  poster?: ImageAsset
   captions?: { nl?: string; en?: string }
-  title: LocaleString
+  title?: LocaleString
   speaker?: string
   consentConfirmed: boolean
 }

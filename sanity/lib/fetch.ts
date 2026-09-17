@@ -4,9 +4,11 @@ import { client } from './client'
 import { readToken } from '@/sanity/env'
 
 /**
- * Tagged fetch (brief §8.1). Every read is cached for a long time and tagged
- * `sanity:<type>`; the revalidate webhook busts a tag on publish/delete so
- * volunteers see changes on the next page load. No defineLive/SanityLive.
+ * Tagged fetch (brief §8.1). Every read is tagged `sanity:<type>` and the
+ * revalidate webhook busts a tag on publish/delete for near-instant updates.
+ * The short time-based revalidate is a safety net: even if the webhook is
+ * misconfigured (e.g. pointing at the wrong host), content still propagates
+ * within ~1 minute instead of being stuck in the persisted Vercel Data Cache.
  */
 export async function sanityFetch<T>({
   query,
@@ -23,7 +25,7 @@ export async function sanityFetch<T>({
     perspective: 'published',
     useCdn: !readToken,
     next: {
-      revalidate: readToken ? 0 : 3600,
+      revalidate: readToken ? 0 : 60,
       tags,
     },
   })
