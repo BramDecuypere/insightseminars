@@ -204,6 +204,7 @@ function homePageDoc(h: HomePage) {
       primaryCta: h.hero.primaryCta,
       secondaryCta: h.hero.secondaryCta,
     },
+    mission: h.mission,
     recognise: {
       intro: h.recognise.intro,
       situations: withKeys(

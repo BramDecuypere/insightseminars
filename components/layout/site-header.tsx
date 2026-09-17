@@ -4,12 +4,12 @@ import { Link } from '@/i18n/navigation'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { LanguageSwitcher } from './language-switcher'
+import { MainNav } from './main-nav'
 import { MobileNav } from './mobile-nav'
-import { mainNav } from './nav-config'
 import { SpectrumStrip } from './spectrum-strip'
 
 /**
- * Header on avondblauw (brief §4, §9.1): logo left, short nav, NL/EN text
+ * Header on papier (brief §4, §9.1): logo left, short nav, NL/EN text
  * switch, a "Gratis infosessie" secondary button and the "Inschrijven"
  * primary button. Spectrum strip sits directly beneath.
  */
@@ -17,11 +17,11 @@ export async function SiteHeader() {
   const t = await getTranslations('nav')
 
   return (
-    <header className="on-avondblauw sticky top-0 z-40 bg-avondblauw text-papier">
+    <header className="sticky top-0 z-40 border-b border-lijn bg-papier text-inkt">
       <div className="container-site flex h-20 items-center justify-between gap-4">
         <Link href="/" className="flex shrink-0 items-center" aria-label="Insight Seminars">
           <Image
-            src="/brand/insight-logo.png"
+            src="/brand/insight-logo-on-white.png"
             alt="Insight Seminars"
             width={107}
             height={53}
@@ -30,23 +30,13 @@ export async function SiteHeader() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label={t('menu')}>
-          {mainNav.map((item) => (
-            <Link
-              key={item.key}
-              href={item.href}
-              className="rounded-md px-3 py-2 text-base font-semibold text-papier/90 transition-colors hover:bg-white/10 hover:text-papier"
-            >
-              {t(item.key)}
-            </Link>
-          ))}
-        </nav>
+        <MainNav />
 
         <div className="hidden items-center gap-3 md:flex">
-          <LanguageSwitcher />
+          <LanguageSwitcher onLight />
           <Link
             href={{ pathname: '/agenda', query: { type: 'infoSessions' } }}
-            className={cn(buttonVariants({ variant: 'onDark', size: 'sm' }))}
+            className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}
           >
             {t('infoSession')}
           </Link>

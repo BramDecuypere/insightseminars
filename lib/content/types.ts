@@ -232,6 +232,7 @@ export interface HomePage {
     secondaryCta: LocaleString
     image?: ImageAsset
   }
+  mission: { heading: LocaleString; body: LocaleText }
   recognise: {
     intro: LocaleText
     situations: {

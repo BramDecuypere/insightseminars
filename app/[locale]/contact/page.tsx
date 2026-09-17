@@ -38,10 +38,10 @@ export default async function ContactPage({ params }: Props) {
 
   return (
     <>
-      <header className="on-avondblauw bg-avondblauw text-papier">
+      <header className="bg-mist text-inkt">
         <div className="container-site section-y">
-          <h1 className="type-h1 text-papier text-balance">{pick(page.hero.title, l)}</h1>
-          <p className="type-lead mt-5 max-w-2xl text-papier/85">{pick(page.hero.lead, l)}</p>
+          <h1 className="type-h1 text-inkt text-balance">{pick(page.hero.title, l)}</h1>
+          <p className="type-lead mt-5 max-w-2xl text-leisteen">{pick(page.hero.lead, l)}</p>
         </div>
       </header>
 

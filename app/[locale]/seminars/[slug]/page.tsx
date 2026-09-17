@@ -10,7 +10,7 @@ import { JsonLd } from "@/components/site/json-ld"
 import { KeyFacts, type Fact } from "@/components/site/key-facts"
 import { NewsletterBand } from "@/components/site/newsletter-band"
 import { VideoClip } from "@/components/site/video-clip"
-import { accentVar } from "@/components/site/accent"
+import { accentInk, accentVar } from "@/components/site/accent"
 import { Link } from "@/i18n/navigation"
 import { routing } from "@/i18n/routing"
 import {
@@ -90,6 +90,7 @@ export default async function ProgramPage({ params }: Props) {
   const how = pickRich(program.howItWorks, l)
   const forWhom = pickRich(program.forWhom, l)
   const accent = accentVar[program.accent]
+  const accentOnLight = accentInk[program.accent]
 
   const tc = await getTranslations("common")
   const facts: Fact[] = []
@@ -121,11 +122,11 @@ export default async function ProgramPage({ params }: Props) {
       {program.videoClip ? <JsonLd data={videoJsonLd(program.videoClip, l)} /> : null}
       {faqSubset.length > 0 ? <FaqHash /> : null}
 
-      <header className="on-avondblauw bg-avondblauw text-papier">
+      <header className="bg-mist text-inkt">
         <div className="container-site section-y">
           <Link
             href="/seminars"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-papier/80 hover:text-papier"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-leisteen hover:text-inkt"
           >
             <ArrowLeft className="size-4" aria-hidden />
             {t("backToSeminars")}
@@ -137,17 +138,17 @@ export default async function ProgramPage({ params }: Props) {
                 <span
                   aria-hidden
                   className="font-display text-4xl font-bold leading-none"
-                  style={{ color: accent }}
+                  style={{ color: accentOnLight }}
                 >
                   {program.numeral}
                 </span>
-                <span className="type-eyebrow text-papier/70">{pick(program.subtitle, l)}</span>
+                <span className="type-eyebrow text-leisteen">{pick(program.subtitle, l)}</span>
               </div>
-              <h1 className="type-h1 mt-4 text-papier text-balance">{pick(program.title, l)}</h1>
+              <h1 className="type-h1 mt-4 text-inkt text-balance">{pick(program.title, l)}</h1>
               {program.officialName ? (
-                <p className="mt-2 text-lg italic text-papier/70">{program.officialName}</p>
+                <p className="mt-2 text-lg italic text-leisteen">{program.officialName}</p>
               ) : null}
-              <p className="type-lead mt-5 max-w-xl text-papier/85">{pick(program.lead, l)}</p>
+              <p className="type-lead mt-5 max-w-xl text-leisteen">{pick(program.lead, l)}</p>
             </div>
 
             {program.heroImage ? (

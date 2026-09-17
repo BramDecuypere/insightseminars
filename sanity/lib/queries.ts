@@ -78,6 +78,7 @@ export const settingsQuery = defineQuery(`*[_type == "siteSettings"][0]{
 
 export const homePageQuery = defineQuery(`*[_type == "homePage"][0]{
   hero{ title, lead, primaryCta, secondaryCta, image },
+  mission{ heading, body },
   recognise{ intro, ${SITUATIONS}, fallback },
   whatIsInsight{ heading, body },
   howItWorks{ heading, points[]{ title, text } },

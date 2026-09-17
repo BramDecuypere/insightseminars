@@ -448,7 +448,56 @@ export const events: InsightEvent[] = [
 
 export const internationalEvents: InternationalEvent[] = []
 
-export const testimonials: Testimonial[] = []
+/**
+ * Placeholder testimonials for local/dev preview only (shown while Sanity has
+ * no real testimonials yet). Fictional names and quotes, no photos. Must be
+ * replaced with real, consented testimonials in Sanity before launch — the
+ * "no invented testimonials" policy above applies to production content.
+ */
+export const testimonials: Testimonial[] = [
+  {
+    _id: 'testimonial-mock-1',
+    situation: { nl: 'Voor haar eerste Insight I', en: 'Before her first Insight I' },
+    quote: {
+      nl: 'Ik kwam binnen zonder goed te weten wat ik zocht, en ging naar buiten met een veel helderder beeld van wat ik echt wil.',
+      en: 'I walked in without quite knowing what I was looking for, and walked out with a much clearer picture of what I really want.',
+    },
+    name: 'Sofie V.',
+    context: { nl: 'deelnemer Insight I', en: 'Insight I participant' },
+    programSlug: 'insight-1',
+    audience: 'adults',
+    featured: true,
+    consentConfirmed: true,
+  },
+  {
+    _id: 'testimonial-mock-2',
+    situation: { nl: 'Na Insight II', en: 'After Insight II' },
+    quote: {
+      nl: 'De drie dagen van Insight I gaven me al veel, maar in Insight II merkte ik pas echt hoeveel ruimte er vrijkomt als je loslaat wat je tegenhoudt.',
+      en: 'The three days of Insight I already gave me a lot, but in Insight II I really noticed how much space opens up once you let go of what holds you back.',
+    },
+    name: 'Tom D.',
+    context: { nl: 'deelnemer Insight I en II', en: 'Insight I and II participant' },
+    programSlug: 'insight-2',
+    audience: 'adults',
+    featured: true,
+    consentConfirmed: true,
+  },
+  {
+    _id: 'testimonial-mock-3',
+    situation: { nl: 'Als ouder van een tiener', en: 'As a parent of a teenager' },
+    quote: {
+      nl: 'Mijn dochter kwam zelfverzekerder thuis en durfde makkelijker te zeggen wat ze echt denkt. Dat alleen al was het meer dan waard.',
+      en: 'My daughter came home more confident and found it easier to say what she really thinks. That alone made it more than worth it.',
+    },
+    name: 'An P.',
+    context: { nl: 'ouder van een Tiener Insight-deelnemer', en: 'parent of a Teen Insight participant' },
+    programSlug: 'tiener-insight-1',
+    audience: 'parents',
+    featured: true,
+    consentConfirmed: true,
+  },
+]
 
 export const faqs: Faq[] = [
   { _id: 'faq-1', category: 'algemeen', order: 1, question: { nl: 'Wat is Insight precies?', en: 'What exactly is Insight?' }, answer: { nl: ['Insight is een reeks ervaringsgerichte seminars rond persoonlijke groei, georganiseerd door een educatieve organisatie zonder winstoogmerk. Je leert niet alleen uit presentaties, maar vooral door te doen: oefeningen, gesprekken en reflectie.'] } },
@@ -491,6 +540,13 @@ export const homePage: HomePage = {
         nl: 'Deelnemers in gesprek tijdens een Insight-seminar in een lichte ruimte',
         en: 'Participants in conversation during an Insight seminar in a bright room',
       },
+    },
+  },
+  mission: {
+    heading: { nl: 'Waar we voor staan', en: 'What we stand for' },
+    body: {
+      nl: 'Insight Seminars België is een organisatie zonder winstoogmerk die sinds 1978 wereldwijd mensen helpt om bewuster, opener en vanuit hun hart te leven. Met vrijwilligers en ervaren facilitators maken we die ervaring ook in België en Nederland mogelijk.',
+      en: 'Insight Seminars België is a non-profit organisation that has helped people worldwide live more consciously, openly and from the heart since 1978. With volunteers and experienced facilitators, we make that experience possible in Belgium and the Netherlands too.',
     },
   },
   recognise: {

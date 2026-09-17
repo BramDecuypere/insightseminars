@@ -5,20 +5,26 @@ import { cn } from '@/lib/utils'
 
 /**
  * Restyled for Insight (brief §9.2, §9.4). Sentence-case labels, 6px radius,
- * generous tap targets. Primary = gold (accent-2) fill with inkt text and a
- * darker edge so the button reaches 3:1 contrast on white.
+ * generous tap targets. Primary = flat avondblauw (navy) fill with papier
+ * text, matching the wordmark color for brand cohesion.
  */
 const buttonVariants = cva(
   "inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-base font-semibold whitespace-nowrap transition-colors outline-none select-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5",
   {
     variants: {
       variant: {
-        // Primary CTA: gold fill, inkt text, darker gold border for edge contrast
+        // Primary CTA: flat navy fill, matches the wordmark. Only for use on
+        // light (papier/mist) surfaces — on avondblauw bands it disappears,
+        // use `onDarkPrimary` there instead.
         primary:
-          'bg-accent-2 text-inkt border border-[#c98f12] hover:bg-[#e5a516]',
+          'bg-avondblauw text-papier border border-transparent hover:bg-[color-mix(in_srgb,var(--avondblauw)_82%,white)]',
         // On the avondblauw bands: readable outline button with white text
         onDark:
           'bg-transparent text-papier border border-white/45 hover:bg-white/10',
+        // High-emphasis CTA fill for use on avondblauw surfaces (mobile nav
+        // sheet, newsletter band), where navy `primary` has no contrast
+        onDarkPrimary:
+          'bg-accent-2 text-inkt border border-transparent hover:bg-[#e5a516]',
         // Neutral outline on light surfaces
         outline:
           'bg-papier text-inkt border border-lijn hover:bg-mist',

@@ -27,6 +27,16 @@ export const homePage = defineType({
       ],
     }),
     defineField({
+      name: 'mission',
+      title: 'Missie',
+      type: 'object',
+      group: 'hero',
+      fields: [
+        defineField({ name: 'heading', title: 'Kop', type: 'localeString' }),
+        defineField({ name: 'body', title: 'Tekst', type: 'localeText' }),
+      ],
+    }),
+    defineField({
       name: 'recognise',
       title: '"Herken je dit?"',
       type: 'object',

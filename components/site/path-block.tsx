@@ -30,17 +30,17 @@ export async function PathBlock({
           >
             {p.numeral}
           </span>
-          <h3 className="mt-2 text-2xl font-bold text-papier">{pick(p.title, locale)}</h3>
-          <p className="mt-1 text-lg text-papier/85">{pick(p.subtitle, locale)}</p>
+          <h3 className="mt-2 text-2xl font-bold">{pick(p.title, locale)}</h3>
+          <p className="mt-1 text-lg">{pick(p.subtitle, locale)}</p>
           {p.officialName ? (
-            <p lang="en" className="mt-1 text-base italic text-papier/60">
+            <p lang="en" className="mt-1 text-base italic">
               {p.officialName}
             </p>
           ) : null}
-          <p className="mt-3 text-base text-papier/80">{pick(p.pathText, locale)}</p>
+          <p className="mt-3 text-base">{pick(p.pathText, locale)}</p>
           <Link
             href={{ pathname: '/seminars/[slug]', params: { slug: p.slug } }}
-            className="mt-4 inline-flex w-fit items-center text-base font-semibold text-papier underline underline-offset-4 hover:decoration-2"
+            className="mt-4 inline-flex w-fit items-center text-base font-semibold underline underline-offset-4 hover:decoration-2"
           >
             {t('readMore', { program: pick(p.title, locale) })}
           </Link>

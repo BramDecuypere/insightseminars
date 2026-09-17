@@ -3,7 +3,7 @@
 import { Menu } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
-import { Link } from '@/i18n/navigation'
+import { Link, usePathname } from '@/i18n/navigation'
 import { buttonVariants } from '@/components/ui/button'
 import {
   Sheet,
@@ -20,13 +20,14 @@ import { mainNav } from './nav-config'
  *  stay visible above the menu items. Large tap targets. */
 export function MobileNav() {
   const t = useTranslations('nav')
+  const pathname = usePathname()
   const [open, setOpen] = useState(false)
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
         className={cn(
-          'inline-flex size-11 items-center justify-center rounded-md text-papier hover:bg-white/10 md:hidden',
+          'inline-flex size-11 items-center justify-center rounded-md text-inkt hover:bg-mist md:hidden',
         )}
         aria-label={t('menu')}
       >
@@ -51,23 +52,31 @@ export function MobileNav() {
           <Link
             href={{ pathname: '/agenda', query: { type: 'seminars' } }}
             onClick={() => setOpen(false)}
-            className={cn(buttonVariants({ variant: 'primary' }), 'w-full')}
+            className={cn(buttonVariants({ variant: 'onDarkPrimary' }), 'w-full')}
           >
             {t('cta')}
           </Link>
         </div>
 
         <nav className="mt-2 flex flex-col px-2" aria-label={t('menu')}>
-          {mainNav.map((item) => (
-            <Link
-              key={item.key}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="rounded-md px-2 py-3 text-lg font-semibold text-papier hover:bg-white/10"
-            >
-              {t(item.key)}
-            </Link>
-          ))}
+          {mainNav.map((item) => {
+            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`)
+
+            return (
+              <Link
+                key={item.key}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                aria-current={isActive ? 'page' : undefined}
+                className={cn(
+                  'rounded-md px-2 py-3 text-lg font-semibold text-papier hover:bg-white/10',
+                  isActive && 'bg-white/10 underline underline-offset-4 decoration-2',
+                )}
+              >
+                {t(item.key)}
+              </Link>
+            )
+          })}
         </nav>
 
         <div className="mt-auto px-4 pb-2">

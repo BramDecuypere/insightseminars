@@ -77,7 +77,12 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
           className="border-transparent bg-papier text-inkt"
         />
       </div>
-      <Button type="submit" variant="primary" disabled={status === 'submitting'} aria-busy={status === 'submitting'}>
+      <Button
+        type="submit"
+        variant={compact ? 'primary' : 'onDarkPrimary'}
+        disabled={status === 'submitting'}
+        aria-busy={status === 'submitting'}
+      >
         {t('submit')}
       </Button>
 

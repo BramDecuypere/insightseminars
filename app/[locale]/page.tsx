@@ -5,7 +5,6 @@ import {
   RecogniseChooser,
   type ChooserSituation,
 } from '@/components/home/recognise-chooser'
-import { EventRow } from '@/components/site/event-row'
 import { NewsletterBand } from '@/components/site/newsletter-band'
 import { NextDatePanel } from '@/components/site/next-date-panel'
 import { PathBlock } from '@/components/site/path-block'
@@ -59,7 +58,6 @@ export default async function HomePage({ params }: Props) {
   const eventViews = await buildEventViews(upcoming, l, now)
   const nextInsight1 = eventViews.find((v) => v.programSlug === 'insight-1')
   const nextInfo = eventViews.find((v) => v.type === 'infoSession')
-  const binnenkort = eventViews.slice(0, 4)
 
   const situations: ChooserSituation[] = home.recognise.situations.map((s, i) => {
     const tst = s.testimonialId
@@ -84,10 +82,41 @@ export default async function HomePage({ params }: Props) {
   })
 
   const featuredCards = featured.slice(0, 3)
+  const showTestimonials = featuredCards.length > 0
 
   return (
     <>
       <HomeHero home={home} locale={l} />
+
+      {/* Missie */}
+      <section className="bg-mist">
+        <div className="container-site section-y max-w-3xl">
+          <h2 className="type-h2 text-inkt text-balance">{pick(home.mission.heading, l)}</h2>
+          <p className="type-lead mt-5 text-inkt">{pick(home.mission.body, l)}</p>
+        </div>
+      </section>
+
+      {/* Vertrouwen: getuigenissen */}
+      {showTestimonials ? (
+        <section className="bg-papier">
+          <div className="container-site section-y">
+            <h2 className="type-h2 text-inkt text-balance">
+              {pick(home.testimonialsHeading, l)}
+            </h2>
+            <ul className="mt-8 grid gap-6 md:grid-cols-3">
+              {featuredCards.map((tst) => (
+                <li key={tst._id}>
+                  <TestimonialCard
+                    testimonial={tst}
+                    locale={l}
+                    playLabel={t('playVideo', { duration: '1 min' })}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : null}
 
       {/* 1. Herkenning */}
       {/* <section className="bg-papier">
@@ -104,7 +133,7 @@ export default async function HomePage({ params }: Props) {
       </section> */}
 
       {/* 2. Begrip */}
-      <section className="bg-mist">
+      <section className={showTestimonials ? 'bg-mist' : 'bg-papier'}>
         <div className="container-site section-y">
           <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
             <div>
@@ -155,28 +184,9 @@ export default async function HomePage({ params }: Props) {
         </div>
       </section>
 
-      {/* 3. Vertrouwen */}
-      <section className="bg-papier">
+      {/* 3. Voor wie */}
+      <section className={showTestimonials ? 'bg-papier' : 'bg-mist'}>
         <div className="container-site section-y">
-          {featuredCards.length > 0 ? (
-            <div className="mb-16">
-              <h2 className="type-h2 text-inkt text-balance">
-                {pick(home.testimonialsHeading, l)}
-              </h2>
-              <ul className="mt-8 grid gap-6 md:grid-cols-3">
-                {featuredCards.map((tst) => (
-                  <li key={tst._id}>
-                    <TestimonialCard
-                      testimonial={tst}
-                      locale={l}
-                      playLabel={t('playVideo', { duration: '1 min' })}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-
           <div className="max-w-3xl">
             <h2 className="type-h2 text-inkt text-balance">{pick(home.forWho.heading, l)}</h2>
             <p className="type-body mt-5 text-inkt">{pick(home.forWho.body, l)}</p>
@@ -186,10 +196,10 @@ export default async function HomePage({ params }: Props) {
       </section>
 
       {/* 4. Uitnodiging */}
-      <section className="on-avondblauw bg-avondblauw text-papier">
+      <section className="on-avondblauw bg-mist">
         <div className="container-site section-y">
-          <h2 className="type-h2 text-papier text-balance">{pick(home.path.heading, l)}</h2>
-          <p className="type-lead mt-4 max-w-2xl text-papier/80">{pick(home.path.intro, l)}</p>
+          <h2 className="type-h2 text-balance">{pick(home.path.heading, l)}</h2>
+          <p className="type-lead mt-4 max-w-2xl">{pick(home.path.intro, l)}</p>
 
           <div className="mt-12">
             <PathBlock programs={adultPrograms} locale={l} />
@@ -226,36 +236,14 @@ export default async function HomePage({ params }: Props) {
             </div>
           </div>
 
-          <p className="mt-10 text-lg text-papier/85">
+          <p className="mt-10 text-lg text-inkt/85">
             {pick(home.path.teenLine, l)}{' '}
-            <Link href="/teens" className="font-semibold text-papier underline underline-offset-4 hover:decoration-2">
+            <Link href="/teens" className="font-semibold underline underline-offset-4 hover:decoration-2">
               {pick({ nl: 'Naar de pagina voor tieners en ouders', en: 'Go to the page for teens and parents' }, l)}
             </Link>
           </p>
         </div>
       </section>
-
-      {/* Binnenkort */}
-      {binnenkort.length > 0 ? (
-        <section className="bg-papier">
-          <div className="container-site section-y">
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <h2 className="type-h2 text-inkt text-balance">{pick(home.upcomingHeading, l)}</h2>
-              <Link
-                href="/agenda"
-                className="text-lg font-semibold text-inkt underline underline-offset-4 hover:decoration-2"
-              >
-                {t('viewAgenda')}
-              </Link>
-            </div>
-            <ul className="mt-8 space-y-4">
-              {binnenkort.map((view) => (
-                <EventRow key={view.id} view={view} locale={l} />
-              ))}
-            </ul>
-          </div>
-        </section>
-      ) : null}
 
       <NewsletterBand />
     </>

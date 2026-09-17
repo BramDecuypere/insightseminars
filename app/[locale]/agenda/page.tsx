@@ -60,10 +60,10 @@ export default async function AgendaPage({ params, searchParams }: Props) {
 
   return (
     <>
-      <header className="on-avondblauw bg-avondblauw text-papier">
+      <header className="bg-mist text-inkt">
         <div className="container-site section-y">
-          <h1 className="type-h1 text-papier text-balance">{t("title")}</h1>
-          <p className="type-lead mt-5 max-w-2xl text-papier/85">{t("lead")}</p>
+          <h1 className="type-h1 text-inkt text-balance">{t("title")}</h1>
+          <p className="type-lead mt-5 max-w-2xl text-leisteen">{t("lead")}</p>
         </div>
       </header>
 

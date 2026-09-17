@@ -12,11 +12,11 @@ export function NewsletterBand({ id = 'nieuwsbrief' }: { id?: string }) {
 
   return (
     <section id={id} className="on-avondblauw bg-avondblauw text-papier">
-      <div className="container-site section-y">
-        <div className="max-w-2xl">
+      <div className="container-site section-y text-center">
+        <div className="mx-auto max-w-2xl">
           <h2 className="type-h2 text-papier text-balance">{t('title')}</h2>
           <p className="type-lead mt-4 text-papier/80">{t('body')}</p>
-          <div className="mt-6">
+          <div className="mt-6 text-left">
             <NewsletterForm />
           </div>
         </div>

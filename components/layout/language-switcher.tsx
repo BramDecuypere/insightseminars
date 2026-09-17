@@ -11,7 +11,14 @@ import { cn } from '@/lib/utils'
  * Plain NL / EN text switch, no flags (brief §4). Keeps the visitor on the
  * equivalent page by re-localizing the current internal pathname and params.
  */
-export function LanguageSwitcher({ className }: { className?: string }) {
+export function LanguageSwitcher({
+  className,
+  onLight,
+}: {
+  className?: string
+  /** Use dark-on-light colors, for placement on a papier surface (e.g. the header). */
+  onLight?: boolean
+}) {
   const t = useTranslations('nav')
   const active = useLocale()
   const pathname = usePathname()
@@ -35,17 +42,25 @@ export function LanguageSwitcher({ className }: { className?: string }) {
     >
       {routing.locales.map((locale, i) => (
         <span key={locale} className="flex items-center gap-1 cursor-pointer">
-          {i > 0 && <span className="text-papier/40" aria-hidden="true">/</span>}
+          {i > 0 && (
+            <span className={onLight ? 'text-leisteen' : 'text-papier/40'} aria-hidden="true">
+              /
+            </span>
+          )}
           <button
             type="button"
             onClick={() => switchTo(locale)}
             disabled={isPending}
             aria-current={locale === active ? 'true' : undefined}
             className={cn(
-              'rounded-sm px-1 font-semibold uppercase transition-colors',
+              'rounded-sm px-1 font-semibold uppercase transition-colors cursor-pointer',
               locale === active
-                ? 'text-papier underline underline-offset-4 decoration-2'
-                : 'text-papier/70 hover:text-papier',
+                ? onLight
+                  ? 'text-inkt underline underline-offset-4 decoration-2'
+                  : 'text-papier underline underline-offset-4 decoration-2'
+                : onLight
+                  ? 'text-leisteen hover:text-inkt'
+                  : 'text-papier/70 hover:text-papier',
             )}
           >
             {locale}
