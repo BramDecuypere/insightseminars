@@ -96,7 +96,13 @@ function mapFaq<T extends Record<string, any>>(f: T): T {
   return { ...f, answer: rich(f.answer) }
 }
 
-function mapPersonPhoto<T extends Record<string, any>>(x: T): T {
+/** Team member: bio is a plain localeText ({nl, en} strings) — leave it as-is. */
+function mapTeamMember<T extends Record<string, any>>(x: T): T {
+  return { ...x, photo: img(x.photo) }
+}
+
+/** Facilitator: bio is localeRichText (Portable Text) — normalise to paragraphs. */
+function mapFacilitator<T extends Record<string, any>>(x: T): T {
   return { ...x, photo: img(x.photo), ...(x.bio ? { bio: rich(x.bio) } : {}) }
 }
 
@@ -193,12 +199,12 @@ export async function getFaqs(): Promise<Faq[]> {
 
 export async function getTeam(): Promise<TeamMember[]> {
   const list = await sanityFetch<any[]>({ query: q.teamQuery, tags: ['sanity:teamMember'] })
-  return (list ?? []).map((m) => mapPersonPhoto(m)) as TeamMember[]
+  return (list ?? []).map((m) => mapTeamMember(m)) as TeamMember[]
 }
 
 export async function getFacilitators(): Promise<Facilitator[]> {
   const list = await sanityFetch<any[]>({ query: q.facilitatorsQuery, tags: ['sanity:facilitator'] })
-  return (list ?? []).map((f) => mapPersonPhoto(f)) as Facilitator[]
+  return (list ?? []).map((f) => mapFacilitator(f)) as Facilitator[]
 }
 
 export async function getFacilitatorById(id: string): Promise<Facilitator | null> {
