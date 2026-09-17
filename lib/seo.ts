@@ -152,7 +152,7 @@ export function videoJsonLd(clip: VideoClip, locale: Locale, uploadDate?: string
     '@type': 'VideoObject',
     name: pickPlain(clip.title, locale) ?? 'Insight',
     description: pickPlain(clip.title, locale) ?? 'Insight',
-    thumbnailUrl: [absoluteUrl(clip.poster.src)],
+    ...(clip.poster ? { thumbnailUrl: [absoluteUrl(clip.poster.src)] } : {}),
     ...(uploadDate ? { uploadDate } : {}),
     ...(clip.youtubeUrl ? { contentUrl: clip.youtubeUrl } : {}),
   }

@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils'
  * real 4:5 group photo alongside. */
 export function HomeHero({ home, locale }: { home: HomePage; locale: Locale }) {
   const image = home.hero.image
-  const alt = image ? (locale === 'en' ? image.alt.en : image.alt.nl) || image.alt.nl : ''
+  const alt = pick(image?.alt, locale)
 
   return (
     <section className="">

@@ -21,11 +21,7 @@ export function Reveal({
   useEffect(() => {
     const el = ref.current
     if (!el) return
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setVisible(true)
-      return
-    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -44,7 +40,7 @@ export function Reveal({
     <div
       ref={ref}
       className={cn(
-        'transition-[opacity,transform] duration-500 ease-out',
+        'transition-[opacity,transform] duration-500 ease-out motion-reduce:opacity-100 motion-reduce:translate-y-0',
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3',
         className,
       )}

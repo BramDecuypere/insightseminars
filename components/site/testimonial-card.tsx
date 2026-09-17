@@ -17,10 +17,7 @@ export function TestimonialCard({
   locale: Locale
   playLabel: string
 }) {
-  const photoAlt =
-    (locale === 'en' ? testimonial.photo?.alt.en : testimonial.photo?.alt.nl) ||
-    testimonial.photo?.alt.nl ||
-    ''
+  const photoAlt = pick(testimonial.photo?.alt, locale)
 
   return (
     <figure className="flex h-full flex-col rounded-panel border border-lijn bg-papier p-6 transition-[transform,border-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-leisteen/60">
