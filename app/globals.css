@@ -20,6 +20,10 @@
   --color-accent-2: var(--accent-2);
   --color-accent-3: var(--accent-3);
   --color-accent-4: var(--accent-4);
+  --color-accent-1-ink: var(--accent-1-ink);
+  --color-accent-2-ink: var(--accent-2-ink);
+  --color-accent-3-ink: var(--accent-3-ink);
+  --color-accent-4-ink: var(--accent-4-ink);
 
   /* shadcn semantic tokens mapped onto the brand palette */
   --color-background: var(--background);
@@ -69,6 +73,14 @@
   --accent-2: #F09236; /* Insight II + primary button */
   --accent-3: #8CC63F; /* Insight III */
   --accent-4: #49A3E9; /* Tiener Insight */
+  /* Darkened accents for accent-coloured TEXT on light backgrounds; each is
+     >= 4.5:1 on papier (WCAG AA) and hue-matched to the accents above. The
+     vivid accents above stay for bars, fills and accent text on the dark
+     avondblauw bands. */
+  --accent-1-ink: #dc3122;
+  --accent-2-ink: #a66525;
+  --accent-3-ink: #5a7f28;
+  --accent-4-ink: #3679ac;
 
   --background: var(--papier);
   --foreground: var(--inkt);
@@ -99,6 +111,15 @@
     @apply bg-background text-foreground font-sans antialiased;
     font-size: 1.125rem;
     line-height: 1.6;
+  }
+
+  /* Long Dutch compound words should break cleanly at narrow widths (Prompt 8).
+     Scoped to Dutch content and headings, which are the words most at risk. */
+  :lang(nl) h1,
+  :lang(nl) h2,
+  :lang(nl) h3 {
+    hyphens: auto;
+    overflow-wrap: break-word;
   }
 
   /* Visible focus everywhere (§9.2, WCAG 2.2 AA) */

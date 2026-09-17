@@ -66,7 +66,7 @@ export function PaymentPoller({
 
   const Icon = view === 'paid' ? CheckCircle2 : view === 'failed' ? XCircle : Clock
   const iconColor =
-    view === 'paid' ? 'text-avondblauw' : view === 'failed' ? 'text-accent1' : 'text-leisteen'
+    view === 'paid' ? 'text-avondblauw' : view === 'failed' ? 'text-accent-1' : 'text-leisteen'
   const title = view === 'paid' ? t('paidTitle') : view === 'failed' ? t('failedTitle') : t('pendingTitle')
   const body = view === 'paid' ? t('paidBody') : view === 'failed' ? t('failedBody') : t('pendingBody')
 

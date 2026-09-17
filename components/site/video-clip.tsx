@@ -79,7 +79,6 @@ export function VideoClip({
             allowFullScreen
           />
         ) : clip.file ? (
-          // eslint-disable-next-line jsx-a11y/media-has-caption -- track added below when a VTT exists
           <video className="absolute inset-0 h-full w-full" controls autoPlay preload="none" poster={posterAsset?.src}>
             <source src={clip.file} type="video/mp4" />
             {vtt ? <track kind="captions" src={vtt} srcLang={locale} default /> : null}

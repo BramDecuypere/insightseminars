@@ -1,6 +1,6 @@
 'use client'
 
-import { useId, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { track } from '@vercel/analytics'
 import { Button } from '@/components/ui/button'
@@ -18,8 +18,14 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
   const t = useTranslations('newsletter')
   const locale = useLocale() as 'nl' | 'en'
   const id = useId()
-  const loadedAt = useRef(Date.now())
+  const loadedAt = useRef(0)
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+
+  // Capture the load time after mount (time trap, brief §7.5); Date.now() must
+  // not run during render.
+  useEffect(() => {
+    loadedAt.current = Date.now()
+  }, [])
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()

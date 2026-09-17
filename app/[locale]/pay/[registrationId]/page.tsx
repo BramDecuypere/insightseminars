@@ -39,7 +39,7 @@ export default async function PayPage({ params, searchParams }: Props) {
   if (!verifyPayToken(registrationId, token)) {
     return (
       <Shell>
-        <span className="inline-flex text-accent1">
+        <span className="inline-flex text-accent-1">
           <AlertCircle className="size-12" aria-hidden />
         </span>
         <h1 className="type-h1 mt-6 text-balance">{t('invalidLink')}</h1>
@@ -53,7 +53,7 @@ export default async function PayPage({ params, searchParams }: Props) {
   if (!found) {
     return (
       <Shell>
-        <span className="inline-flex text-accent1">
+        <span className="inline-flex text-accent-1">
           <AlertCircle className="size-12" aria-hidden />
         </span>
         <h1 className="type-h1 mt-6 text-balance">{t('invalidLink')}</h1>

@@ -14,12 +14,12 @@ export function KeyFacts({ facts }: { facts: Fact[] }) {
   return (
     <dl className="grid gap-x-6 gap-y-4 sm:grid-cols-2">
       {facts.map(({ icon: Icon, label, value }) => (
-        <div key={label} className="flex items-start gap-3">
-          <Icon className="mt-0.5 size-5 shrink-0 text-leisteen" />
-          <div>
-            <dt className="text-sm font-semibold text-leisteen">{label}</dt>
-            <dd className="text-base text-inkt">{value}</dd>
-          </div>
+        <div key={label}>
+          <dt className="flex items-center gap-2 text-sm font-semibold text-leisteen">
+            <Icon className="size-5 shrink-0 text-leisteen" aria-hidden />
+            {label}
+          </dt>
+          <dd className="mt-1 pl-7 text-base text-inkt">{value}</dd>
         </div>
       ))}
     </dl>

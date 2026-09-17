@@ -2,7 +2,7 @@ import { ArrowRight, CalendarDays } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import { buttonVariants } from "@/components/ui/button"
-import { accentVar } from "@/components/site/accent"
+import { accentInk, accentVar } from "@/components/site/accent"
 import { pick } from "@/lib/content"
 import { formatEuro } from "@/lib/format"
 import { cn } from "@/lib/utils"
@@ -48,7 +48,7 @@ export async function ProgramCard({ program, locale, fromPrice, free, nextDate }
           <span
             aria-hidden
             className="font-display text-3xl font-bold leading-none"
-            style={{ color: accentVar[program.accent] }}
+            style={{ color: accentInk[program.accent] }}
           >
             {program.numeral}
           </span>

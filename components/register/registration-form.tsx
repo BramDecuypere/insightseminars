@@ -202,7 +202,7 @@ export function RegistrationForm({
             {banner && (
               <div
                 role="alert"
-                className="mt-4 rounded-md border border-accent1/40 bg-accent1/10 px-4 py-3 text-sm font-medium text-inkt"
+                className="mt-4 rounded-md border border-accent-1/40 bg-accent-1/10 px-4 py-3 text-sm font-medium text-inkt"
               >
                 {banner}
               </div>
@@ -307,7 +307,7 @@ function ReviewStep({ paymentMode }: { paymentMode: 'mollie' | 'bank_transfer' }
         </span>
       </label>
       {termsError && (
-        <p className="text-sm font-medium text-accent1" role="alert">
+        <p className="text-sm font-medium text-accent-1" role="alert">
           {termsError}
         </p>
       )}

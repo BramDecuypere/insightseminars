@@ -1,6 +1,6 @@
 'use client'
 
-import { useId, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useLocale, useTranslations } from 'next-intl'
@@ -25,11 +25,18 @@ export function InfoSessionForm({ eventSlug }: { eventSlug: string }) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<InfoSessionInput>({
     resolver: zodResolver(infoSessionSchema) as never,
-    defaultValues: { website: '', formLoadedAt: Date.now(), firstName: '', email: '', referral: '', newsletter: false },
+    defaultValues: { website: '', formLoadedAt: 0, firstName: '', email: '', referral: '', newsletter: false },
   })
+
+  // Stamp the load time after mount (time trap, brief §7.3); Date.now() must
+  // not run during render.
+  useEffect(() => {
+    setValue('formLoadedAt', Date.now())
+  }, [setValue])
 
   const errorFor = (name: keyof InfoSessionInput) => {
     const code = errors[name]?.message
@@ -54,12 +61,12 @@ export function InfoSessionForm({ eventSlug }: { eventSlug: string }) {
 
   const label = 'block text-base font-semibold text-inkt'
   const input =
-    'mt-1.5 h-12 w-full rounded-md border border-lijn bg-mist px-3.5 text-base text-inkt outline-none focus-visible:ring-3 focus-visible:ring-accent4 focus-visible:ring-offset-2'
+    'mt-1.5 h-12 w-full rounded-md border border-lijn bg-mist px-3.5 text-base text-inkt outline-none focus-visible:ring-3 focus-visible:ring-accent-4 focus-visible:ring-offset-2'
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className="max-w-xl space-y-5">
       {banner && (
-        <div role="alert" className="rounded-md border border-accent1/40 bg-accent1/10 px-4 py-3 text-sm font-medium text-inkt">
+        <div role="alert" className="rounded-md border border-accent-1/40 bg-accent-1/10 px-4 py-3 text-sm font-medium text-inkt">
           {banner}
         </div>
       )}
@@ -72,7 +79,7 @@ export function InfoSessionForm({ eventSlug }: { eventSlug: string }) {
           {t('firstName')}
         </label>
         <input id={`${ids}-first`} autoComplete="given-name" className={input} {...register('firstName')} />
-        {errorFor('firstName') && <p className="mt-1.5 text-sm font-medium text-accent1">{errorFor('firstName')}</p>}
+        {errorFor('firstName') && <p className="mt-1.5 text-sm font-medium text-accent-1">{errorFor('firstName')}</p>}
       </div>
 
       <div>
@@ -80,7 +87,7 @@ export function InfoSessionForm({ eventSlug }: { eventSlug: string }) {
           {t('email')}
         </label>
         <input id={`${ids}-email`} type="email" inputMode="email" autoComplete="email" className={input} {...register('email')} />
-        {errorFor('email') && <p className="mt-1.5 text-sm font-medium text-accent1">{errorFor('email')}</p>}
+        {errorFor('email') && <p className="mt-1.5 text-sm font-medium text-accent-1">{errorFor('email')}</p>}
       </div>
 
       <div>

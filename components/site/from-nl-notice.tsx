@@ -16,6 +16,9 @@ export function FromNlNotice() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     if (params.get('from') !== 'nl') return
+    // Syncs React state with an external system (the URL) once on mount; the
+    // value cannot be known during SSR, so this cannot move to render.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setVisible(true)
     params.delete('from')
     const query = params.toString()

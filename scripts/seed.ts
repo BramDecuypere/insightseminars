@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Seed script (brief Prompt 4, §13). Run with `pnpm seed`.
  *
