@@ -34,7 +34,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
       aria-label={t('language')}
     >
       {routing.locales.map((locale, i) => (
-        <span key={locale} className="flex items-center gap-1">
+        <span key={locale} className="flex items-center gap-1 cursor-pointer">
           {i > 0 && <span className="text-papier/40" aria-hidden="true">/</span>}
           <button
             type="button"
