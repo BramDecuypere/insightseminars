@@ -37,7 +37,11 @@ export async function getSettings() {
 }
 
 export async function getHomePage() {
-  if (hasSanity) return (await sanity.getHomePage()) ?? mock.homePage
+  if (hasSanity) {
+    const page = await sanity.getHomePage()
+    if (!page) return mock.homePage
+    return { ...page, seo: page.seo ?? mock.homePage.seo }
+  }
   return mock.homePage
 }
 
