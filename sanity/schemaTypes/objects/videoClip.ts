@@ -1,9 +1,20 @@
 import { defineField, defineType } from 'sanity'
 
+type VideoClipParent = { source?: string; file?: unknown; youtubeUrl?: unknown }
+
 /**
- * Short speaker clip (brief §5.2 videoClip). Publishing requires a poster,
- * captions and confirmed consent. Uploads are MP4 up to ~30 MB; YouTube clips
- * load only after a click (handled in the renderer, §9.4).
+ * A clip counts as "in use" once a file or YouTube link is provided. `source`
+ * and `consentConfirmed` carry initialValues, so the object is never truly
+ * empty — without this check the required subfields would block saving even
+ * when no video is entered.
+ */
+const hasClip = (parent: VideoClipParent | undefined): boolean =>
+  Boolean(parent?.file || parent?.youtubeUrl)
+
+/**
+ * Short speaker clip (brief §5.2 videoClip). When a clip is provided, publishing
+ * requires a poster and confirmed consent. Uploads are MP4 up to ~30 MB; YouTube
+ * clips load only after a click (handled in the renderer, §9.4).
  */
 export const videoClip = defineType({
   name: 'videoClip',
@@ -53,8 +64,13 @@ export const videoClip = defineType({
       name: 'poster',
       title: 'Posterafbeelding',
       type: 'imageWithAlt',
-      description: 'Verplicht. Wordt getoond vóór het afspelen.',
-      validation: (rule) => rule.required().error('Een posterafbeelding is verplicht.'),
+      description: 'Verplicht wanneer er een videofragment is. Wordt getoond vóór het afspelen.',
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const parent = context.parent as VideoClipParent | undefined
+          if (hasClip(parent) && !value) return 'Een posterafbeelding is verplicht bij een videofragment.'
+          return true
+        }),
     }),
     defineField({
       name: 'captionsNl',
@@ -76,9 +92,11 @@ export const videoClip = defineType({
       type: 'boolean',
       initialValue: false,
       validation: (rule) =>
-        rule
-          .custom((value) => (value === true ? true : 'Bevestig de toestemming vóór publicatie.'))
-          .error(),
+        rule.custom((value, context) => {
+          const parent = context.parent as VideoClipParent | undefined
+          if (hasClip(parent) && value !== true) return 'Bevestig de toestemming vóór publicatie.'
+          return true
+        }),
     }),
   ],
   preview: {

@@ -1,6 +1,10 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
-/** Image with hotspot and required, translated alt text (brief §5.2). */
+/**
+ * Image with hotspot and translated alt text (brief §5.2). Alt text is required
+ * only once an image asset is actually uploaded, so optional/empty image fields
+ * don't block saving.
+ */
 export const imageWithAlt = defineType({
   name: 'imageWithAlt',
   title: 'Afbeelding',
@@ -10,9 +14,15 @@ export const imageWithAlt = defineType({
     defineField({
       name: 'alt',
       title: 'Alt-tekst (beschrijving)',
-      description: 'Korte beschrijving voor schermlezers en zoekmachines. Verplicht.',
+      description: 'Korte beschrijving voor schermlezers en zoekmachines. Verplicht bij een afbeelding.',
       type: 'localeString',
-      validation: (rule) => rule.required().error('Alt-tekst is verplicht.'),
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const parent = context.parent as { asset?: unknown } | undefined
+          const alt = value as { nl?: string; en?: string } | undefined
+          if (parent?.asset && !alt?.nl && !alt?.en) return 'Alt-tekst is verplicht bij een afbeelding.'
+          return true
+        }),
     }),
   ],
 })
