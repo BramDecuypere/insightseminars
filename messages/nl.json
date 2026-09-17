@@ -253,7 +253,8 @@
     "submit": "Inschrijven op de nieuwsbrief",
     "success": "Bijna klaar! Bevestig je inschrijving via de link in je mailbox.",
     "confirmedTitle": "Je inschrijving is bevestigd",
-    "confirmedBody": "Vanaf nu ontvang je onze nieuwsbrief."
+    "confirmedBody": "Vanaf nu ontvang je onze nieuwsbrief.",
+    "error": "Je inschrijving lukte niet door een technisch probleem. Probeer het later opnieuw."
   },
   "contactForm": {
     "name": "Naam",
