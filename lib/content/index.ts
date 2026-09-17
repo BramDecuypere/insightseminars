@@ -36,11 +36,39 @@ export async function getSettings() {
   return mock.settings
 }
 
+/**
+ * Deep-fill `value` from `fallback`: recurse into plain objects, and use the
+ * fallback wherever the Sanity value is null/undefined, an empty string, or an
+ * empty array. Keeps partially-populated Sanity documents rendering during the
+ * initial content migration instead of crashing on missing sections.
+ */
+function withFallback<T>(value: unknown, fallback: T): T {
+  if (value === null || value === undefined) return fallback
+  if (typeof value === 'string') return (value.trim() === '' ? fallback : value) as T
+  if (Array.isArray(value)) return (value.length === 0 ? fallback : value) as T
+  if (
+    typeof value === 'object' &&
+    typeof fallback === 'object' &&
+    fallback !== null &&
+    !Array.isArray(fallback)
+  ) {
+    const out: Record<string, unknown> = { ...(value as Record<string, unknown>) }
+    for (const key of Object.keys(fallback as Record<string, unknown>)) {
+      out[key] = withFallback(
+        (value as Record<string, unknown>)[key],
+        (fallback as Record<string, unknown>)[key],
+      )
+    }
+    return out as T
+  }
+  return value as T
+}
+
 export async function getHomePage() {
   if (hasSanity) {
     const page = await sanity.getHomePage()
     if (!page) return mock.homePage
-    return { ...page, seo: page.seo ?? mock.homePage.seo }
+    return withFallback(page, mock.homePage)
   }
   return mock.homePage
 }
