@@ -199,7 +199,7 @@ export default async function AboutPage({ params }: Props) {
       </section>
 
       {/* Steun Insight */}
-      <section id="steun" className="scroll-mt-24 bg-papier">
+      <section id="steun" className="scroll-mt-24 bg-mist">
         <div className="container-site section-y">
           <div className="mx-auto max-w-2xl">
             <h2 className="type-h2 text-inkt text-balance">{pick(page.support.heading, l)}</h2>

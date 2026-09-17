@@ -81,7 +81,53 @@ export const facilitators: Facilitator[] = [
   { _id: 'fac-david', name: 'David Raynr', slug: 'david-raynr', role: { nl: 'Facilitator', en: 'Facilitator' } },
 ]
 
-export const team: TeamMember[] = []
+export const team: TeamMember[] = [
+  {
+    _id: 'team-isabel',
+    name: 'Isabel Leybaert',
+    order: 1,
+    role: { nl: 'Actrice, dramadocent en theatercoach', en: 'Actress, drama teacher and theatre coach' },
+    photo: {
+      src: '/images/team/isabel-leybaert.jpg',
+      alt: { nl: 'Portret van Isabel Leybaert', en: 'Portrait of Isabel Leybaert' },
+    },
+    bio: {
+      nl: 'In mijn professionele leven hou ik me bezig als actrice, dramadocent en theatercoach. Tot op de dag van vandaag word ik warm en vrolijk bij de herinnering aan mijn allereerste Insight in 1994. Ik ben ervan overtuigd dat de talrijke inzichten die Insight mij bood in mijn eigen patronen, mijn valkuilen, maar ook in mijn persoonlijke waardes en kwaliteiten, mijn leven ontzettend veel rijker en bewuster heeft gemaakt. Zulke leerrijke en hartverwarmende ervaring wil ik iedereen toewensen. Het is dan ook daarom dat ik niet heb getwijfeld om als vrijwilliger mee te werken aan een herstart voor vzw Insight in België.',
+      en: 'In my professional life I work as an actress, drama teacher and theatre coach. To this day I feel warm and happy remembering my very first Insight in 1994. I am convinced that the many insights Insight gave me into my own patterns and pitfalls, but also into my personal values and qualities, have made my life so much richer and more conscious. I wish everyone such an enriching, heartwarming experience. That is why I didn’t hesitate to volunteer for the relaunch of vzw Insight in Belgium.',
+    },
+  },
+  {
+    _id: 'team-lulu',
+    name: 'Lulu Aertgeerts',
+    order: 2,
+    role: {
+      nl: 'Dramaturge en opleidingshoofd Musical, Koninklijk Conservatorium Brussel',
+      en: 'Dramaturge and head of the Musical Theatre department, Royal Conservatory Brussels',
+    },
+    photo: {
+      src: '/images/team/lulu-aertgeerts.jpg',
+      alt: { nl: 'Portret van Lulu Aertgeerts', en: 'Portrait of Lulu Aertgeerts' },
+    },
+    bio: {
+      nl: 'Ik ben opgeleid als dramaturg (KUL 1986), maar was naast mijn tv-werk als actrice (o.a. Wittekerke, Familie, coach voor Idool en X-factor) voornamelijk werkzaam in de musicalsector (Koninklijk Ballet van Vlaanderen, Stage Entertainment, Music Hall, …). Sinds 2013 ben ik opleidingshoofd van de Musicalafdeling van het Koninklijk Conservatorium Brussel, en pik ik sporadisch nog een rolletje mee, omdat het leven op, voor, achter en naast het podium een waar feest is. Ik ben een Insight 1, 2 en 3 – grad en assisteerde bij meerdere seminaries. Insight heeft me geleerd om thuis te komen bij mezelf. De inzichten die ik tijdens de seminaries verworven heb, helpen me nog dagelijks om prioriteiten te stellen, in het ‘nu’ te leven, en met focus en daadkracht te werken aan het realiseren van mijn dromen. Ook genieten en niks doen is dik oké.',
+      en: 'I trained as a dramaturge (KU Leuven, 1986), but alongside TV work as an actress (including Wittekerke, Familie, coaching Idool and X Factor) I mainly worked in musical theatre (Royal Ballet of Flanders, Stage Entertainment, Music Hall, …). Since 2013 I’ve headed the Musical Theatre department at the Royal Conservatory of Brussels, and I still take the odd role, because life on, in front of, behind and beside the stage is a true celebration. I’m an Insight 1, 2 and 3 graduate and have assisted at several seminars. Insight taught me to come home to myself. What I learned there still helps me daily to set priorities, live in the ‘now’, and work with focus and drive toward my dreams. Enjoying life and doing nothing is perfectly fine too.',
+    },
+  },
+  {
+    _id: 'team-jerko',
+    name: 'Jerko Božiković',
+    order: 3,
+    role: { nl: 'Voormalig professioneel danser, trainer, coach en keynote speaker', en: 'Former professional dancer, trainer, coach and keynote speaker' },
+    photo: {
+      src: '/images/team/jerko-bozikovic.jpg',
+      alt: { nl: 'Portret van Jerko Božiković', en: 'Portrait of Jerko Božiković' },
+    },
+    bio: {
+      nl: 'Ik heb 2 grote carrières/dromen mogen hebben, eerst 16 jaar als professioneel danser in vele musicals, tv-shows en revues in binnen- en buitenland. Sinds 2001 werk ik als trainer – coach – keynote speaker in de bedrijfswereld, waar ik elke dag mensen mag inspireren, uitdagen, bewust maken en laten groeien, en dit op 4 continenten. Insight heeft daar een grote rol in gespeeld om deze beide dromen toe te laten, uit te bouwen en van te genieten. Ik heb Insight 1, 2, 3, 4, Gift of the Heart en Leadership gedaan. Tussen 1995 en 2000 was ik ook city director voor Insight Benelux en organiseerde ik samen met een team jaarlijks verschillende Insight seminars. Het is met heel veel dankbaarheid en passie dat ik mee Insight in België op de kaart help zetten, om hier mensen terug naar hun hart, hun dromen en hun passie te helpen evolueren.',
+      en: 'I’ve been lucky enough to have 2 big careers/dreams: first 16 years as a professional dancer in many musicals, TV shows and revues at home and abroad. Since 2001 I’ve worked as a trainer – coach – keynote speaker in the corporate world, where every day, on 4 continents, I get to inspire, challenge and grow people. Insight played a big role in allowing, building and enjoying both of those dreams. I’ve done Insight 1, 2, 3, 4, Gift of the Heart and Leadership. Between 1995 and 2000 I was also city director for Insight Benelux, organising several Insight seminars a year together with a team. It’s with great gratitude and passion that I help put Insight Belgium back on the map, helping people here evolve back toward their heart, their dreams and their passion.',
+    },
+  },
+]
 
 export const programs: Program[] = [
   {
