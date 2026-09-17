@@ -24,7 +24,7 @@ export async function SiteFooter() {
   ].filter(Boolean)
 
   return (
-    <footer className="border-t border-avondblauw bg-papier text-inkt">
+    <footer className="border-t border-avondblauw/40 bg-papier text-inkt">
       {/* <div className="border-b border-lijn">
         <div className="container-site grid gap-6 py-12 md:grid-cols-2 md:items-center">
           <div className="max-w-md">
