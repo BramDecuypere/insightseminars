@@ -195,20 +195,20 @@ export default async function AboutPage({ params }: Props) {
 
             {settings.iban ? (
               <dl className="mt-6 space-y-3 rounded-panel border border-lijn bg-mist p-6">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <dt className="text-sm text-leisteen">{t('supportIban')}</dt>
-                    <dd className="text-lg font-semibold text-inkt">{settings.iban}</dd>
-                  </div>
-                  <CopyButton value={settings.iban} label={t('supportIban')} />
+                <div>
+                  <dt className="text-sm text-leisteen">{t('supportIban')}</dt>
+                  <dd className="mt-1 flex flex-wrap items-center justify-between gap-3">
+                    <span className="text-lg font-semibold text-inkt">{settings.iban}</span>
+                    <CopyButton value={settings.iban} label={t('supportIban')} />
+                  </dd>
                 </div>
                 {settings.accountHolder ? (
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-t border-lijn pt-3">
-                    <div>
-                      <dt className="text-sm text-leisteen">{t('supportHolder')}</dt>
-                      <dd className="text-lg font-semibold text-inkt">{settings.accountHolder}</dd>
-                    </div>
-                    <CopyButton value={settings.accountHolder} label={t('supportHolder')} />
+                  <div className="border-t border-lijn pt-3">
+                    <dt className="text-sm text-leisteen">{t('supportHolder')}</dt>
+                    <dd className="mt-1 flex flex-wrap items-center justify-between gap-3">
+                      <span className="text-lg font-semibold text-inkt">{settings.accountHolder}</span>
+                      <CopyButton value={settings.accountHolder} label={t('supportHolder')} />
+                    </dd>
                   </div>
                 ) : null}
               </dl>

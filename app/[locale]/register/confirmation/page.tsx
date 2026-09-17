@@ -65,7 +65,7 @@ export default async function ConfirmationPage({ params, searchParams }: Props) 
 
   const Icon = view.tone === 'ok' ? CheckCircle2 : view.tone === 'error' ? XCircle : state === 'check' ? ListChecks : state === 'info' ? Info : Clock
   const iconColor =
-    view.tone === 'ok' ? 'text-avondblauw' : view.tone === 'error' ? 'text-accent1' : 'text-leisteen'
+    view.tone === 'ok' ? 'text-avondblauw' : view.tone === 'error' ? 'text-accent-1' : 'text-leisteen'
 
   // Mollie just redirected back: poll the sheet until the payment settles.
   if (state === 'pending' && ref) {

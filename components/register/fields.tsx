@@ -53,13 +53,13 @@ export function useFieldError(name: string): string | undefined {
 
 const labelClass = 'block text-base font-semibold text-inkt'
 const inputClass =
-  'mt-1.5 h-12 w-full rounded-md border border-lijn bg-mist px-3.5 text-base text-inkt outline-none focus-visible:ring-3 focus-visible:ring-accent4 focus-visible:ring-offset-2'
+  'mt-1.5 h-12 w-full rounded-md border border-lijn bg-mist px-3.5 text-base text-inkt outline-none focus-visible:ring-3 focus-visible:ring-accent-4 focus-visible:ring-offset-2'
 
 export function ErrorText({ name }: { name: string }) {
   const error = useFieldError(name)
   if (!error) return null
   return (
-    <p id={`${name}-error`} className="mt-1.5 text-sm font-medium text-accent1" role="alert">
+    <p id={`${name}-error`} className="mt-1.5 text-sm font-medium text-accent-1" role="alert">
       {error}
     </p>
   )
@@ -134,7 +134,7 @@ export function TextAreaField({
       <textarea
         id={id}
         rows={rows}
-        className="mt-1.5 w-full rounded-md border border-lijn bg-mist px-3.5 py-2.5 text-base text-inkt outline-none focus-visible:ring-3 focus-visible:ring-accent4 focus-visible:ring-offset-2"
+        className="mt-1.5 w-full rounded-md border border-lijn bg-mist px-3.5 py-2.5 text-base text-inkt outline-none focus-visible:ring-3 focus-visible:ring-accent-4 focus-visible:ring-offset-2"
         {...register(name)}
       />
       <ErrorText name={name} />
@@ -195,7 +195,7 @@ export function RadioField({
         {options.map((o) => (
           <label
             key={o.value}
-            className="flex cursor-pointer items-center gap-2 rounded-md border border-lijn bg-mist px-3.5 py-2.5 text-base text-inkt has-[:checked]:border-avondblauw has-[:checked]:bg-papier has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-accent4"
+            className="flex cursor-pointer items-center gap-2 rounded-md border border-lijn bg-mist px-3.5 py-2.5 text-base text-inkt has-[:checked]:border-avondblauw has-[:checked]:bg-papier has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-accent-4"
           >
             <input type="radio" value={o.value} className="accent-avondblauw" {...register(name)} />
             {o.label}

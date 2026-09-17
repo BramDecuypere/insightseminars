@@ -1,6 +1,6 @@
 'use client'
 
-import { useId, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
@@ -26,18 +26,25 @@ export function ContactForm() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<ContactInput>({
     resolver: zodResolver(contactSchema) as never,
     defaultValues: {
       website: '',
-      formLoadedAt: Date.now(),
+      formLoadedAt: 0,
       name: '',
       email: '',
       subject: 'general',
       message: '',
     },
   })
+
+  // Stamp the load time after mount (time trap, brief §7.4); Date.now() must
+  // not run during render.
+  useEffect(() => {
+    setValue('formLoadedAt', Date.now())
+  }, [setValue])
 
   const errorFor = (name: keyof ContactInput) => {
     const code = errors[name]?.message

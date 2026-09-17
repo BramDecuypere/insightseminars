@@ -43,7 +43,7 @@ export function PayNowButton({
         {t('payButton')}
       </Button>
       {error && (
-        <p className="mt-3 text-sm font-medium text-accent1" role="alert">
+        <p className="mt-3 text-sm font-medium text-accent-1" role="alert">
           {error}
         </p>
       )}

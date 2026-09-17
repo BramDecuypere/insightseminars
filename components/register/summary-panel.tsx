@@ -36,7 +36,7 @@ export function SummaryPanel({ summary }: { summary: RegistrationSummary }) {
       aria-label={t('summary')}
       className="rounded-xl border border-lijn bg-mist p-5 lg:sticky lg:top-24"
     >
-      <h2 className="text-sm font-bold uppercase tracking-wide text-leisteen">{t('summary')}</h2>
+      <h2 className="text-sm font-bold text-leisteen">{t('summary')}</h2>
       <p className="mt-3 text-lg font-bold text-inkt text-balance">{summary.eventTitle}</p>
       <dl className="mt-4 space-y-2.5 text-base">
         <div className="flex justify-between gap-4">
