@@ -69,17 +69,18 @@
   --inkt: #1c1e33;
   --leisteen: #575c75;
   --lijn: #dadce8;
-  --accent-1: #e0413a; /* Insight I */
-  --accent-2: #f4b223; /* Insight II + primary button */
-  --accent-3: #16a394; /* Insight III */
-  --accent-4: #8a55d6; /* Tiener Insight */
+  --accent-1: #EA3424; /* Insight I */
+  --accent-2: #F09236; /* Insight II + primary button */
+  --accent-3: #8CC63F; /* Insight III */
+  --accent-4: #49A3E9; /* Tiener Insight */
   /* Darkened accents for accent-coloured TEXT on light backgrounds; each is
-     >= 4.5:1 on papier (WCAG AA). The vivid accents above stay for bars,
-     fills and accent text on the dark avondblauw bands. */
-  --accent-1-ink: #c62f28;
-  --accent-2-ink: #9a6b00;
-  --accent-3-ink: #0f766e;
-  --accent-4-ink: #7040bd;
+     >= 4.5:1 on papier (WCAG AA) and hue-matched to the accents above. The
+     vivid accents above stay for bars, fills and accent text on the dark
+     avondblauw bands. */
+  --accent-1-ink: #dc3122;
+  --accent-2-ink: #a66525;
+  --accent-3-ink: #5a7f28;
+  --accent-4-ink: #3679ac;
 
   --background: var(--papier);
   --foreground: var(--inkt);
