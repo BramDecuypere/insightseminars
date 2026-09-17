@@ -61,7 +61,6 @@ export const videoClip = defineType({
       title: 'Ondertiteling Nederlands (VTT)',
       type: 'file',
       options: { accept: '.vtt,text/vtt' },
-      validation: (rule) => rule.required().error('Nederlandse ondertiteling (VTT) is verplicht.'),
     }),
     defineField({
       name: 'captionsEn',
