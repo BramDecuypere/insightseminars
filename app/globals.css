@@ -65,10 +65,10 @@
   --inkt: #1c1e33;
   --leisteen: #575c75;
   --lijn: #dadce8;
-  --accent-1: #e0413a; /* Insight I */
-  --accent-2: #f4b223; /* Insight II + primary button */
-  --accent-3: #16a394; /* Insight III */
-  --accent-4: #8a55d6; /* Tiener Insight */
+  --accent-1: #EA3424; /* Insight I */
+  --accent-2: #F09236; /* Insight II + primary button */
+  --accent-3: #8CC63F; /* Insight III */
+  --accent-4: #49A3E9; /* Tiener Insight */
 
   --background: var(--papier);
   --foreground: var(--inkt);
