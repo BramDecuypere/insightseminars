@@ -41,7 +41,7 @@ export async function ProgramCard({ program, locale, fromPrice, free, nextDate }
       : null
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-panel border border-lijn bg-papier">
+    <article className="flex h-full flex-col overflow-hidden rounded-panel border border-lijn bg-papier transition-[transform,border-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-leisteen/60">
       <span aria-hidden className="h-1.5 w-full" style={{ backgroundColor: accentVar[program.accent] }} />
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-start gap-4">

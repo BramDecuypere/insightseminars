@@ -36,14 +36,14 @@ export function HomeHero({ home, locale }: { home: HomePage; locale: Locale }) {
           </div>
 
           {image ? (
-            <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-panel lg:mx-0">
+            <div className="group relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-panel lg:mx-0">
               <Image
                 src={image.src}
                 alt={alt}
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 26rem"
-                className="object-cover"
+                className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
               />
             </div>
           ) : null}

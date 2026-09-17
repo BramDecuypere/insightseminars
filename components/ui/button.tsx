@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils'
  * text, matching the wordmark color for brand cohesion.
  */
 const buttonVariants = cva(
-  "inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-base font-semibold whitespace-nowrap transition-colors outline-none select-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5",
+  "inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-base font-semibold whitespace-nowrap transition-[color,background-color,border-color,transform] duration-150 outline-none select-none active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50 disabled:active:scale-100 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5",
   {
     variants: {
       variant: {
@@ -31,7 +31,7 @@ const buttonVariants = cva(
         // Quiet secondary on light surfaces
         secondary: 'bg-mist text-inkt border border-transparent hover:bg-lijn',
         ghost: 'bg-transparent text-inkt hover:bg-mist',
-        link: 'text-inkt underline underline-offset-4 hover:decoration-2 px-0 h-auto',
+        link: 'text-inkt underline underline-offset-4 hover:decoration-2 px-0 h-auto active:scale-100',
       },
       size: {
         default: 'h-12 px-5',

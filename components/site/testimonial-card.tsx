@@ -23,7 +23,7 @@ export function TestimonialCard({
     ''
 
   return (
-    <figure className="flex h-full flex-col rounded-panel border border-lijn bg-papier p-6">
+    <figure className="flex h-full flex-col rounded-panel border border-lijn bg-papier p-6 transition-[transform,border-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-leisteen/60">
       {testimonial.videoClip ? (
         <div className="mb-5">
           <VideoClip clip={testimonial.videoClip} playLabel={playLabel} locale={locale} />

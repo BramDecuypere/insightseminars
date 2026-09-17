@@ -8,6 +8,7 @@ import {
 import { NewsletterBand } from '@/components/site/newsletter-band'
 import { NextDatePanel } from '@/components/site/next-date-panel'
 import { PathBlock } from '@/components/site/path-block'
+import { Reveal } from '@/components/site/reveal'
 import { TestimonialCard } from '@/components/site/testimonial-card'
 import { VideoClip } from '@/components/site/video-clip'
 import { buttonVariants } from '@/components/ui/button'
@@ -90,16 +91,16 @@ export default async function HomePage({ params }: Props) {
 
       {/* Missie */}
       <section className="bg-mist">
-        <div className="container-site section-y max-w-3xl">
+        <Reveal className="container-site section-y max-w-3xl">
           <h2 className="type-h2 text-inkt text-balance">{pick(home.mission.heading, l)}</h2>
           <p className="type-lead mt-5 text-inkt">{pick(home.mission.body, l)}</p>
-        </div>
+        </Reveal>
       </section>
 
       {/* Vertrouwen: getuigenissen */}
       {showTestimonials ? (
         <section className="bg-papier">
-          <div className="container-site section-y">
+          <Reveal className="container-site section-y">
             <h2 className="type-h2 text-inkt text-balance">
               {pick(home.testimonialsHeading, l)}
             </h2>
@@ -114,7 +115,7 @@ export default async function HomePage({ params }: Props) {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
         </section>
       ) : null}
 
@@ -134,7 +135,7 @@ export default async function HomePage({ params }: Props) {
 
       {/* 2. Begrip */}
       <section className={showTestimonials ? 'bg-mist' : 'bg-papier'}>
-        <div className="container-site section-y">
+        <Reveal className="container-site section-y">
           <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
             <div>
               <h2 className="type-h2 text-inkt text-balance">
@@ -181,23 +182,23 @@ export default async function HomePage({ params }: Props) {
               </ul>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* 3. Voor wie */}
       <section className={showTestimonials ? 'bg-papier' : 'bg-mist'}>
-        <div className="container-site section-y">
+        <Reveal className="container-site section-y">
           <div className="max-w-3xl">
             <h2 className="type-h2 text-inkt text-balance">{pick(home.forWho.heading, l)}</h2>
             <p className="type-body mt-5 text-inkt">{pick(home.forWho.body, l)}</p>
             <p className="mt-6 text-base text-leisteen">{pick(home.forWho.trustLine, l)}</p>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* 4. Uitnodiging */}
       <section className="on-avondblauw bg-mist">
-        <div className="container-site section-y">
+        <Reveal className="container-site section-y">
           <h2 className="type-h2 text-balance">{pick(home.path.heading, l)}</h2>
           <p className="type-lead mt-4 max-w-2xl">{pick(home.path.intro, l)}</p>
 
@@ -242,7 +243,7 @@ export default async function HomePage({ params }: Props) {
               {pick({ nl: 'Naar de pagina voor tieners en ouders', en: 'Go to the page for teens and parents' }, l)}
             </Link>
           </p>
-        </div>
+        </Reveal>
       </section>
 
       <NewsletterBand />

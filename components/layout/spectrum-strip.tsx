@@ -5,13 +5,13 @@
  */
 const segments = [
   { color: '#FFFF55', delay: '0ms' },
-  { color: '#F09236', delay: '60ms' },
-  { color: '#EA3424', delay: '120ms' },
-  { color: '#3C159B', delay: '180ms' },
-  { color: '#7E3BB8', delay: '240ms' },
-  { color: '#53B54B', delay: '300ms' },
-  { color: '#40904E', delay: '360ms' },
-  { color: '#49A3E9', delay: '420ms' },
+  { color: '#F09236', delay: '50ms' },
+  { color: '#EA3424', delay: '100ms' },
+  { color: '#3C159B', delay: '150ms' },
+  { color: '#7E3BB8', delay: '200ms' },
+  { color: '#53B54B', delay: '250ms' },
+  { color: '#40904E', delay: '300ms' },
+  { color: '#49A3E9', delay: '350ms' },
 ]
 
 export function SpectrumStrip() {

@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { HeaderFrame } from './header-frame'
 import { LanguageSwitcher } from './language-switcher'
 import { MainNav } from './main-nav'
 import { MobileNav } from './mobile-nav'
@@ -11,13 +12,14 @@ import { SpectrumStrip } from './spectrum-strip'
 /**
  * Header on papier (brief §4, §9.1): logo left, short nav, NL/EN text
  * switch, a "Gratis infosessie" secondary button and the "Inschrijven"
- * primary button. Spectrum strip sits directly beneath.
+ * primary button. Spectrum strip sits directly beneath. The border only
+ * settles in once scrolled (HeaderFrame), a quiet cue that the page moved.
  */
 export async function SiteHeader() {
   const t = await getTranslations('nav')
 
   return (
-    <header className="sticky top-0 z-40 border-b border-lijn bg-papier text-inkt">
+    <HeaderFrame>
       <div className="container-site flex h-20 items-center justify-between gap-4">
         <Link href="/" className="flex shrink-0 items-center" aria-label="Insight Seminars">
           <Image
@@ -51,6 +53,6 @@ export async function SiteHeader() {
         <MobileNav />
       </div>
       <SpectrumStrip />
-    </header>
+    </HeaderFrame>
   )
 }

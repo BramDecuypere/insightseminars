@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { NewsletterForm } from './newsletter-form'
+import { Reveal } from './reveal'
 
 /**
  * Newsletter sign-up band (brief §7.5). Wraps the shared NewsletterForm, which
@@ -12,7 +13,7 @@ export function NewsletterBand({ id = 'nieuwsbrief' }: { id?: string }) {
 
   return (
     <section id={id} className="on-avondblauw bg-avondblauw text-papier">
-      <div className="container-site section-y text-center">
+      <Reveal className="container-site section-y text-center">
         <div className="mx-auto max-w-2xl">
           <h2 className="type-h2 text-papier text-balance">{t('title')}</h2>
           <p className="type-lead mt-4 text-papier/80">{t('body')}</p>
@@ -20,7 +21,7 @@ export function NewsletterBand({ id = 'nieuwsbrief' }: { id?: string }) {
             <NewsletterForm />
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   )
 }

@@ -219,13 +219,29 @@
 
 .spectrum-seg {
   transform-origin: left center;
-  animation: spectrum-grow 600ms ease-out both;
+  animation: spectrum-grow 50ms ease-out both;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .spectrum-seg {
     animation: none;
     transform: none;
+  }
+}
+
+/* Motion brief: blanket safety net so any new transition/animation is inert
+   for reduced-motion users by default, without hand-writing a guard per
+   component. Specific components (like the spectrum strip above) may still
+   add a precise override where "no animation" needs to mean something more
+   exact than "near-instant". */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
