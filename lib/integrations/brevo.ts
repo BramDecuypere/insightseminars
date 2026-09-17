@@ -34,7 +34,8 @@ function parseSender(): { email: string; name?: string } {
 
 export async function sendEmail(input: SendEmailInput): Promise<void> {
   if (!hasKeys(['BREVO_API_KEY'], 'Brevo')) {
-    console.log(`[v0] (brevo stub) email to ${input.to.email}: "${input.subject}"`)
+    // No recipient address in the log (brief §11: no personal data in logs).
+    console.log(`[v0] (brevo stub) transactional email skipped: "${input.subject}"`)
     return
   }
   const body = {
@@ -72,7 +73,8 @@ export async function startDoubleOptin({ email, locale }: NewsletterInput): Prom
   const listKey = locale === 'en' ? 'BREVO_LIST_ID_EN' : 'BREVO_LIST_ID_NL'
   const templateKey = locale === 'en' ? 'BREVO_DOI_TEMPLATE_ID_EN' : 'BREVO_DOI_TEMPLATE_ID_NL'
   if (!hasKeys(['BREVO_API_KEY', listKey, templateKey], 'Brevo newsletter')) {
-    console.log(`[v0] (brevo stub) double opt-in for ${email} (${locale})`)
+    // No subscriber address in the log (brief §11: no personal data in logs).
+    console.log(`[v0] (brevo stub) double opt-in skipped (${locale})`)
     return true
   }
   const redirect =

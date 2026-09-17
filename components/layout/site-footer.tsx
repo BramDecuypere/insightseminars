@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { getSettings } from '@/lib/content'
+import { NewsletterForm } from '@/components/site/newsletter-form'
 import { LanguageSwitcher } from './language-switcher'
 import { mainNav } from './nav-config'
 
@@ -24,6 +25,15 @@ export async function SiteFooter() {
 
   return (
     <footer className="on-avondblauw bg-avondblauw text-papier">
+      <div className="border-b border-white/15">
+        <div className="container-site grid gap-6 py-12 md:grid-cols-2 md:items-center">
+          <div className="max-w-md">
+            <h2 className="type-h3 text-papier text-balance">{t('newsletter.title')}</h2>
+            <p className="mt-2 type-small text-papier/70">{t('newsletter.body')}</p>
+          </div>
+          <NewsletterForm compact />
+        </div>
+      </div>
       <div className="container-site grid gap-10 py-16 md:grid-cols-4">
         <div className="md:col-span-1">
           <Image
