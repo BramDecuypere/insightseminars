@@ -14,10 +14,14 @@ import { createClient } from 'next-sanity'
 
 import * as mock from '../lib/content/mock'
 import type {
+  AboutPage,
+  ContactPage,
+  HomePage,
   InsightEvent,
   LocaleRichText,
   Program,
   Testimonial,
+  TeensPage,
   InternationalEvent,
 } from '../lib/content/types'
 
@@ -190,6 +194,81 @@ function internationalDoc(e: InternationalEvent) {
   })
 }
 
+function homePageDoc(h: HomePage) {
+  return stripPlaceholders({
+    _id: 'homePage',
+    _type: 'homePage',
+    hero: {
+      title: h.hero.title,
+      lead: h.hero.lead,
+      primaryCta: h.hero.primaryCta,
+      secondaryCta: h.hero.secondaryCta,
+    },
+    recognise: {
+      intro: h.recognise.intro,
+      situations: withKeys(
+        h.recognise.situations.map((s) => ({
+          label: s.label,
+          target: s.target,
+          program: s.programSlug ? ref(programIdBySlug.get(s.programSlug) ?? '') : undefined,
+          testimonial: s.testimonialId ? ref(s.testimonialId) : undefined,
+        })),
+      ),
+      fallback: h.recognise.fallback,
+    },
+    whatIsInsight: h.whatIsInsight,
+    howItWorks: { heading: h.howItWorks.heading, points: withKeys(h.howItWorks.points) },
+    benefits: { heading: h.benefits.heading, items: withKeys(h.benefits.items) },
+    forWho: h.forWho,
+    path: h.path,
+    upcomingHeading: h.upcomingHeading,
+    testimonialsHeading: h.testimonialsHeading,
+    testimonials: h.testimonialIds.map((id) => ({ _key: key(), ...ref(id) })),
+    seo: h.seo,
+  })
+}
+
+function aboutPageDoc(a: AboutPage) {
+  return stripPlaceholders({
+    _id: 'aboutPage',
+    _type: 'aboutPage',
+    hero: a.hero,
+    sections: withKeys(a.sections),
+    benefits: { heading: a.benefits.heading, items: withKeys(a.benefits.items) },
+    forWho: a.forWho,
+    story: { heading: a.story.heading, paragraphs: withKeys(a.story.paragraphs) },
+    teamIntro: a.teamIntro,
+    facilitatorsIntro: a.facilitatorsIntro,
+    support: a.support,
+    closing: a.closing,
+    seo: a.seo,
+  })
+}
+
+function teensPageDoc(t: TeensPage) {
+  return stripPlaceholders({
+    _id: 'teensPage',
+    _type: 'teensPage',
+    hero: { title: t.hero.title, lead: t.hero.lead, points: withKeys(t.hero.points) },
+    parents: {
+      heading: t.parents.heading,
+      lead: t.parents.lead,
+      blocks: withKeys(t.parents.blocks),
+    },
+    seo: t.seo,
+  })
+}
+
+function contactPageDoc(c: ContactPage) {
+  return stripPlaceholders({
+    _id: 'contactPage',
+    _type: 'contactPage',
+    hero: c.hero,
+    sections: c.sections,
+    seo: c.seo,
+  })
+}
+
 function settingsDoc() {
   return stripPlaceholders({
     _id: 'siteSettings',
@@ -208,6 +287,10 @@ async function run() {
   const docs: Record<string, unknown>[] = []
 
   docs.push(settingsDoc())
+  docs.push(homePageDoc(mock.homePage))
+  docs.push(aboutPageDoc(mock.aboutPage))
+  docs.push(teensPageDoc(mock.teensPage))
+  docs.push(contactPageDoc(mock.contactPage))
 
   for (const v of mock.venues) docs.push(stripPlaceholders({ ...v, _type: 'venue' }))
   for (const f of mock.facilitators)
