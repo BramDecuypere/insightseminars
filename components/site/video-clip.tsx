@@ -27,10 +27,12 @@ export function VideoClip({
 
   const posterAsset = clip?.poster ?? poster
   const posterAlt =
-    (locale === 'en' ? posterAsset?.alt.en : posterAsset?.alt.nl) ||
-    posterAsset?.alt.nl ||
+    (locale === 'en' ? posterAsset?.alt?.en : posterAsset?.alt?.nl) ||
+    posterAsset?.alt?.nl ||
     ''
-  const captionText = caption ?? (clip ? (locale === 'en' ? clip.title.en : clip.title.nl) : undefined)
+  const clipTitle = clip?.title
+  const captionText =
+    caption ?? (clipTitle ? (locale === 'en' ? clipTitle.en : clipTitle.nl) : undefined)
 
   // No clip: static poster figure, no play affordance.
   if (!clip) {
