@@ -11,6 +11,7 @@
 @theme inline {
   /* Brand palette (§9.2) exposed as Tailwind colour utilities */
   --color-avondblauw: var(--avondblauw);
+  --color-brand-purple: var(--brand-purple);
   --color-papier: var(--papier);
   --color-mist: var(--mist);
   --color-inkt: var(--inkt);
@@ -64,6 +65,7 @@
 
   /* §9.2 colour tokens — accents sampled from the logo spectrum */
   --avondblauw: #211e55;
+  --brand-purple: #7E3BB8;
   --papier: #ffffff;
   --mist: #f2f3f8;
   --inkt: #1c1e33;

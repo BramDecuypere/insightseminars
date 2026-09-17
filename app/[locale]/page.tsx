@@ -90,7 +90,7 @@ export default async function HomePage({ params }: Props) {
       <HomeHero home={home} locale={l} />
 
       {/* 1. Herkenning */}
-      <section className="bg-papier">
+      {/* <section className="bg-papier">
         <div className="container-site section-y">
           <h2 className="type-h2 text-inkt text-balance">{t('recognise')}</h2>
           <div className="mt-8 max-w-3xl">
@@ -101,7 +101,7 @@ export default async function HomePage({ params }: Props) {
             />
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* 2. Begrip */}
       <section className="bg-mist">

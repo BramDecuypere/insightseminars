@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { CopyButton } from '@/components/site/copy-button'
 import { JsonLd } from '@/components/site/json-ld'
+import { PersonCard } from '@/components/site/person-card'
 import { ReadMore } from '@/components/site/read-more'
 import { TestimonialCard } from '@/components/site/testimonial-card'
 import { VideoClip } from '@/components/site/video-clip'
@@ -14,6 +15,7 @@ import {
   getTeam,
   getTestimonials,
   pick,
+  pickRich,
 } from '@/lib/content'
 import { buildMetadata, videoJsonLd } from '@/lib/seo'
 import type { Locale } from '@/lib/content/types'
@@ -152,37 +154,47 @@ export default async function AboutPage({ params }: Props) {
         </div>
       </section>
 
-      {/* Team + facilitators */}
+      {/* Team */}
       <section id="team" className="scroll-mt-24 bg-mist">
         <div className="container-site section-y">
-          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <h2 className="type-h2 text-inkt text-balance">{t('teamHeading')}</h2>
-              <p className="type-body mt-5 text-inkt">{pick(page.teamIntro, l)}</p>
-              {team.length > 0 ? (
-                <ul className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3">
-                  {team.map((m) => (
-                    <li key={m._id}>
-                      <p className="font-semibold text-inkt">{m.name}</p>
-                      <p className="text-base text-leisteen">{pick(m.role, l)}</p>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-            </div>
-            <div>
-              <h2 className="type-h2 text-inkt text-balance">{t('facilitatorsHeading')}</h2>
-              <p className="type-body mt-5 text-inkt">{pick(page.facilitatorsIntro, l)}</p>
-              <ul className="mt-6 space-y-2">
-                {facilitators.map((f) => (
-                  <li key={f._id} className="text-lg text-inkt">
-                    <span className="font-semibold">{f.name}</span>
-                    <span className="text-leisteen"> {'\u00b7'} {pick(f.role, l)}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <h2 className="type-h2 text-inkt text-balance">{t('teamHeading')}</h2>
+          <p className="type-body mt-5 max-w-2xl text-inkt">{pick(page.teamIntro, l)}</p>
+          {team.length > 0 ? (
+            <ul className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+              {team.map((m) => (
+                <PersonCard
+                  key={m._id}
+                  photo={m.photo}
+                  name={m.name}
+                  role={pick(m.role, l)}
+                  bio={m.bio ? [pick(m.bio, l)] : undefined}
+                  locale={l}
+                />
+              ))}
+            </ul>
+          ) : null}
+        </div>
+      </section>
+
+      {/* Facilitators */}
+      <section id="facilitators" className="scroll-mt-24 bg-papier">
+        <div className="container-site section-y">
+          <h2 className="type-h2 text-inkt text-balance">{t('facilitatorsHeading')}</h2>
+          <p className="type-body mt-5 max-w-2xl text-inkt">{pick(page.facilitatorsIntro, l)}</p>
+          {facilitators.length > 0 ? (
+            <ul className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+              {facilitators.map((f) => (
+                <PersonCard
+                  key={f._id}
+                  photo={f.photo}
+                  name={f.name}
+                  role={pick(f.role, l)}
+                  bio={pickRich(f.bio, l)}
+                  locale={l}
+                />
+              ))}
+            </ul>
+          ) : null}
         </div>
       </section>
 

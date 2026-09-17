@@ -13,12 +13,12 @@ export function HomeHero({ home, locale }: { home: HomePage; locale: Locale }) {
   const alt = image ? (locale === 'en' ? image.alt.en : image.alt.nl) || image.alt.nl : ''
 
   return (
-    <section className="on-avondblauw bg-avondblauw text-papier">
-      <div className="container-site section-y">
+    <section className="">
+      <div className="container-site section-y text-avondblauw">
         <div className="grid items-center gap-10 lg:grid-cols-[1fr_minmax(0,26rem)] lg:gap-16">
           <div>
-            <h1 className="type-h1 text-papier text-balance">{pick(home.hero.title, locale)}</h1>
-            <p className="type-lead mt-6 max-w-xl text-papier/85">{pick(home.hero.lead, locale)}</p>
+            <h1 className="type-h1 text-balance">{pick(home.hero.title, locale)}</h1>
+            <p className="type-lead mt-6 max-w-xl">{pick(home.hero.lead, locale)}</p>
             <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
               <Link
                 href={{ pathname: '/agenda', query: { type: 'infoSessions' } }}
@@ -28,7 +28,7 @@ export function HomeHero({ home, locale }: { home: HomePage; locale: Locale }) {
               </Link>
               <Link
                 href="/seminars"
-                className="text-lg font-semibold text-papier underline underline-offset-4 hover:decoration-2"
+                className="text-lg font-semibold underline underline-offset-4 hover:decoration-2"
               >
                 {pick(home.hero.secondaryCta, locale)}
               </Link>

@@ -23,10 +23,10 @@ export async function SiteHeader() {
           <Image
             src="/brand/insight-logo.png"
             alt="Insight Seminars"
-            width={89}
-            height={44}
+            width={107}
+            height={53}
             priority
-            className="h-11 w-auto"
+            className="h-20 w-auto"
           />
         </Link>
 
