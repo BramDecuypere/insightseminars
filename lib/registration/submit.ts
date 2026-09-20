@@ -175,8 +175,9 @@ export async function runSubmitRegistration(payload: {
     const isTeen = ctx.flow === 'teen'
 
     // --- Decide status, payment method, confirmation state (§7.1) ---
+    // Bank transfer is only ever driven by the global PAYMENT_MODE ops toggle;
+    // registrants can no longer choose it — paid registrations go through Mollie.
     const bankTransferMode = paymentMode === 'bank_transfer'
-    const wantsTransfer = clean.paymentMethod === 'transfer'
     let status: string
     let confirmationState: ConfirmationState
     let betaalwijze = ''
@@ -203,7 +204,7 @@ export async function runSubmitRegistration(payload: {
       betaalwijze = 'betaallink'
       payUrl = payLinkUrl(registrationId, locale)
       if (settings.allowBankTransfer) ogm = generateOgm()
-    } else if (bankTransferMode || wantsTransfer) {
+    } else if (bankTransferMode) {
       status = 'wacht_op_overschrijving'
       confirmationState = 'transfer'
       betaalwijze = 'overschrijving'
