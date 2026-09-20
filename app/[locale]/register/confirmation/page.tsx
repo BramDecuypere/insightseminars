@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { CheckCircle2, Clock, XCircle, ListChecks, Info } from 'lucide-react'
 import { CopyButton } from '@/components/register/copy-button'
 import { PaymentPoller } from '@/components/register/payment-poller'
+import { readRegistrationStatus } from '@/lib/registration/status'
 import { getSettings } from '@/lib/content'
 import { formatEuro } from '@/lib/format'
 import { formatDate } from '@/lib/domain/dates'
@@ -28,12 +29,37 @@ export default async function ConfirmationPage({ params, searchParams }: Props) 
   const sp = await searchParams
 
   const t = await getTranslations('confirmation')
-  const state = str(sp.state) ?? 'pending'
+  const requestedState = str(sp.state) ?? 'pending'
   const ref = str(sp.ref)
   const amountCents = Number(str(sp.amount))
   const due = str(sp.due)
   const ogm = str(sp.ogm)
-  const eventSlug = str(sp.event)
+  let eventSlug = str(sp.event)
+
+  // Mollie always redirects back with `state=pending`; the real outcome (open,
+  // paid, failed, canceled, expired) lives in the sheet / Mollie. Resolve it
+  // server-side so the page shows the correct feedback right away. While the
+  // payment is genuinely still settling we fall back to the live poller.
+  let state = requestedState
+  let payUrl: string | undefined
+  if (requestedState === 'pending' && ref) {
+    const status = await readRegistrationStatus(ref)
+    if (status.state === 'pending' || status.state === 'unknown') {
+      return (
+        <div className="container-site section-y">
+          <div className="mx-auto max-w-2xl">
+            <PaymentPoller reference={ref} locale={locale} eventSlug={eventSlug} />
+            <p className="mt-8 text-sm text-leisteen">
+              {t('reference')}: <span className="font-mono text-inkt">{ref}</span>
+            </p>
+          </div>
+        </div>
+      )
+    }
+    state = status.state
+    payUrl = status.payUrl
+    eventSlug = status.eventSlug ?? eventSlug
+  }
 
   const settings = await getSettings()
   const dueText = due ? formatDate(due, l) : ''
@@ -56,8 +82,14 @@ export default async function ConfirmationPage({ params, searchParams }: Props) 
         return { tone: 'ok', title: t('paidTitle'), body: t('paidBody') }
       case 'info':
         return { tone: 'ok', title: t('infoSessionTitle'), body: t('infoSessionBody') }
+      case 'open':
+        return { tone: 'pending', title: t('openTitle'), body: t('openBody') }
       case 'failed':
         return { tone: 'error', title: t('failedTitle'), body: t('failedBody') }
+      case 'canceled':
+        return { tone: 'error', title: t('canceledTitle'), body: t('canceledBody') }
+      case 'expired':
+        return { tone: 'error', title: t('expiredTitle'), body: t('expiredBody') }
       default:
         return { tone: 'pending', title: t('pendingTitle'), body: t('pendingBody') }
     }
@@ -67,19 +99,8 @@ export default async function ConfirmationPage({ params, searchParams }: Props) 
   const iconColor =
     view.tone === 'ok' ? 'text-avondblauw' : view.tone === 'error' ? 'text-accent-1' : 'text-leisteen'
 
-  // Mollie just redirected back: poll the sheet until the payment settles.
-  if (state === 'pending' && ref) {
-    return (
-      <div className="container-site section-y">
-        <div className="mx-auto max-w-2xl">
-          <PaymentPoller reference={ref} locale={locale} eventSlug={eventSlug} />
-          <p className="mt-8 text-sm text-leisteen">
-            {t('reference')}: <span className="font-mono text-inkt">{ref}</span>
-          </p>
-        </div>
-      </div>
-    )
-  }
+  // States where the visitor still owes a payment can offer a retry link.
+  const canRetry = payUrl && (state === 'open' || state === 'failed' || state === 'canceled' || state === 'expired')
 
   const showTransferDetails = state === 'transfer'
   const rows: { label: string; value: string }[] = []
@@ -104,6 +125,15 @@ export default async function ConfirmationPage({ params, searchParams }: Props) 
             className="mt-6 inline-flex items-center rounded-md bg-avondblauw px-5 py-3 text-base font-semibold text-papier hover:opacity-90"
           >
             {t('addToCalendar')}
+          </a>
+        )}
+
+        {canRetry && (
+          <a
+            href={payUrl}
+            className="mt-6 inline-flex items-center rounded-md bg-avondblauw px-5 py-3 text-base font-semibold text-papier hover:opacity-90"
+          >
+            {t('retry')}
           </a>
         )}
 

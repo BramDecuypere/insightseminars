@@ -85,7 +85,6 @@ const base = z.object({
   peppolId: z.string().optional().default(''),
 
   // Step: review.
-  paymentMethod: z.enum(['online', 'transfer']).optional().default('online'),
   terms: z.boolean().optional().default(false),
 })
 

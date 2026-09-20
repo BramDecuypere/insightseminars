@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 import { CheckCircle2, Clock, XCircle } from 'lucide-react'
 import { getRegistrationStatus } from '@/app/[locale]/register/actions'
 
-type View = 'pending' | 'paid' | 'failed'
+type View = 'pending' | 'open' | 'paid' | 'failed' | 'canceled' | 'expired'
 
 /**
  * Polls the registration status while a Mollie payment settles (brief §7.1):
@@ -43,8 +43,13 @@ export function PaymentPoller({
           setView('paid')
           return
         }
-        if (res.state === 'failed') {
-          setView('failed')
+        if (
+          res.state === 'open' ||
+          res.state === 'failed' ||
+          res.state === 'canceled' ||
+          res.state === 'expired'
+        ) {
+          setView(res.state)
           return
         }
       } catch {
@@ -64,11 +69,30 @@ export function PaymentPoller({
     }
   }, [reference])
 
-  const Icon = view === 'paid' ? CheckCircle2 : view === 'failed' ? XCircle : Clock
-  const iconColor =
-    view === 'paid' ? 'text-avondblauw' : view === 'failed' ? 'text-accent-1' : 'text-leisteen'
-  const title = view === 'paid' ? t('paidTitle') : view === 'failed' ? t('failedTitle') : t('pendingTitle')
-  const body = view === 'paid' ? t('paidBody') : view === 'failed' ? t('failedBody') : t('pendingBody')
+  const isError = view === 'failed' || view === 'canceled' || view === 'expired'
+  const titleKey = {
+    paid: 'paidTitle',
+    open: 'openTitle',
+    failed: 'failedTitle',
+    canceled: 'canceledTitle',
+    expired: 'expiredTitle',
+    pending: 'pendingTitle',
+  }[view] as 'paidTitle'
+  const bodyKey = {
+    paid: 'paidBody',
+    open: 'openBody',
+    failed: 'failedBody',
+    canceled: 'canceledBody',
+    expired: 'expiredBody',
+    pending: 'pendingBody',
+  }[view] as 'paidBody'
+
+  const Icon = view === 'paid' ? CheckCircle2 : isError ? XCircle : Clock
+  const iconColor = view === 'paid' ? 'text-avondblauw' : isError ? 'text-accent-1' : 'text-leisteen'
+  const title = t(titleKey)
+  const body = t(bodyKey)
+  const canRetry =
+    payUrl && (view === 'open' || view === 'failed' || view === 'canceled' || view === 'expired')
 
   return (
     <div aria-live="polite">
@@ -87,7 +111,7 @@ export function PaymentPoller({
         </a>
       )}
 
-      {view === 'failed' && payUrl && (
+      {canRetry && (
         <a
           href={payUrl}
           className="mt-8 inline-flex items-center rounded-md bg-avondblauw px-5 py-3 text-base font-semibold text-papier hover:opacity-90"

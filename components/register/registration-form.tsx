@@ -11,7 +11,7 @@ import { makeRegistrationSchema, type RegistrationInput } from '@/lib/registrati
 import type { FlowContext } from '@/lib/registration/flow'
 import { stepsFor } from '@/lib/registration/flow'
 import { submitRegistration } from '@/app/[locale]/register/actions'
-import { FlowProvider, Honeypot, useFieldError, useFlow } from './fields'
+import { FlowProvider, Honeypot, useFieldError } from './fields'
 import {
   AgreementsStep,
   ConsentStep,
@@ -87,7 +87,6 @@ function defaultValues(): RegistrationInput {
     invoiceEmail: '',
     peppol: '',
     peppolId: '',
-    paymentMethod: 'online',
     terms: false,
   }
 }
@@ -209,7 +208,7 @@ export function RegistrationForm({
             )}
 
             <div className="mt-6">
-              <StepContent stepKey={stepKey} paymentMode={paymentMode} />
+              <StepContent stepKey={stepKey} />
             </div>
 
             <div className="mt-8 flex items-center justify-between gap-4">
@@ -238,13 +237,7 @@ export function RegistrationForm({
   )
 }
 
-function StepContent({
-  stepKey,
-  paymentMode,
-}: {
-  stepKey: string
-  paymentMode: 'mollie' | 'bank_transfer'
-}) {
+function StepContent({ stepKey }: { stepKey: string }) {
   switch (stepKey) {
     case 'date':
       return <DateStep />
@@ -261,39 +254,19 @@ function StepContent({
     case 'billing':
       return <BillingStep />
     case 'review':
-      return <ReviewStep paymentMode={paymentMode} />
+      return <ReviewStep />
     default:
       return null
   }
 }
 
-function ReviewStep({ paymentMode }: { paymentMode: 'mollie' | 'bank_transfer' }) {
+function ReviewStep() {
   const t = useTranslations('form')
-  const tp = useTranslations('form.payment')
-  const flow = useFlow()
   const termsError = useFieldError('terms')
-
-  const showChoice = paymentMode === 'mollie' && flow.allowBankTransfer && !flow.free && !flow.waitlist
   const { register } = useFormContext<RegistrationInput>()
 
   return (
     <div className="space-y-6">
-      {showChoice && (
-        <fieldset>
-          <legend className="block text-base font-semibold text-inkt">{tp('title')}</legend>
-          <div className="mt-2 space-y-2.5">
-            <label className="flex items-center gap-2 rounded-md border border-lijn bg-mist px-3.5 py-2.5 has-[:checked]:border-avondblauw has-[:checked]:bg-papier">
-              <input type="radio" value="online" className="accent-avondblauw" {...register('paymentMethod')} />
-              {tp('online')}
-            </label>
-            <label className="flex items-center gap-2 rounded-md border border-lijn bg-mist px-3.5 py-2.5 has-[:checked]:border-avondblauw has-[:checked]:bg-papier">
-              <input type="radio" value="transfer" className="accent-avondblauw" {...register('paymentMethod')} />
-              {tp('transfer')}
-            </label>
-          </div>
-        </fieldset>
-      )}
-
       <label className="flex items-start gap-3 text-base text-inkt">
         <input type="checkbox" className="mt-1 size-5 shrink-0 accent-avondblauw" {...register('terms')} />
         <span>
@@ -336,7 +309,6 @@ function SubmitButton({
 }) {
   const tp = useTranslations('form.payment')
   const { control } = useFormContext<RegistrationInput>()
-  const method = useWatch({ control, name: 'paymentMethod' })
   const earlier = useWatch({ control, name: 'earlierDeposit' })
   const sponsoring = useWatch({ control, name: 'sponsoring' })
 
@@ -344,7 +316,7 @@ function SubmitButton({
   if (flow.waitlist) label = tp('submitWaitlist')
   else if (flow.free) label = tp('submitFree')
   else if (earlier === 'ja' || sponsoring === 'ja') label = tp('submitCheck')
-  else if (paymentMode === 'bank_transfer' || method === 'transfer') label = tp('submitTransfer')
+  else if (paymentMode === 'bank_transfer') label = tp('submitTransfer')
 
   return (
     <Button type="submit" size="lg" disabled={submitting} aria-busy={submitting}>

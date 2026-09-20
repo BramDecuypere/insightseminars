@@ -16,7 +16,10 @@ export type SubmitResult =
 export type ConfirmationState =
   | 'paid'
   | 'pending'
+  | 'open'
   | 'failed'
+  | 'canceled'
+  | 'expired'
   | 'transfer'
   | 'later'
   | 'waitlist'
