@@ -1,5 +1,5 @@
 import 'server-only'
-import { env, hasKeys } from '@/lib/env'
+import { env, hasKeys, isProd } from '@/lib/env'
 
 /**
  * Brevo transactional email + newsletter double opt-in (brief §8.4). Uses the
@@ -75,7 +75,10 @@ export async function startDoubleOptin({ email, locale }: NewsletterInput): Prom
   if (!hasKeys(['BREVO_API_KEY', listKey, templateKey], 'Brevo newsletter')) {
     // No subscriber address in the log (brief §11: no personal data in logs).
     console.log(`[v0] (brevo stub) double opt-in skipped (${locale})`)
-    return true
+    // In dev/preview the stub "succeeds" so the flow can be exercised without
+    // Brevo keys. In production a missing configuration must NOT report success:
+    // returning false surfaces the error state instead of faking a confirmation.
+    return !isProd
   }
   const redirect =
     locale === 'en'
