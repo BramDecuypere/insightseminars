@@ -54,40 +54,38 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <form
-      className={compact ? 'flex flex-col gap-3' : 'flex flex-col gap-3 sm:flex-row sm:items-end'}
-      onSubmit={onSubmit}
-      noValidate
-    >
+    <form className="flex flex-col gap-3" onSubmit={onSubmit} noValidate>
       {/* Honeypot: hidden from people and assistive tech. */}
       <div aria-hidden className="absolute left-[-9999px] h-px w-px overflow-hidden">
         <input type="text" name="website" tabIndex={-1} autoComplete="off" />
       </div>
 
-      <div className="flex-1">
-        <Label htmlFor={`${id}-email`} className="mb-1.5 block text-papier">
-          {t('label')}
-        </Label>
-        <Input
-          id={`${id}-email`}
-          name="email"
-          type="email"
-          required
-          autoComplete="email"
-          className="border-transparent bg-papier text-inkt"
-        />
+      <div className={compact ? 'flex flex-col gap-3' : 'flex flex-col gap-3 sm:flex-row sm:items-end'}>
+        <div className="flex-1">
+          <Label htmlFor={`${id}-email`} className="mb-1.5 block text-papier">
+            {t('label')}
+          </Label>
+          <Input
+            id={`${id}-email`}
+            name="email"
+            type="email"
+            required
+            autoComplete="email"
+            className="border-transparent bg-papier text-inkt"
+          />
+        </div>
+        <Button
+          type="submit"
+          variant={compact ? 'primary' : 'onDarkPrimary'}
+          disabled={status === 'submitting'}
+          aria-busy={status === 'submitting'}
+        >
+          {t('submit')}
+        </Button>
       </div>
-      <Button
-        type="submit"
-        variant={compact ? 'primary' : 'onDarkPrimary'}
-        disabled={status === 'submitting'}
-        aria-busy={status === 'submitting'}
-      >
-        {t('submit')}
-      </Button>
 
       {status === 'error' && (
-        <p role="alert" className="basis-full text-sm font-medium text-papier">
+        <p role="alert" className="text-sm font-medium text-papier">
           {t('error')}
         </p>
       )}
