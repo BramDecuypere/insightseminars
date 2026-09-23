@@ -172,7 +172,7 @@ export function RegistrationForm({
         setBanner(te('priceExpired'))
         return
       }
-      setBanner(te(res.error))
+      setBanner(te(res.error, { email: 'info@insightseminars.be' }))
     } finally {
       setSubmitting(false)
     }
