@@ -60,11 +60,25 @@ export default async function TeensPage({ params }: Props) {
     if (!nextByProgram.has(v.programSlug)) nextByProgram.set(v.programSlug, v)
   }
 
+  const showPrograms = teenPrograms.length > 0
+  const showGallery = Boolean(page.gallery && page.gallery.length > 0)
+  const showFaq = teenFaqs.length > 0
+  const renderedSections = [
+    "hero",
+    showPrograms && "programs",
+    showGallery && "gallery",
+    "parents",
+    showFaq && "faq",
+  ].filter(Boolean)
+  const tone = (key: string) =>
+    renderedSections.indexOf(key) % 2 === 0 ? "bg-papier" : "bg-mist"
+  const parentsInset = tone("parents") === "bg-mist" ? "bg-papier" : "bg-mist"
+
   return (
     <>
       <FaqHash />
       {/* Teen hero */}
-      <header className="bg-papier">
+      <header className={tone("hero")}>
         <div className="container-site section-y">
           <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
             <div>
@@ -113,8 +127,8 @@ export default async function TeensPage({ params }: Props) {
       </header>
 
       {/* Teen programs */}
-      {teenPrograms.length > 0 ? (
-        <section className="bg-mist">
+      {showPrograms ? (
+        <section className={tone("programs")}>
           <div className="container-site section-y">
             <h2 className="type-h2 text-inkt">{t("programsHeading")}</h2>
             <p className="type-body mt-4 max-w-2xl text-inkt">{t("programsLead")}</p>
@@ -139,8 +153,8 @@ export default async function TeensPage({ params }: Props) {
       ) : null}
 
       {/* Sfeerbeelden */}
-      {page.gallery && page.gallery.length > 0 ? (
-        <section className="bg-papier">
+      {showGallery && page.gallery ? (
+        <section className={tone("gallery")}>
           <div className="container-site section-y">
             <h2 className="type-h2 text-inkt text-balance">
               {pick({ nl: 'Een sfeerbeeld', en: 'A glimpse of the room' }, l)}
@@ -159,7 +173,7 @@ export default async function TeensPage({ params }: Props) {
       ) : null}
 
       {/* For parents */}
-      <section id="ouders" className="scroll-mt-24 bg-mist">
+      <section id="ouders" className={cn("scroll-mt-24", tone("parents"))}>
         <div className="container-site section-y">
           <div className="max-w-2xl">
             <h2 className="type-h2 text-inkt text-balance">{pick(page.parents.heading, l)}</h2>
@@ -190,7 +204,7 @@ export default async function TeensPage({ params }: Props) {
             </dl>
           )}
 
-          <p className="mt-10 flex items-start gap-3 rounded-panel bg-mist p-5 text-base text-inkt">
+          <p className={cn("mt-10 flex items-start gap-3 rounded-panel p-5 text-base text-inkt", parentsInset)}>
             <Users className="mt-0.5 size-5 shrink-0 text-leisteen" aria-hidden />
             {t("consentNote")}
           </p>
@@ -198,8 +212,8 @@ export default async function TeensPage({ params }: Props) {
       </section>
 
       {/* Parent FAQ */}
-      {teenFaqs.length > 0 ? (
-        <section className="bg-mist">
+      {showFaq ? (
+        <section className={tone("faq")}>
           <div className="container-site section-y">
             <h2 className="type-h2 text-inkt">{t("faqHeading")}</h2>
             <div className="mt-8 max-w-3xl">
