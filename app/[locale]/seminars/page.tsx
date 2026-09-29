@@ -53,6 +53,7 @@ export default async function SeminarsPage({ params }: Props) {
       fromPrice: v?.fromPrice ?? null,
       free: v?.free ?? false,
       nextDate: v?.dateRange,
+      status: v ? { status: v.status, regState: v.regState } : undefined,
     }
   }
 
@@ -79,6 +80,7 @@ export default async function SeminarsPage({ params }: Props) {
                   fromPrice={d.fromPrice}
                   free={d.free}
                   nextDate={d.nextDate}
+                  status={d.status}
                 />
               )
             })}
@@ -104,6 +106,7 @@ export default async function SeminarsPage({ params }: Props) {
                     fromPrice={d.fromPrice}
                     free={d.free}
                     nextDate={d.nextDate}
+                    status={d.status}
                   />
                 )
               })}

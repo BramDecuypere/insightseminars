@@ -99,7 +99,7 @@ export const aboutPageQuery = defineQuery(`*[_type == "aboutPage"][0]{
   benefits{ heading, items },
   forWho{ heading, body },
   story{ heading, paragraphs },
-  teamIntro, facilitatorsIntro,
+  teamIntro, testimonialsHeading, facilitatorsIntro,
   support{ heading, body },
   closing{ heading },
   videoClip ${VIDEO},
@@ -138,7 +138,7 @@ export const teamQuery = defineQuery(`*[_type == "teamMember"] | order(order asc
 export const facilitatorsQuery = defineQuery(`*[_type == "facilitator"] | order(name asc) ${FACILITATOR}`)
 export const venuesQuery = defineQuery(`*[_type == "venue"] | order(name asc) ${VENUE}`)
 export const testimonialsQuery = defineQuery(
-  `*[_type == "testimonial" && consentConfirmed == true] ${TESTIMONIAL}`,
+  `*[_type == "testimonial" && consentConfirmed == true && defined(quote.nl) && !(_id match "testimonial-mock*")] ${TESTIMONIAL}`,
 )
 export const internationalEventsQuery = defineQuery(
   `*[_type == "internationalEvent" && end >= $now] | order(start asc) ${INTERNATIONAL}`,

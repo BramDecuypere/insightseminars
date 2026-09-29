@@ -3,10 +3,12 @@ import { getTranslations } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import { buttonVariants } from "@/components/ui/button"
 import { accentInk, accentVar } from "@/components/site/accent"
+import { StatusBadge } from "@/components/site/status-badge"
 import { pick } from "@/lib/content"
 import { formatEuro } from "@/lib/format"
 import { cn } from "@/lib/utils"
-import type { Locale, Program } from "@/lib/content/types"
+import type { Locale, Program, RegistrationStatus } from "@/lib/content/types"
+import type { RegistrationState } from "@/lib/domain/events"
 
 interface ProgramCardProps {
   program: Program
@@ -14,6 +16,7 @@ interface ProgramCardProps {
   fromPrice: number | null
   free?: boolean
   nextDate?: string
+  status?: { status: RegistrationStatus; regState: RegistrationState }
 }
 
 /**
@@ -22,17 +25,15 @@ interface ProgramCardProps {
  * page. The accent is a thin top bar plus the numeral — colour is never the
  * only signal.
  */
-export async function ProgramCard({ program, locale, fromPrice, free, nextDate }: ProgramCardProps) {
+export async function ProgramCard({ program, locale, fromPrice, free, nextDate, status }: ProgramCardProps) {
   const t = await getTranslations("common")
   const tp = await getTranslations("seminarsPage")
 
   const facts: string[] = []
   const duration = pick(program.durationLabel, locale)
   const hours = pick(program.hoursLabel, locale)
-  const group = pick(program.groupSize, locale)
   if (duration) facts.push(duration)
   if (hours) facts.push(hours)
-  if (group) facts.push(`${t("groupSize")}: ${group}`)
 
   const priceLabel = free
     ? t("free")
@@ -72,11 +73,14 @@ export async function ProgramCard({ program, locale, fromPrice, free, nextDate }
         ) : null}
 
         <div className="mt-auto pt-6">
-          <div className="flex items-center justify-between gap-4 border-t border-lijn pt-4">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-t border-lijn pt-4">
             {priceLabel ? <span className="text-base font-semibold text-inkt">{priceLabel}</span> : <span />}
-            <span className="flex items-center gap-1.5 text-sm text-leisteen">
-              <CalendarDays className="size-4" aria-hidden />
-              {nextDate ?? tp("noDate")}
+            <span className="flex items-center gap-3 text-sm text-leisteen">
+              <span className="flex items-center gap-1.5">
+                <CalendarDays className="size-4" aria-hidden />
+                {nextDate ?? tp("noDate")}
+              </span>
+              {status ? <StatusBadge status={status.status} regState={status.regState} /> : null}
             </span>
           </div>
           <Link

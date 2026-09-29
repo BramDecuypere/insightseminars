@@ -19,16 +19,29 @@ import type {
  * which keeps pages rendering during the initial content migration.
  */
 
+/**
+ * Editorial placeholder marker used in Studio drafts to flag copy that still
+ * needs sign-off. Any value containing it is treated as unset so it never
+ * reaches the live site; existing `? :` render guards then hide the block.
+ */
+const PLACEHOLDER_MARKER = '[TE BEVESTIGEN]'
+
+function isPlaceholder(value: string): boolean {
+  return value.includes(PLACEHOLDER_MARKER)
+}
+
 /** Resolve a localized field, always falling back to Dutch (§5.1). */
 export function pick(field: LocaleString | undefined, locale: Locale): string {
   if (!field) return ''
-  return (locale === 'en' ? field.en : field.nl) || field.nl || ''
+  const value = (locale === 'en' ? field.en : field.nl) || field.nl || ''
+  return isPlaceholder(value) ? '' : value
 }
 
 /** Resolve localized rich text (paragraph array) with Dutch fallback. */
 export function pickRich(field: LocaleRichText | undefined, locale: Locale): string[] {
   if (!field) return []
-  return (locale === 'en' ? field.en : field.nl) || field.nl || []
+  const value = (locale === 'en' ? field.en : field.nl) || field.nl || []
+  return value.filter((p) => !isPlaceholder(p))
 }
 
 export async function getSettings() {
