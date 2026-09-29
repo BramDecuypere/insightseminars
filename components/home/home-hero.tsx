@@ -36,15 +36,20 @@ export function HomeHero({ home, locale }: { home: HomePage; locale: Locale }) {
           </div>
 
           {image ? (
-            <div className="group relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-panel lg:mx-0">
-              <Image
-                src={image.src}
-                alt={alt}
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 26rem"
-                className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
-              />
+            <div
+              className="mx-auto w-full max-w-sm rounded-panel p-3 lg:mx-0"
+              style={{ backgroundColor: 'color-mix(in srgb, var(--accent-2) 14%, var(--papier))' }}
+            >
+              <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-[calc(var(--radius-panel)-0.75rem)]">
+                <Image
+                  src={image.src}
+                  alt={alt}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 26rem"
+                  className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
+                />
+              </div>
             </div>
           ) : null}
         </div>

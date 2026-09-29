@@ -24,6 +24,12 @@ export const imageWithAlt = defineType({
           return true
         }),
     }),
+    defineField({
+      name: 'caption',
+      title: 'Bijschrift',
+      description: 'Optioneel bijschrift, getoond onder de afbeelding (bv. in een fotogalerij).',
+      type: 'localeString',
+    }),
   ],
 })
 

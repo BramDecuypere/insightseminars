@@ -13,7 +13,15 @@
     "menu": "Menu",
     "close": "Close",
     "skip": "Skip to content",
-    "language": "Language: Nederlands / English"
+    "language": "Language: Nederlands / English",
+    "seminarsAll": "All seminars",
+    "aboutMissie": "Mission",
+    "aboutStory": "Our story",
+    "aboutTeam": "Team",
+    "aboutFacilitators": "Facilitators",
+    "aboutSteun": "Support us",
+    "agendaSeminars": "Seminars",
+    "agendaInfo": "Info sessions"
   },
   "common": {
     "readMore": "More about {program}",
@@ -23,6 +31,9 @@
     "groupSize": "Group",
     "playVideo": "Watch the video ({duration})",
     "readTranscript": "Read the transcript",
+    "openImage": "Open photo in full size",
+    "prevImage": "Previous photo",
+    "nextImage": "Next photo",
     "recognise": "Does this sound like you?",
     "nextStep": "What suits you",
     "viewAgenda": "See the full calendar",

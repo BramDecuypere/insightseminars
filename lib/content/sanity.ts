@@ -34,9 +34,16 @@ import type {
 
 /** Sanity image (asset + hotspot + alt) -> {src, alt}, respecting hotspot. */
 function img(value: unknown): ImageAsset | undefined {
-  const v = value as { asset?: unknown; alt?: ImageAsset['alt'] } | undefined
+  const v = value as { asset?: unknown; alt?: ImageAsset['alt']; caption?: ImageAsset['caption'] } | undefined
   if (!v || !v.asset) return undefined
-  return { src: imageUrl(v as never), alt: v.alt ?? { nl: '' } }
+  return { src: imageUrl(v as never), alt: v.alt ?? { nl: '' }, caption: v.caption }
+}
+
+/** Array of Sanity images -> ImageAsset[], dropping any entry without an asset. */
+function gallery(value: unknown): ImageAsset[] | undefined {
+  if (!Array.isArray(value)) return undefined
+  const mapped = value.map((v) => img(v)).filter((v): v is ImageAsset => Boolean(v))
+  return mapped.length ? mapped : undefined
 }
 
 /** Portable Text blocks -> plain-text paragraphs (one string per block). */
@@ -72,6 +79,7 @@ function mapProgram<T extends Record<string, any>>(p: T | null): T | null {
   return {
     ...p,
     heroImage: img(p.heroImage),
+    gallery: gallery(p.gallery),
     howItWorks: rich(p.howItWorks),
     forWhom: rich(p.forWhom),
     videoClip: video(p.videoClip),
@@ -131,13 +139,14 @@ export async function getHomePage(): Promise<HomePage | null> {
     hero: h.hero ? { ...h.hero, image: img(h.hero.image) } : h.hero,
     videoClip: video(h.videoClip),
     videoPoster: img(h.videoPoster),
+    gallery: gallery(h.gallery),
   } as HomePage
 }
 
 export async function getAboutPage(): Promise<AboutPage | null> {
   const a = await sanityFetch<any>({ query: q.aboutPageQuery, tags: ['sanity:aboutPage'] })
   if (!a) return null
-  return { ...a, videoClip: video(a.videoClip) } as AboutPage
+  return { ...a, videoClip: video(a.videoClip), gallery: gallery(a.gallery) } as AboutPage
 }
 
 export async function getTeensPage(): Promise<TeensPage | null> {
@@ -146,6 +155,7 @@ export async function getTeensPage(): Promise<TeensPage | null> {
   return {
     ...t,
     media: t.media ? { image: img(t.media.image), videoClip: video(t.media.videoClip) } : undefined,
+    gallery: gallery(t.gallery),
   } as TeensPage
 }
 

@@ -5,9 +5,11 @@ import {
   RecogniseChooser,
   type ChooserSituation,
 } from '@/components/home/recognise-chooser'
+import { CheckList } from '@/components/site/check-list'
 import { NewsletterBand } from '@/components/site/newsletter-band'
 import { NextDatePanel } from '@/components/site/next-date-panel'
 import { PathBlock } from '@/components/site/path-block'
+import { PhotoGrid } from '@/components/site/photo-grid'
 import { Reveal } from '@/components/site/reveal'
 import { TestimonialCard } from '@/components/site/testimonial-card'
 import { VideoClip } from '@/components/site/video-clip'
@@ -169,24 +171,36 @@ export default async function HomePage({ params }: Props) {
               <h2 className="type-h2 text-inkt text-balance">
                 {pick(home.benefits.heading, l)}
               </h2>
-              <ul className="mt-6 space-y-3">
-                {home.benefits.items.map((item) => (
-                  <li key={item.nl} className="flex items-start gap-3 text-lg text-inkt">
-                    <span
-                      aria-hidden
-                      className="mt-2.5 size-2 shrink-0 rounded-full bg-[var(--accent-3)]"
-                    />
-                    {pick(item, l)}
-                  </li>
-                ))}
-              </ul>
+              <div className="mt-6">
+                <CheckList items={home.benefits.items.map((item) => pick(item, l))} />
+              </div>
             </div>
           </div>
         </Reveal>
       </section>
 
+      {/* Sfeerbeelden */}
+      {home.gallery && home.gallery.length > 0 ? (
+        <section className={showTestimonials ? 'bg-papier' : 'bg-mist'}>
+          <Reveal className="container-site section-y">
+            <h2 className="type-h2 text-inkt text-balance">
+              {pick({ nl: 'Een sfeerbeeld', en: 'A glimpse of the room' }, l)}
+            </h2>
+            <div className="mt-8">
+              <PhotoGrid
+                images={home.gallery}
+                locale={l}
+                openLabel={t('openImage')}
+                prevLabel={t('prevImage')}
+                nextLabel={t('nextImage')}
+              />
+            </div>
+          </Reveal>
+        </section>
+      ) : null}
+
       {/* 3. Voor wie */}
-      <section className={showTestimonials ? 'bg-papier' : 'bg-mist'}>
+      <section className={showTestimonials ? (home.gallery?.length ? 'bg-mist' : 'bg-papier') : (home.gallery?.length ? 'bg-papier' : 'bg-mist')}>
         <Reveal className="container-site section-y">
           <div className="max-w-3xl">
             <h2 className="type-h2 text-inkt text-balance">{pick(home.forWho.heading, l)}</h2>
