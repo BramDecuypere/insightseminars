@@ -251,7 +251,8 @@ export interface HomePage {
   videoClip?: VideoClip
   /** Still shown in the "Wat is Insight?" slot when no clip is uploaded yet. */
   videoPoster?: ImageAsset
-  forWho: { heading: LocaleString; body: LocaleText; trustLine: LocaleString }
+  /** trustLine is retained in Sanity for historical data but no longer rendered (tester feedback). */
+  forWho: { heading: LocaleString; body: LocaleText; trustLine?: LocaleString }
   path: {
     heading: LocaleString
     intro: LocaleText
@@ -270,6 +271,7 @@ export interface AboutPage {
   forWho: { heading: LocaleString; body: LocaleText }
   story: { heading: LocaleString; paragraphs: LocaleText[] }
   teamIntro: LocaleText
+  testimonialsHeading: LocaleString
   facilitatorsIntro: LocaleText
   support: { heading: LocaleString; body: LocaleText }
   closing: { heading: LocaleString }

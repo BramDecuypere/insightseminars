@@ -41,6 +41,10 @@ export function MobileNav() {
           <SheetTitle className="text-papier">{t('menu')}</SheetTitle>
         </SheetHeader>
 
+        <div className="px-4">
+          <LanguageSwitcher variant="full" />
+        </div>
+
         <div className="flex flex-col gap-3 px-4">
           <Link
             href={{ pathname: '/agenda', query: { type: 'infoSessions' } }}
@@ -78,10 +82,6 @@ export function MobileNav() {
             )
           })}
         </nav>
-
-        <div className="mt-auto px-4 pb-2">
-          <LanguageSwitcher />
-        </div>
       </SheetContent>
     </Sheet>
   )

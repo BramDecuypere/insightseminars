@@ -117,7 +117,9 @@ export default async function AboutPage({ params }: Props) {
       {testimonials.length > 0 ? (
         <section className="bg-papier">
           <div className="container-site section-y">
-            <h2 className="type-h2 text-inkt text-balance">{t('testimonialsHeading')}</h2>
+            <h2 className="type-h2 text-inkt text-balance">
+              {pick(page.testimonialsHeading, l) || t('testimonialsHeading')}
+            </h2>
             {page.videoClip ? (
               <div className="mt-8 max-w-3xl">
                 <VideoClip clip={page.videoClip} locale={l} playLabel={tc('playVideo', { duration: '1 min' })} />

@@ -320,7 +320,8 @@ async function run() {
     )
   for (const p of mock.programs) docs.push(programDoc(p))
   for (const e of mock.events) docs.push(eventDoc(e))
-  for (const t of mock.testimonials) docs.push(testimonialDoc(t))
+  // No mock testimonials are seeded (§13): real, consented testimonials are
+  // added directly in Sanity.
   for (const e of mock.internationalEvents) docs.push(internationalDoc(e))
   for (const l of mock.legalPages)
     docs.push(

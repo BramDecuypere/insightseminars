@@ -125,6 +125,7 @@ export default async function TeensPage({ params }: Props) {
                     fromPrice={v?.fromPrice ?? null}
                     free={v?.free ?? false}
                     nextDate={v?.dateRange}
+                    status={v ? { status: v.status, regState: v.regState } : undefined}
                   />
                 )
               })}

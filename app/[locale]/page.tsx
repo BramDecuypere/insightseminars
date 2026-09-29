@@ -191,7 +191,7 @@ export default async function HomePage({ params }: Props) {
           <div className="max-w-3xl">
             <h2 className="type-h2 text-inkt text-balance">{pick(home.forWho.heading, l)}</h2>
             <p className="type-body mt-5 text-inkt">{pick(home.forWho.body, l)}</p>
-            <p className="mt-6 text-base text-leisteen">{pick(home.forWho.trustLine, l)}</p>
+
           </div>
         </Reveal>
       </section>

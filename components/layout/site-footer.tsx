@@ -100,7 +100,7 @@ export async function SiteFooter() {
               {s.platform}
             </a>
           ))}
-          <LanguageSwitcher className="mt-2" onLight />
+          <LanguageSwitcher className="mt-2" onLight variant="footer" />
         </div>
       </div>
 

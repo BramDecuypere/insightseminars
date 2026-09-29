@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-import { MapPin } from 'lucide-react'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { ContactForm } from '@/components/site/contact-form'
-import { getContactPage, getSettings, getVenues, pick } from '@/lib/content'
+import { getContactPage, getSettings, pick } from '@/lib/content'
 import { buildMetadata } from '@/lib/seo'
 import type { Locale } from '@/lib/content/types'
 
@@ -26,15 +25,7 @@ export default async function ContactPage({ params }: Props) {
   const l = locale as Locale
 
   const t = await getTranslations('contactPage')
-  const tc = await getTranslations('common')
-  const [page, settings, venues] = await Promise.all([
-    getContactPage(),
-    getSettings(),
-    getVenues(),
-  ])
-
-  // Only venues with a real address are shown (§13.7); others stay hidden until confirmed.
-  const shownVenues = venues.filter((v) => v.street && v.city)
+  const [page, settings] = await Promise.all([getContactPage(), getSettings()])
 
   return (
     <>
@@ -87,36 +78,6 @@ export default async function ContactPage({ params }: Props) {
                   ) : null}
                 </dl>
               </div>
-
-              {shownVenues.length > 0 ? (
-                <div>
-                  <h2 className="type-h3 text-inkt">{pick(page.sections.venue, l)}</h2>
-                  <ul className="mt-4 space-y-5">
-                    {shownVenues.map((v) => (
-                      <li key={v._id} className="rounded-panel border border-lijn bg-mist p-5">
-                        <p className="font-semibold text-inkt">{v.name}</p>
-                        <p className="mt-1 text-base text-leisteen">
-                          {v.street}
-                          <br />
-                          {v.postalCode} {v.city}
-                          {v.country ? `, ${v.country}` : ''}
-                        </p>
-                        {v.mapsUrl ? (
-                          <a
-                            href={v.mapsUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="mt-3 inline-flex items-center gap-1.5 text-base font-semibold text-inkt underline underline-offset-4 hover:decoration-2"
-                          >
-                            <MapPin className="size-4" aria-hidden />
-                            {tc('openInMaps')}
-                          </a>
-                        ) : null}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
 
               {settings.socials.length > 0 ? (
                 <div>

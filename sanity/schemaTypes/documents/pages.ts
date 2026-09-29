@@ -85,7 +85,13 @@ export const homePage = defineType({
       fields: [
         defineField({ name: 'heading', title: 'Kop', type: 'localeString' }),
         defineField({ name: 'body', title: 'Tekst', type: 'localeText' }),
-        defineField({ name: 'trustLine', title: 'Vertrouwensregel', type: 'localeString' }),
+        defineField({
+          name: 'trustLine',
+          title: 'Vertrouwensregel',
+          type: 'localeString',
+          hidden: true,
+          description: 'Verwijderd uit de weergave (tester feedback); data blijft bewaard.',
+        }),
       ],
     }),
     defineField({
@@ -160,6 +166,7 @@ export const aboutPage = defineType({
       ],
     }),
     defineField({ name: 'teamIntro', title: 'Intro team', type: 'localeText' }),
+    defineField({ name: 'testimonialsHeading', title: 'Kop getuigenissen', type: 'localeString' }),
     defineField({ name: 'facilitatorsIntro', title: 'Intro begeleiders', type: 'localeText' }),
     defineField({
       name: 'support',
@@ -241,7 +248,13 @@ export const contactPage = defineType({
       type: 'object',
       fields: [
         defineField({ name: 'direct', title: 'Direct contact', type: 'localeString' }),
-        defineField({ name: 'venue', title: 'Locatie', type: 'localeString' }),
+        defineField({
+          name: 'venue',
+          title: 'Locatie',
+          type: 'localeString',
+          hidden: true,
+          description: 'Verwijderd uit de Contact-pagina (tester feedback); data blijft bewaard.',
+        }),
         defineField({ name: 'follow', title: 'Volg ons', type: 'localeString' }),
       ],
     }),

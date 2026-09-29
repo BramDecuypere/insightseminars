@@ -35,7 +35,7 @@ export async function SiteHeader() {
         <MainNav />
 
         <div className="hidden items-center gap-3 md:flex">
-          <LanguageSwitcher onLight />
+          <LanguageSwitcher onLight variant="compact" />
           <Link
             href={{ pathname: '/agenda', query: { type: 'infoSessions' } }}
             className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}
@@ -50,7 +50,10 @@ export async function SiteHeader() {
           </Link>
         </div>
 
-        <MobileNav />
+        <div className="flex items-center gap-1 md:hidden">
+          <LanguageSwitcher onLight variant="compact" />
+          <MobileNav />
+        </div>
       </div>
       <SpectrumStrip />
     </HeaderFrame>
