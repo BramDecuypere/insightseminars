@@ -25,7 +25,7 @@ export function MainNav({ seminarPrograms }: { seminarPrograms: SeminarNavLink[]
   const pathname = usePathname()
 
   return (
-    <NavigationMenu className="hidden md:flex" aria-label={t('menu')}>
+    <NavigationMenu className="hidden xl:flex" aria-label={t('menu')}>
       <NavigationMenuList className="gap-1">
         {mainNav.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`)
