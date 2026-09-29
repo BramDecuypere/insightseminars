@@ -228,11 +228,12 @@ export interface ReadMoreBlock {
 
 export interface HomePage {
   hero: {
-    title: LocaleString
-    lead: LocaleText
-    primaryCta: LocaleString
-    secondaryCta: LocaleString
-    image?: ImageAsset
+  title: LocaleString
+  lead: LocaleText
+  question?: LocaleString
+  primaryCta: LocaleString
+  secondaryCta: LocaleString
+  image?: ImageAsset
   }
   mission: { heading: LocaleString; body: LocaleText }
   recognise: {

@@ -515,13 +515,17 @@ export const faqs: Faq[] = [
 
 export const homePage: HomePage = {
   hero: {
-    title: { nl: 'Voel je dat er meer in je leven zit?', en: 'Do you feel there is more to your life?' },
-    lead: {
-      nl: 'Insight is een intensieve training van een paar dagen waarin je ervaart hoe je in het leven staat, en ontdekt wat er nog meer mogelijk is.',
-      en: 'Insight is an intensive training of a few days in which you experience how you relate to life, and discover what more is possible.',
+    title: {
+      nl: 'Insight: seminars om bewuster in het leven te staan',
+      en: 'Insight: seminars to live more consciously',
     },
-    primaryCta: { nl: 'Kom naar een gratis infosessie', en: 'Come to a free info session' },
-    secondaryCta: { nl: 'Bekijk de seminars', en: 'See the seminars' },
+    lead: {
+      nl: 'Een ervaringsgerichte seminar in een kleine groep, geen therapie. Voor volwassenen vanaf 18 jaar en tieners van 14 tot 19 jaar, in Antwerpen.',
+      en: 'An experiential seminar in a small group, not therapy. For adults aged 18 and over and teens aged 14 to 19, in Antwerp.',
+    },
+    question: { nl: 'Hoe bewust leef jij?', en: 'How consciously do you live?' },
+    primaryCta: { nl: 'Ontdek de seminars', en: 'Discover the seminars' },
+    secondaryCta: { nl: 'Of schrijf je meteen in voor Insight I', en: 'Or sign up directly for Insight I' },
     image: {
       src: '/images/home-hero.png',
       alt: {
@@ -543,12 +547,11 @@ export const homePage: HomePage = {
       en: "You don't have to know exactly what's going on. Maybe you recognise yourself in one of these sentences.",
     },
     situations: [
-      { label: { nl: 'Ik loop steeds opnieuw tegen dezelfde patronen aan.', en: 'I keep running into the same patterns.' }, target: 'infoSession' },
-      { label: { nl: 'Ik wil meer uit mijn leven halen, maar weet niet goed hoe.', en: "I want more out of my life, but don't quite know how." }, target: 'program', programSlug: 'insight-1' },
-      { label: { nl: 'Ik verlang naar meer verbinding met anderen.', en: 'I long for more connection with others.' }, target: 'program', programSlug: 'insight-1' },
-      { label: { nl: 'Ik weet niet goed wat ik zelf eigenlijk wil.', en: "I don't really know what I want myself." }, target: 'infoSession' },
-      { label: { nl: 'De manier waarop ik tot nu toe met dingen omging, werkt niet meer.', en: 'The way I dealt with things until now no longer works.' }, target: 'program', programSlug: 'insight-1' },
-      { label: { nl: 'Ik wil mijn tiener sterker in het leven zien staan.', en: 'I want to see my teenager stand stronger in life.' }, target: 'teens' },
+      { label: { nl: 'Je vindt het moeilijk om je grenzen aan te geven.', en: 'You find it hard to set your boundaries.' }, target: 'infoSession' },
+      { label: { nl: 'Je loopt steeds vast in dezelfde reacties, thuis of op het werk.', en: 'You keep getting stuck in the same reactions, at home or at work.' }, target: 'infoSession' },
+      { label: { nl: 'Je wil de tijd nemen om je eigen keuzes te onderzoeken.', en: 'You want to take the time to examine your own choices.' }, target: 'infoSession' },
+      { label: { nl: 'Je wil dieper op dingen ingaan, maar in je omgeving is dat niet echt de gewoonte.', en: "You want to go deeper into things, but that's not really the habit in your environment." }, target: 'infoSession' },
+      { label: { nl: 'Sommige gebeurtenissen blijven langer aan je hangen dan je zou willen.', en: "Some events stick with you longer than you'd like." }, target: 'infoSession' },
     ],
     fallback: {
       nl: 'Veel deelnemers kwamen met net deze vraag binnen. Op de gratis infosessie vertellen ze hoe het voor hen was.',

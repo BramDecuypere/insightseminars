@@ -1,32 +1,23 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { HomeHero } from '@/components/home/home-hero'
-import {
-  RecogniseChooser,
-  type ChooserSituation,
-} from '@/components/home/recognise-chooser'
-import { CheckList } from '@/components/site/check-list'
-import { NewsletterBand } from '@/components/site/newsletter-band'
+import { EventRow } from '@/components/site/event-row'
+import { NewsletterForm } from '@/components/site/newsletter-form'
 import { NextDatePanel } from '@/components/site/next-date-panel'
 import { PathBlock } from '@/components/site/path-block'
-import { PhotoGrid } from '@/components/site/photo-grid'
 import { Reveal } from '@/components/site/reveal'
 import { TestimonialCard } from '@/components/site/testimonial-card'
-import { VideoClip } from '@/components/site/video-clip'
-import { buttonVariants } from '@/components/ui/button'
 import { Link } from '@/i18n/navigation'
 import {
   getFeaturedTestimonials,
   getHomePage,
   getPrograms,
-  getTestimonials,
   getUpcomingEvents,
   pick,
 } from '@/lib/content'
 import { buildEventViews } from '@/lib/content/view'
 import { buildMetadata } from '@/lib/seo'
 import type { Locale } from '@/lib/content/types'
-import { cn } from '@/lib/utils'
 
 type Props = { params: Promise<{ locale: string }> }
 
@@ -49,169 +40,56 @@ export default async function HomePage({ params }: Props) {
   const now = new Date()
 
   const t = await getTranslations('common')
-  const [home, programs, upcoming, testimonials, featured] = await Promise.all([
+  const [home, programs, upcoming, featured] = await Promise.all([
     getHomePage(),
     getPrograms(),
     getUpcomingEvents(now),
-    getTestimonials(),
     getFeaturedTestimonials(),
   ])
 
   const adultPrograms = programs.filter((p) => p.track === 'adults')
   const eventViews = await buildEventViews(upcoming, l, now)
-  const nextInsight1 = eventViews.find((v) => v.programSlug === 'insight-1')
-  const nextInfo = eventViews.find((v) => v.type === 'infoSession')
-
-  const situations: ChooserSituation[] = home.recognise.situations.map((s, i) => {
-    const tst = s.testimonialId
-      ? testimonials.find((x) => x._id === s.testimonialId)
-      : undefined
-    const prog = s.programSlug ? programs.find((p) => p.slug === s.programSlug) : undefined
-    return {
-      id: String(i),
-      label: pick(s.label, l),
-      target: s.target,
-      programSlug: s.programSlug,
-      programTitle: prog ? pick(prog.title, l) : undefined,
-      testimonial: tst
-        ? {
-            situation: pick(tst.situation, l),
-            quote: pick(tst.quote, l),
-            name: tst.name,
-            context: pick(tst.context, l),
-          }
-        : undefined,
-    }
-  })
-
-  const featuredCards = featured.slice(0, 3)
-  const showTestimonials = featuredCards.length > 0
+  const nextFour = eventViews.slice(0, 4)
+  const nextFreeSession = eventViews.find((v) => v.free && v.regState !== 'closed')
+  const testimonial = featured[0]
 
   return (
     <>
       <HomeHero home={home} locale={l} />
 
-      {/* Missie */}
+      {/* Herken je dit? */}
       <section className="bg-mist">
         <Reveal className="container-site section-y max-w-3xl">
-          <h2 className="type-h2 text-inkt text-balance">{pick(home.mission.heading, l)}</h2>
-          <p className="type-lead mt-5 text-inkt">{pick(home.mission.body, l)}</p>
-        </Reveal>
-      </section>
-
-      {/* Vertrouwen: getuigenissen */}
-      {showTestimonials ? (
-        <section className="bg-papier">
-          <Reveal className="container-site section-y">
-            <h2 className="type-h2 text-inkt text-balance">
-              {pick(home.testimonialsHeading, l)}
-            </h2>
-            <ul className="mt-8 grid gap-6 md:grid-cols-3">
-              {featuredCards.map((tst) => (
-                <li key={tst._id}>
-                  <TestimonialCard
-                    testimonial={tst}
-                    locale={l}
-                    playLabel={t('playVideo', { duration: '1 min' })}
-                  />
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </section>
-      ) : null}
-
-      {/* 1. Herkenning */}
-      {/* <section className="bg-papier">
-        <div className="container-site section-y">
           <h2 className="type-h2 text-inkt text-balance">{t('recognise')}</h2>
-          <div className="mt-8 max-w-3xl">
-            <RecogniseChooser
-              intro={pick(home.recognise.intro, l)}
-              situations={situations}
-              fallback={pick(home.recognise.fallback, l)}
-            />
-          </div>
-        </div>
-      </section> */}
-
-      {/* 2. Begrip */}
-      <section className={showTestimonials ? 'bg-mist' : 'bg-papier'}>
-        <Reveal className="container-site section-y">
-          <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <h2 className="type-h2 text-inkt text-balance">
-                {pick(home.whatIsInsight.heading, l)}
-              </h2>
-              <p className="type-body mt-5 text-inkt">{pick(home.whatIsInsight.body, l)}</p>
-            </div>
-            <VideoClip
-              clip={home.videoClip}
-              poster={home.videoPoster}
-              playLabel={t('playVideo', { duration: '1 min' })}
-              locale={l}
-            />
-          </div>
-
-          <div className="mt-16 grid gap-10 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <h2 className="type-h2 text-inkt text-balance">
-                {pick(home.howItWorks.heading, l)}
-              </h2>
-              <ul className="mt-6 space-y-6">
-                {home.howItWorks.points.map((p) => (
-                  <li key={p.title.nl}>
-                    <h3 className="text-xl font-bold text-inkt">{pick(p.title, l)}</h3>
-                    <p className="mt-1.5 text-base text-leisteen">{pick(p.text, l)}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h2 className="type-h2 text-inkt text-balance">
-                {pick(home.benefits.heading, l)}
-              </h2>
-              <div className="mt-6">
-                <CheckList items={home.benefits.items.map((item) => pick(item, l))} />
-              </div>
-            </div>
-          </div>
+          <p className="type-body mt-4 text-inkt">{pick(home.recognise.intro, l)}</p>
+          <ul className="mt-8 space-y-4">
+            {home.recognise.situations.map((s, i) => (
+              <li key={i} className="flex gap-3 text-lg text-inkt">
+                <span className="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-accent-3" aria-hidden="true" />
+                <span>{pick(s.label, l)}</span>
+              </li>
+            ))}
+          </ul>
         </Reveal>
       </section>
 
-      {/* Sfeerbeelden */}
-      {home.gallery && home.gallery.length > 0 ? (
-        <section className={showTestimonials ? 'bg-papier' : 'bg-mist'}>
-          <Reveal className="container-site section-y">
-            <h2 className="type-h2 text-inkt text-balance">
-              {pick({ nl: 'Een sfeerbeeld', en: 'A glimpse of the room' }, l)}
-            </h2>
-            <div className="mt-8">
-              <PhotoGrid
-                images={home.gallery}
-                locale={l}
-                openLabel={t('openImage')}
-                prevLabel={t('prevImage')}
-                nextLabel={t('nextImage')}
-              />
-            </div>
-          </Reveal>
-        </section>
-      ) : null}
-
-      {/* 3. Voor wie */}
-      <section className={showTestimonials ? (home.gallery?.length ? 'bg-mist' : 'bg-papier') : (home.gallery?.length ? 'bg-papier' : 'bg-mist')}>
+      {/* Hoe het werkt */}
+      <section className="bg-papier">
         <Reveal className="container-site section-y">
-          <div className="max-w-3xl">
-            <h2 className="type-h2 text-inkt text-balance">{pick(home.forWho.heading, l)}</h2>
-            <p className="type-body mt-5 text-inkt">{pick(home.forWho.body, l)}</p>
-
-          </div>
+          <h2 className="type-h2 text-inkt text-balance">{pick(home.howItWorks.heading, l)}</h2>
+          <ul className="mt-8 grid gap-8 md:grid-cols-3">
+            {home.howItWorks.points.map((p) => (
+              <li key={p.title.nl}>
+                <h3 className="text-xl font-bold text-inkt">{pick(p.title, l)}</h3>
+                <p className="mt-1.5 text-base text-leisteen">{pick(p.text, l)}</p>
+              </li>
+            ))}
+          </ul>
         </Reveal>
       </section>
 
-      {/* 4. Uitnodiging */}
-      <section className="on-avondblauw bg-mist">
+      {/* Het pad */}
+      <section className="on-avondblauw bg-avondblauw">
         <Reveal className="container-site section-y">
           <h2 className="type-h2 text-balance">{pick(home.path.heading, l)}</h2>
           <p className="type-lead mt-4 max-w-2xl">{pick(home.path.intro, l)}</p>
@@ -220,38 +98,7 @@ export default async function HomePage({ params }: Props) {
             <PathBlock programs={adultPrograms} locale={l} />
           </div>
 
-          <div className="mt-14 grid gap-6 lg:grid-cols-2">
-            {nextInsight1 ? (
-              <NextDatePanel
-                view={nextInsight1}
-                heading={pick(home.path.nextInsight1Heading, l)}
-                locale={l}
-              />
-            ) : null}
-
-            <div className="rounded-panel bg-papier p-6 text-inkt">
-              {nextInfo ? (
-                <NextDatePanel view={nextInfo} locale={l} />
-              ) : (
-                <>
-                  <h3 className="text-lg font-bold text-inkt">
-                    {pick(home.path.infoSessionLine, l)}
-                  </h3>
-                  <p className="mt-2 text-base text-leisteen">
-                    {pick(home.hero.lead, l)}
-                  </p>
-                  <Link
-                    href={{ pathname: '/agenda', query: { type: 'infoSessions' } }}
-                    className={cn(buttonVariants({ variant: 'primary' }), 'mt-6 w-full')}
-                  >
-                    {pick(home.hero.primaryCta, l)}
-                  </Link>
-                </>
-              )}
-            </div>
-          </div>
-
-          <p className="mt-10 text-lg text-inkt/85">
+          <p className="mt-10 text-lg text-papier/85">
             {pick(home.path.teenLine, l)}{' '}
             <Link href="/teens" className="font-semibold underline underline-offset-4 hover:decoration-2">
               {pick({ nl: 'Naar de pagina voor tieners en ouders', en: 'Go to the page for teens and parents' }, l)}
@@ -260,7 +107,64 @@ export default async function HomePage({ params }: Props) {
         </Reveal>
       </section>
 
-      <NewsletterBand />
+      {/* Binnenkort */}
+      {nextFour.length > 0 ? (
+        <section className="bg-mist">
+          <Reveal className="container-site section-y">
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <h2 className="type-h2 text-inkt text-balance">{t('upcomingHeading')}</h2>
+              <Link
+                href="/agenda"
+                className="font-semibold text-inkt underline underline-offset-4 hover:decoration-2"
+              >
+                {t('viewAgenda')}
+              </Link>
+            </div>
+            <ul className="mt-8 space-y-4">
+              {nextFour.map((view) => (
+                <EventRow key={view.slug} view={view} locale={l} />
+              ))}
+            </ul>
+          </Reveal>
+        </section>
+      ) : null}
+
+      {/* Een getuigenis */}
+      {testimonial ? (
+        <section className="bg-papier">
+          <Reveal className="container-site py-14 max-w-2xl md:py-16">
+            <h2 className="type-h2 text-inkt text-balance">{pick(home.testimonialsHeading, l)}</h2>
+            <div className="mt-8">
+              <TestimonialCard
+                testimonial={testimonial}
+                locale={l}
+                playLabel={t('playVideo', { duration: '1 min' })}
+              />
+            </div>
+          </Reveal>
+        </section>
+      ) : null}
+
+      {/* Eerst kennismaken? */}
+      <section id="nieuwsbrief" className="on-avondblauw bg-avondblauw">
+        <Reveal className="container-site py-14 text-center md:py-16">
+          <div className="mx-auto max-w-xl">
+            <h2 className="type-h2 text-balance">{t('meetFirstHeading')}</h2>
+            {nextFreeSession ? (
+              <div className="mt-8 text-left">
+                <NextDatePanel view={nextFreeSession} locale={l} />
+              </div>
+            ) : (
+              <>
+                <p className="type-lead mt-4 text-papier/80">{t('notifyNewInfoSession')}</p>
+                <div className="mt-6 text-left">
+                  <NewsletterForm />
+                </div>
+              </>
+            )}
+          </div>
+        </Reveal>
+      </section>
     </>
   )
 }

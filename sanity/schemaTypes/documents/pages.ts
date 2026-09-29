@@ -21,6 +21,7 @@ export const homePage = defineType({
       fields: [
         defineField({ name: 'title', title: 'Titel', type: 'localeString' }),
         defineField({ name: 'lead', title: 'Intro', type: 'localeText' }),
+        defineField({ name: 'question', title: 'Vraag', type: 'localeString' }),
         defineField({ name: 'primaryCta', title: 'Knop 1', type: 'localeString' }),
         defineField({ name: 'secondaryCta', title: 'Knop 2', type: 'localeString' }),
         defineField({ name: 'image', title: 'Afbeelding', type: 'imageWithAlt' }),
