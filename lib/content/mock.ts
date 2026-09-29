@@ -523,7 +523,6 @@ export const homePage: HomePage = {
       nl: 'Een ervaringsgerichte seminar in een kleine groep, geen therapie. Voor volwassenen vanaf 18 jaar en tieners van 14 tot 19 jaar, in Antwerpen.',
       en: 'An experiential seminar in a small group, not therapy. For adults aged 18 and over and teens aged 14 to 19, in Antwerp.',
     },
-    question: { nl: 'Hoe bewust leef jij?', en: 'How consciously do you live?' },
     primaryCta: { nl: 'Ontdek de seminars', en: 'Discover the seminars' },
     secondaryCta: { nl: 'Of kom eerst naar een gratis infosessie', en: 'Or join a free info session first' },
     image: {
