@@ -37,10 +37,10 @@ export async function SiteFooter() {
       <div className="container-site grid gap-10 py-16 md:grid-cols-4">
         <div className="md:col-span-1">
           <Image
-            src="/brand/insight-logo-on-white.png"
-            alt="Insight Seminars"
-            width={114}
-            height={56}
+            src="/brand/insights-seminars.png"
+            alt="Insight Seminars Belgium"
+            width={675}
+            height={304}
             className="h-14 w-auto"
           />
           <p className="mt-4 type-small text-leisteen">{settings.orgName}</p>

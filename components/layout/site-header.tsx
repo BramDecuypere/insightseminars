@@ -23,12 +23,12 @@ export async function SiteHeader() {
       <div className="container-site flex h-20 items-center justify-between gap-4">
         <Link href="/" className="flex shrink-0 items-center" aria-label="Insight Seminars">
           <Image
-            src="/brand/insight-logo-on-white.png"
-            alt="Insight Seminars"
-            width={107}
-            height={53}
+            src="/brand/insights-seminars.png"
+            alt="Insight Seminars Belgium"
+            width={675}
+            height={304}
             priority
-            className="h-20 w-auto"
+            className="h-14 w-auto"
           />
         </Link>
 
