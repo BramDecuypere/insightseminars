@@ -75,7 +75,7 @@ export function organizationJsonLd(settings: SiteSettings) {
     '@type': 'Organization',
     name: 'Insight Seminars België',
     url: SITE_URL,
-    logo: absoluteUrl('/brand/insight-logo.png'),
+    logo: absoluteUrl('/brand/insights-seminars.png'),
     email: settings.email,
     sameAs: settings.socials.map((s) => s.url),
   }
