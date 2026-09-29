@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { ContactForm } from '@/components/site/contact-form'
+import { NewsletterBand } from '@/components/site/newsletter-band'
 import { getContactPage, getSettings, pick } from '@/lib/content'
 import { buildMetadata } from '@/lib/seo'
 import type { Locale } from '@/lib/content/types'
@@ -102,6 +103,8 @@ export default async function ContactPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      <NewsletterBand />
     </>
   )
 }

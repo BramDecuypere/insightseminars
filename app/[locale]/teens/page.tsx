@@ -11,6 +11,7 @@ import { ProgramCard } from "@/components/site/program-card"
 import { buttonVariants } from "@/components/ui/button"
 import { Link } from "@/i18n/navigation"
 import {
+  getAboutPage,
   getFaqs,
   getPrograms,
   getTeensPage,
@@ -44,8 +45,10 @@ export default async function TeensPage({ params }: Props) {
 
   const t = await getTranslations("teensPage")
   const tc = await getTranslations("common")
-  const [page, programs, faqs, upcoming] = await Promise.all([
+  const ta = await getTranslations("aboutPage")
+  const [page, aboutPage, programs, faqs, upcoming] = await Promise.all([
     getTeensPage(),
+    getAboutPage(),
     getPrograms(),
     getFaqs(),
     getUpcomingEvents(now),
@@ -229,6 +232,27 @@ export default async function TeensPage({ params }: Props) {
           </div>
         </section>
       ) : null}
+
+      {/* Closing invitation */}
+      <section className="on-avondblauw bg-avondblauw text-papier">
+        <div className="container-site section-y text-center">
+          <h2 className="type-h2 text-papier text-balance">{pick(aboutPage.closing.heading, l)}</h2>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link
+              href={{ pathname: "/agenda", query: { type: "infoSessions" } }}
+              className={cn(buttonVariants({ variant: "primary" }), "w-full sm:w-auto")}
+            >
+              {ta("infoCta")}
+            </Link>
+            <Link
+              href={{ pathname: "/agenda", query: { type: "teens" } }}
+              className={cn(buttonVariants({ variant: "onDark" }), "w-full sm:w-auto")}
+            >
+              {t("datesCta")}
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   )
 }
