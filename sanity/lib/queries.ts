@@ -27,7 +27,7 @@ const PROGRAM = /* groq */ `{
   _id, title, subtitle, officialName, "slug": slug.current, track, order, numeral, accent,
   lead, outcomes, howItWorks, forWhom, durationLabel, hoursLabel, groupSize,
   expectations[]{ title, text },
-  ageMin, ageMax, nextDateNote, heroImage,
+  ageMin, ageMax, nextDateNote, heroImage, gallery,
   videoClip ${VIDEO},
   "prerequisites": prerequisites[]->slug.current,
   "testimonials": testimonials[]->_id,
@@ -77,7 +77,7 @@ export const settingsQuery = defineQuery(`*[_type == "siteSettings"][0]{
 }`)
 
 export const homePageQuery = defineQuery(`*[_type == "homePage"][0]{
-  hero{ title, lead, primaryCta, secondaryCta, image },
+  hero{ title, lead, question, primaryCta, secondaryCta, image },
   mission{ heading, body },
   recognise{ intro, ${SITUATIONS}, fallback },
   whatIsInsight{ heading, body },
@@ -90,6 +90,7 @@ export const homePageQuery = defineQuery(`*[_type == "homePage"][0]{
   "testimonialIds": testimonials[]->_id,
   videoClip ${VIDEO},
   videoPoster,
+  gallery,
   seo
 }`)
 
@@ -103,12 +104,14 @@ export const aboutPageQuery = defineQuery(`*[_type == "aboutPage"][0]{
   support{ heading, body },
   closing{ heading },
   videoClip ${VIDEO},
+  gallery,
   seo
 }`)
 
 export const teensPageQuery = defineQuery(`*[_type == "teensPage"][0]{
   hero{ title, lead, points },
   media{ image, videoClip ${VIDEO} },
+  gallery,
   parents{ heading, lead, blocks[]{ title, text } },
   seo
 }`)

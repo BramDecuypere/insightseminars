@@ -21,6 +21,7 @@ export const homePage = defineType({
       fields: [
         defineField({ name: 'title', title: 'Titel', type: 'localeString' }),
         defineField({ name: 'lead', title: 'Intro', type: 'localeText' }),
+        defineField({ name: 'question', title: 'Vraag', type: 'localeString' }),
         defineField({ name: 'primaryCta', title: 'Knop 1', type: 'localeString' }),
         defineField({ name: 'secondaryCta', title: 'Knop 2', type: 'localeString' }),
         defineField({ name: 'image', title: 'Afbeelding', type: 'imageWithAlt' }),
@@ -118,6 +119,7 @@ export const homePage = defineType({
     }),
     defineField({ name: 'videoClip', title: 'Videofragment', type: 'videoClip', group: 'testimonials' }),
     defineField({ name: 'videoPoster', title: 'Poster (zonder clip)', type: 'imageWithAlt', group: 'testimonials' }),
+    defineField({ name: 'gallery', title: 'Fotogalerij', type: 'array', of: [arr('imageWithAlt')], group: 'sections' }),
     defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
   ],
   preview: { prepare: () => ({ title: 'Startpagina' }) },
@@ -184,6 +186,7 @@ export const aboutPage = defineType({
       fields: [defineField({ name: 'heading', title: 'Kop', type: 'localeString' })],
     }),
     defineField({ name: 'videoClip', title: 'Videofragment', type: 'videoClip' }),
+    defineField({ name: 'gallery', title: 'Fotogalerij', type: 'array', of: [arr('imageWithAlt')] }),
     defineField({ name: 'seo', title: 'SEO', type: 'seo' }),
   ],
   preview: { prepare: () => ({ title: 'Over Insight' }) },
@@ -213,6 +216,7 @@ export const teensPage = defineType({
         defineField({ name: 'videoClip', title: 'Videofragment', type: 'videoClip' }),
       ],
     }),
+    defineField({ name: 'gallery', title: 'Fotogalerij', type: 'array', of: [arr('imageWithAlt')] }),
     defineField({
       name: 'parents',
       title: 'Voor ouders',

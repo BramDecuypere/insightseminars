@@ -21,6 +21,7 @@ export interface LocaleRichText {
 export interface ImageAsset {
   src: string
   alt?: LocaleString
+  caption?: LocaleString
 }
 
 export type Accent = 'accent1' | 'accent2' | 'accent3' | 'accent4'
@@ -78,6 +79,7 @@ export interface Program {
   prerequisites?: string[]
   nextDateNote?: LocaleString
   heroImage?: ImageAsset
+  gallery?: ImageAsset[]
   faqs?: string[]
   seo?: { title: LocaleString; description: LocaleString }
 }
@@ -226,11 +228,12 @@ export interface ReadMoreBlock {
 
 export interface HomePage {
   hero: {
-    title: LocaleString
-    lead: LocaleText
-    primaryCta: LocaleString
-    secondaryCta: LocaleString
-    image?: ImageAsset
+  title: LocaleString
+  lead: LocaleText
+  question?: LocaleString
+  primaryCta: LocaleString
+  secondaryCta: LocaleString
+  image?: ImageAsset
   }
   mission: { heading: LocaleString; body: LocaleText }
   recognise: {
@@ -251,6 +254,7 @@ export interface HomePage {
   videoClip?: VideoClip
   /** Still shown in the "Wat is Insight?" slot when no clip is uploaded yet. */
   videoPoster?: ImageAsset
+  gallery?: ImageAsset[]
   /** trustLine is retained in Sanity for historical data but no longer rendered (tester feedback). */
   forWho: { heading: LocaleString; body: LocaleText; trustLine?: LocaleString }
   path: {
@@ -276,12 +280,14 @@ export interface AboutPage {
   support: { heading: LocaleString; body: LocaleText }
   closing: { heading: LocaleString }
   videoClip?: VideoClip
+  gallery?: ImageAsset[]
   seo: { title: LocaleString; description: LocaleString }
 }
 
 export interface TeensPage {
   hero: { title: LocaleString; lead: LocaleText; points: LocaleString[] }
   media?: { image?: ImageAsset; videoClip?: VideoClip }
+  gallery?: ImageAsset[]
   parents: {
     heading: LocaleString
     lead: LocaleText

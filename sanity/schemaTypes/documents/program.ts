@@ -104,6 +104,13 @@ export const program = defineType({
       group: 'content',
     }),
     defineField({
+      name: 'gallery',
+      title: 'Fotogalerij',
+      type: 'array',
+      of: [defineArrayMember({ type: 'imageWithAlt' })],
+      group: 'content',
+    }),
+    defineField({
       name: 'prerequisites',
       title: 'Voorwaarden (eerdere seminaries)',
       type: 'array',

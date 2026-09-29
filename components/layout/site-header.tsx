@@ -1,7 +1,9 @@
 import Image from 'next/image'
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { buttonVariants } from '@/components/ui/button'
+import { getPrograms, pick } from '@/lib/content'
+import type { Locale } from '@/lib/content/types'
 import { cn } from '@/lib/utils'
 import { HeaderFrame } from './header-frame'
 import { LanguageSwitcher } from './language-switcher'
@@ -16,7 +18,12 @@ import { SpectrumStrip } from './spectrum-strip'
  * settles in once scrolled (HeaderFrame), a quiet cue that the page moved.
  */
 export async function SiteHeader() {
-  const t = await getTranslations('nav')
+  const [t, rawLocale, programs] = await Promise.all([getTranslations('nav'), getLocale(), getPrograms()])
+  const locale = rawLocale as Locale
+  const seminarPrograms = programs
+    .slice()
+    .sort((a, b) => a.order - b.order)
+    .map((program) => ({ slug: program.slug, title: pick(program.title, locale) }))
 
   return (
     <HeaderFrame>
@@ -32,7 +39,7 @@ export async function SiteHeader() {
           />
         </Link>
 
-        <MainNav />
+        <MainNav seminarPrograms={seminarPrograms} />
 
         <div className="hidden items-center gap-3 md:flex">
           <LanguageSwitcher onLight variant="compact" />
@@ -52,7 +59,7 @@ export async function SiteHeader() {
 
         <div className="flex items-center gap-1 md:hidden">
           <LanguageSwitcher onLight variant="compact" />
-          <MobileNav />
+          <MobileNav seminarPrograms={seminarPrograms} />
         </div>
       </div>
       <SpectrumStrip />

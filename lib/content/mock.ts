@@ -129,6 +129,32 @@ export const team: TeamMember[] = [
   },
 ]
 
+const adultGallery = [
+  {
+    src: '/images/gallery/program-1.png',
+    alt: { nl: 'Deelnemers die samen oefenen in de seminarruimte', en: 'Participants practising together in the seminar room' },
+    caption: { nl: 'Oefenen in de grote groep', en: 'Practising in the large group' },
+  },
+  {
+    src: '/images/gallery/program-2.png',
+    alt: { nl: 'Twee deelnemers in een persoonlijk gesprek', en: 'Two participants in a personal conversation' },
+    caption: { nl: 'Ruimte voor een gesprek onder vier ogen', en: 'Room for a one-to-one conversation' },
+  },
+]
+
+const teenGallery = [
+  {
+    src: '/images/gallery/teens-1.png',
+    alt: { nl: 'Jongeren in een kleine groep tijdens een oefening', en: 'Teenagers in a small group during an exercise' },
+    caption: { nl: 'Samen oefenen in een kleine groep', en: 'Practising together in a small group' },
+  },
+  {
+    src: '/images/gallery/teens-2.png',
+    alt: { nl: 'Jongeren die lachen tijdens een pauze buiten', en: 'Teenagers laughing during an outdoor break' },
+    caption: { nl: 'Nieuwe vrienden, ook tijdens de pauzes', en: 'New friends, during breaks too' },
+  },
+]
+
 export const programs: Program[] = [
   {
     _id: 'program-insight-1',
@@ -177,6 +203,7 @@ export const programs: Program[] = [
       src: '/images/seminar-room.png',
       alt: { nl: 'Deelnemers in gesprek tijdens Insight I', en: 'Participants in conversation during Insight I' },
     },
+    gallery: adultGallery,
     seo: {
       title: { nl: 'Insight I — training voor persoonlijke groei in Antwerpen', en: 'Insight I — personal growth training in Antwerp' },
       description: { nl: 'Een interactief seminar van drie dagen om te ontdekken wat je echt wil.', en: 'An interactive three-day seminar to discover what you really want.' },
@@ -218,6 +245,7 @@ export const programs: Program[] = [
       ],
     },
     forWhom: { nl: ['Voor wie Insight I volgde, in België of elders.'] },
+    gallery: adultGallery,
     seo: {
       title: { nl: 'Insight II — persoonlijke ontwikkeling training in Antwerpen', en: 'Insight II — personal development training in Antwerp' },
       description: { nl: 'Vijf dagen om los te laten wat je tegenhoudt en voluit te kiezen voor wie je bent.', en: 'Five days to let go of what holds you back and fully choose who you are.' },
@@ -254,6 +282,7 @@ export const programs: Program[] = [
     },
     forWhom: { nl: ['Voor wie Insight II volgde.'] },
     nextDateNote: { nl: 'Nieuwe data volgen binnenkort.', en: 'New dates will follow soon.' },
+    gallery: adultGallery,
     seo: {
       title: { nl: 'Insight III — retraite voor persoonlijke groei', en: 'Insight III — retreat for personal growth' },
       description: { nl: 'Een seminar in retraitevorm dat voortbouwt op Insight I en II.', en: 'A retreat-style seminar that builds on Insight I and II.' },
@@ -284,6 +313,7 @@ export const programs: Program[] = [
     ],
     howItWorks: { nl: [] },
     forWhom: { nl: ['Voor jongeren van 14 tot 19 jaar. Geen voorkennis nodig. Een ouder of voogd schrijft in en geeft toestemming.'] },
+    gallery: teenGallery,
     seo: {
       title: { nl: 'Tiener Insight I — voor jongeren van 14 tot 19 jaar', en: 'Teen Insight I — for young people aged 14 to 19' },
       description: { nl: 'Bouwen aan zelfvertrouwen en beter communiceren, in een veilige groep.', en: 'Building self-confidence and better communication, in a safe group.' },
@@ -314,6 +344,7 @@ export const programs: Program[] = [
     howItWorks: { nl: [] },
     forWhom: { nl: ['Voor wie Tiener Insight I volgde.'] },
     nextDateNote: { nl: 'Verwacht in de zomer van 2028.', en: 'Expected in the summer of 2028.' },
+    gallery: teenGallery,
     seo: {
       title: { nl: 'Tiener Insight II — kies voor jezelf', en: 'Teen Insight II — choose yourself' },
       description: { nl: 'Vijf dagen om te oefenen met nieuwe, betere keuzes.', en: 'Five days to practise new, better choices.' },
@@ -343,6 +374,7 @@ export const programs: Program[] = [
     ],
     howItWorks: { nl: [] },
     forWhom: { nl: ['Voor wie Tiener Insight I en II volgde.'] },
+    gallery: teenGallery,
     seo: {
       title: { nl: 'Tiener Insight III — thuiskomen bij jezelf', en: 'Teen Insight III — coming home to yourself' },
       description: { nl: 'Vijf dagen om naar binnen te keren en te verankeren wat je leerde.', en: 'Five days to turn inward and anchor what you learned.' },
@@ -483,13 +515,17 @@ export const faqs: Faq[] = [
 
 export const homePage: HomePage = {
   hero: {
-    title: { nl: 'Voel je dat er meer in je leven zit?', en: 'Do you feel there is more to your life?' },
-    lead: {
-      nl: 'Insight is een intensieve training van een paar dagen waarin je ervaart hoe je in het leven staat, en ontdekt wat er nog meer mogelijk is.',
-      en: 'Insight is an intensive training of a few days in which you experience how you relate to life, and discover what more is possible.',
+    title: {
+      nl: 'Insight: seminars om bewuster in het leven te staan',
+      en: 'Insight: seminars to live more consciously',
     },
-    primaryCta: { nl: 'Kom naar een gratis infosessie', en: 'Come to a free info session' },
-    secondaryCta: { nl: 'Bekijk de seminars', en: 'See the seminars' },
+    lead: {
+      nl: 'Een ervaringsgerichte seminar in een kleine groep, geen therapie. Voor volwassenen vanaf 18 jaar en tieners van 14 tot 19 jaar, in Antwerpen.',
+      en: 'An experiential seminar in a small group, not therapy. For adults aged 18 and over and teens aged 14 to 19, in Antwerp.',
+    },
+    question: { nl: 'Hoe bewust leef jij?', en: 'How consciously do you live?' },
+    primaryCta: { nl: 'Ontdek de seminars', en: 'Discover the seminars' },
+    secondaryCta: { nl: 'Of schrijf je meteen in voor Insight I', en: 'Or sign up directly for Insight I' },
     image: {
       src: '/images/home-hero.png',
       alt: {
@@ -511,12 +547,11 @@ export const homePage: HomePage = {
       en: "You don't have to know exactly what's going on. Maybe you recognise yourself in one of these sentences.",
     },
     situations: [
-      { label: { nl: 'Ik loop steeds opnieuw tegen dezelfde patronen aan.', en: 'I keep running into the same patterns.' }, target: 'infoSession' },
-      { label: { nl: 'Ik wil meer uit mijn leven halen, maar weet niet goed hoe.', en: "I want more out of my life, but don't quite know how." }, target: 'program', programSlug: 'insight-1' },
-      { label: { nl: 'Ik verlang naar meer verbinding met anderen.', en: 'I long for more connection with others.' }, target: 'program', programSlug: 'insight-1' },
-      { label: { nl: 'Ik weet niet goed wat ik zelf eigenlijk wil.', en: "I don't really know what I want myself." }, target: 'infoSession' },
-      { label: { nl: 'De manier waarop ik tot nu toe met dingen omging, werkt niet meer.', en: 'The way I dealt with things until now no longer works.' }, target: 'program', programSlug: 'insight-1' },
-      { label: { nl: 'Ik wil mijn tiener sterker in het leven zien staan.', en: 'I want to see my teenager stand stronger in life.' }, target: 'teens' },
+      { label: { nl: 'Je vindt het moeilijk om je grenzen aan te geven.', en: 'You find it hard to set your boundaries.' }, target: 'infoSession' },
+      { label: { nl: 'Je loopt steeds vast in dezelfde reacties, thuis of op het werk.', en: 'You keep getting stuck in the same reactions, at home or at work.' }, target: 'infoSession' },
+      { label: { nl: 'Je wil de tijd nemen om je eigen keuzes te onderzoeken.', en: 'You want to take the time to examine your own choices.' }, target: 'infoSession' },
+      { label: { nl: 'Je wil dieper op dingen ingaan, maar in je omgeving is dat niet echt de gewoonte.', en: "You want to go deeper into things, but that's not really the habit in your environment." }, target: 'infoSession' },
+      { label: { nl: 'Sommige gebeurtenissen blijven langer aan je hangen dan je zou willen.', en: "Some events stick with you longer than you'd like." }, target: 'infoSession' },
     ],
     fallback: {
       nl: 'Veel deelnemers kwamen met net deze vraag binnen. Op de gratis infosessie vertellen ze hoe het voor hen was.',
@@ -575,6 +610,18 @@ export const homePage: HomePage = {
     teenLine: { nl: 'Voor jongeren van 14 tot 19 jaar is er Tiener Insight.', en: 'For young people aged 14 to 19 there is Teen Insight.' },
   },
   upcomingHeading: { nl: 'Binnenkort', en: 'Coming up' },
+  gallery: [
+    {
+      src: '/images/gallery/home-1.png',
+      alt: { nl: 'Kleine groep in gesprek tijdens een seminar', en: 'Small group in conversation during a seminar' },
+      caption: { nl: 'Samen in gesprek, in een veilige groep', en: 'In conversation together, in a safe group' },
+    },
+    {
+      src: '/images/gallery/home-2.png',
+      alt: { nl: 'Twee deelnemers in gesprek tijdens een pauze', en: 'Two participants talking during a break' },
+      caption: { nl: 'Ook tijdens de pauzes gaat het gesprek verder', en: 'The conversation continues during breaks too' },
+    },
+  ],
   seo: {
     title: { nl: 'Insight Seminars België | Training voor persoonlijke groei in Antwerpen', en: 'Insight Seminars België | Personal growth training in Antwerp' },
     description: { nl: 'Intensieve, ervaringsgerichte training voor persoonlijke groei. Ontdek je patronen, maak bewustere keuzes en ervaar meer verbinding. Kom naar een gratis infosessie.', en: 'Intensive, experiential training for personal growth. Discover your patterns, make more conscious choices and experience more connection. Come to a free info session.' },
@@ -615,6 +662,18 @@ export const aboutPage: AboutPage = {
   facilitatorsIntro: { nl: 'De seminars worden geleid door ervaren Insight-facilitators.', en: 'The seminars are led by experienced Insight facilitators.' },
   support: { heading: { nl: 'Steun Insight', en: 'Support Insight' }, body: { nl: 'Insight Seminars België werkt zonder winstoogmerk. Met een gift help je om seminars in België mogelijk te maken. Je kan een bedrag overschrijven naar {iban} op naam van {accountHolder}, met als mededeling "gift". Dank je wel!', en: 'Insight Seminars België is a non-profit. With a gift you help make seminars in Belgium possible. You can transfer an amount to {iban} in the name of {accountHolder}, with "gift" as the reference. Thank you!' } },
   closing: { heading: { nl: 'Klaar om te beginnen?', en: 'Ready to begin?' } },
+  gallery: [
+    {
+      src: '/images/gallery/about-1.png',
+      alt: { nl: 'Vrijwilligers en facilitators voor aanvang van een seminar', en: 'Volunteers and facilitators before the start of a seminar' },
+      caption: { nl: 'Het team dat elk seminar mogelijk maakt', en: 'The team that makes every seminar possible' },
+    },
+    {
+      src: '/images/gallery/about-2.png',
+      alt: { nl: 'Deelnemers die elkaar begroeten bij aankomst', en: 'Participants greeting each other on arrival' },
+      caption: { nl: 'Aankomst: iedereen is welkom, zoals je bent', en: 'Arrival: everyone is welcome, just as you are' },
+    },
+  ],
   seo: {
     title: { nl: 'Over Insight | Persoonlijke groei en zelfkennis', en: 'About Insight | Personal growth and self-knowledge' },
     description: { nl: 'Wat Insight is, hoe de training werkt en wie het in België mogelijk maakt.', en: 'What Insight is, how the training works and who makes it possible in Belgium.' },
@@ -651,6 +710,18 @@ export const teensPage: TeensPage = {
       { title: { nl: 'Inschrijven', en: 'Registering' }, text: { nl: 'Je vult het formulier in en geeft online toestemming, of je uploadt een ondertekend formulier.', en: 'You fill in the form and give consent online, or you upload a signed form.' } },
     ],
   },
+  gallery: [
+    {
+      src: '/images/gallery/teens-1.png',
+      alt: { nl: 'Jongeren in een kleine groep tijdens een oefening', en: 'Teenagers in a small group during an exercise' },
+      caption: { nl: 'Samen oefenen in een kleine groep', en: 'Practising together in a small group' },
+    },
+    {
+      src: '/images/gallery/teens-2.png',
+      alt: { nl: 'Jongeren die lachen tijdens een pauze buiten', en: 'Teenagers laughing during an outdoor break' },
+      caption: { nl: 'Nieuwe vrienden, ook tijdens de pauzes', en: 'New friends, during breaks too' },
+    },
+  ],
   seo: {
     title: { nl: 'Tiener Insight | Voor jongeren van 14 tot 19 jaar', en: 'Teen Insight | For young people aged 14 to 19' },
     description: { nl: 'Een paar dagen om jezelf beter te leren kennen, in een veilige en begeleide groep. Voor tieners en hun ouders.', en: 'A few days to get to know yourself better, in a safe and guided group. For teens and their parents.' },

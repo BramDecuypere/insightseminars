@@ -1,14 +1,17 @@
 import type { Metadata } from "next"
 import Image from "next/image"
-import { ArrowLeft, Check, Clock, Hourglass, Users, UserRound, Tag } from "lucide-react"
+import { ArrowLeft, Clock, Hourglass, Users, UserRound, Tag } from "lucide-react"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
+import { CheckList } from "@/components/site/check-list"
+import { CollapsibleSection } from "@/components/site/collapsible-section"
 import { EventRow } from "@/components/site/event-row"
 import { FaqHash } from "@/components/site/faq-hash"
 import { FaqList } from "@/components/site/faq-list"
 import { JsonLd } from "@/components/site/json-ld"
 import { KeyFacts, type Fact } from "@/components/site/key-facts"
 import { NewsletterBand } from "@/components/site/newsletter-band"
+import { PhotoGrid } from "@/components/site/photo-grid"
 import { VideoClip } from "@/components/site/video-clip"
 import { accentInk, accentVar } from "@/components/site/accent"
 import { Link } from "@/i18n/navigation"
@@ -89,8 +92,8 @@ export default async function ProgramPage({ params }: Props) {
 
   const how = pickRich(program.howItWorks, l)
   const forWhom = pickRich(program.forWhom, l)
-  const accent = accentVar[program.accent]
   const accentOnLight = accentInk[program.accent]
+  const accentTint = `color-mix(in srgb, ${accentVar[program.accent]} 8%, var(--papier))`
 
   const tc = await getTranslations("common")
   const facts: Fact[] = []
@@ -122,7 +125,7 @@ export default async function ProgramPage({ params }: Props) {
       {program.videoClip ? <JsonLd data={videoJsonLd(program.videoClip, l)} /> : null}
       {faqSubset.length > 0 ? <FaqHash /> : null}
 
-      <header className="bg-mist text-inkt">
+      <header className="text-inkt" style={{ backgroundColor: accentTint }}>
         <div className="container-site section-y">
           <Link
             href="/seminars"
@@ -152,14 +155,19 @@ export default async function ProgramPage({ params }: Props) {
             </div>
 
             {program.heroImage ? (
-              <div className="relative aspect-[4/3] overflow-hidden rounded-panel">
-                <Image
-                  src={program.heroImage.src || "/placeholder.svg"}
-                  alt={pick(program.heroImage.alt, l)}
-                  fill
-                  sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="object-cover"
-                />
+              <div
+                className="rounded-panel p-3"
+                style={{ backgroundColor: `color-mix(in srgb, ${accentVar[program.accent]} 14%, var(--papier))` }}
+              >
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[calc(var(--radius-panel)-0.75rem)]">
+                  <Image
+                    src={program.heroImage.src || "/placeholder.svg"}
+                    alt={pick(program.heroImage.alt, l)}
+                    fill
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
               </div>
             ) : null}
           </div>
@@ -189,16 +197,11 @@ export default async function ProgramPage({ params }: Props) {
               ) : null}
 
               {program.outcomes.length > 0 ? (
-                <section>
+                <section className="rounded-panel p-6 sm:p-8" style={{ backgroundColor: accentTint }}>
                   <h2 className="type-h2 text-inkt">{t("outcomesHeading")}</h2>
-                  <ul className="mt-5 space-y-3">
-                    {program.outcomes.map((o) => (
-                      <li key={o.nl} className="flex items-start gap-3 text-lg text-inkt">
-                        <Check className="mt-1 size-5 shrink-0" style={{ color: accent }} aria-hidden />
-                        {pick(o, l)}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="mt-5">
+                    <CheckList items={program.outcomes.map((o) => pick(o, l))} accent={program.accent} />
+                  </div>
                 </section>
               ) : null}
 
@@ -216,7 +219,7 @@ export default async function ProgramPage({ params }: Props) {
               ) : null}
 
               {program.expectations && program.expectations.length > 0 ? (
-                <section className="rounded-panel bg-mist p-6">
+                <CollapsibleSection label={t("expectationsHeading")}>
                   <ul className="space-y-5">
                     {program.expectations.map((e) => (
                       <li key={e.title.nl}>
@@ -225,7 +228,7 @@ export default async function ProgramPage({ params }: Props) {
                       </li>
                     ))}
                   </ul>
-                </section>
+                </CollapsibleSection>
               ) : null}
             </div>
 
@@ -242,8 +245,28 @@ export default async function ProgramPage({ params }: Props) {
         </div>
       </div>
 
+      {/* Sfeerbeelden */}
+      {program.gallery && program.gallery.length > 0 ? (
+        <section className="bg-mist">
+          <div className="container-site section-y">
+            <h2 className="type-h2 text-inkt text-balance">
+              {pick({ nl: 'Een sfeerbeeld', en: 'A glimpse of the room' }, l)}
+            </h2>
+            <div className="mt-8">
+              <PhotoGrid
+                images={program.gallery}
+                locale={l}
+                openLabel={tc('openImage')}
+                prevLabel={tc('prevImage')}
+                nextLabel={tc('nextImage')}
+              />
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       {/* Dates */}
-      <section className="bg-mist">
+      <section className="bg-papier">
         <div className="container-site section-y">
           <h2 className="type-h2 text-inkt">{t("datesHeading")}</h2>
           {views.length > 0 ? (

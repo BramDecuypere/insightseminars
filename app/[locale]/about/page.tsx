@@ -1,8 +1,11 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { CheckList } from '@/components/site/check-list'
+import { CollapsibleSection } from '@/components/site/collapsible-section'
 import { CopyButton } from '@/components/site/copy-button'
 import { JsonLd } from '@/components/site/json-ld'
 import { PersonCard } from '@/components/site/person-card'
+import { PhotoGrid } from '@/components/site/photo-grid'
 import { ReadMore } from '@/components/site/read-more'
 import { TestimonialCard } from '@/components/site/testimonial-card'
 import { VideoClip } from '@/components/site/video-clip'
@@ -59,7 +62,7 @@ export default async function AboutPage({ params }: Props) {
       {page.videoClip ? <JsonLd data={videoJsonLd(page.videoClip, l)} /> : null}
 
       {/* Hero */}
-      <header className="bg-mist text-inkt">
+      <header id="missie" className="scroll-mt-24 bg-mist text-inkt">
         <div className="container-site section-y">
           <h1 className="type-h1 text-inkt text-balance">{pick(page.hero.title, l)}</h1>
           <p className="type-lead mt-5 max-w-2xl text-leisteen">{pick(page.hero.lead, l)}</p>
@@ -93,17 +96,9 @@ export default async function AboutPage({ params }: Props) {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
               <h2 className="type-h2 text-inkt text-balance">{pick(page.benefits.heading, l)}</h2>
-              <ul className="mt-6 space-y-3">
-                {page.benefits.items.map((item) => (
-                  <li key={item.nl} className="flex items-start gap-3 text-lg text-inkt">
-                    <span
-                      aria-hidden
-                      className="mt-2.5 size-2 shrink-0 rounded-full bg-[var(--accent-3)]"
-                    />
-                    {pick(item, l)}
-                  </li>
-                ))}
-              </ul>
+              <div className="mt-6">
+                <CheckList items={page.benefits.items.map((item) => pick(item, l))} />
+              </div>
             </div>
             <div>
               <h2 className="type-h2 text-inkt text-balance">{pick(page.forWho.heading, l)}</h2>
@@ -141,23 +136,50 @@ export default async function AboutPage({ params }: Props) {
       ) : null}
 
       {/* Ons verhaal */}
-      <section className="bg-papier">
+      <section id="verhaal" className="scroll-mt-24 bg-papier">
         <div className="container-site section-y">
           <div className="mx-auto max-w-2xl">
             <h2 className="type-h2 text-inkt text-balance">{pick(page.story.heading, l)}</h2>
             <div className="mt-6 space-y-4">
-              {page.story.paragraphs.map((p, i) => (
-                <p key={i} className="type-body text-inkt">
-                  {pick(p, l)}
-                </p>
-              ))}
+              {page.story.paragraphs.length > 0 ? (
+                <p className="type-body text-inkt">{pick(page.story.paragraphs[0], l)}</p>
+              ) : null}
+              {page.story.paragraphs.length > 1 ? (
+                <CollapsibleSection label={t('storyMore')}>
+                  {page.story.paragraphs.slice(1).map((p, i) => (
+                    <p key={i} className="type-body text-inkt">
+                      {pick(p, l)}
+                    </p>
+                  ))}
+                </CollapsibleSection>
+              ) : null}
             </div>
           </div>
         </div>
       </section>
 
+      {/* Sfeerbeelden */}
+      {page.gallery && page.gallery.length > 0 ? (
+        <section className="bg-mist">
+          <div className="container-site section-y">
+            <h2 className="type-h2 text-inkt text-balance">
+              {pick({ nl: 'Een sfeerbeeld', en: 'A glimpse of the room' }, l)}
+            </h2>
+            <div className="mt-8">
+              <PhotoGrid
+                images={page.gallery}
+                locale={l}
+                openLabel={tc('openImage')}
+                prevLabel={tc('prevImage')}
+                nextLabel={tc('nextImage')}
+              />
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       {/* Team */}
-      <section id="team" className="scroll-mt-24 bg-mist">
+      <section id="team" className="scroll-mt-24 bg-papier">
         <div className="container-site section-y">
           <h2 className="type-h2 text-inkt text-balance">{t('teamHeading')}</h2>
           <p className="type-body mt-5 max-w-2xl text-inkt">{pick(page.teamIntro, l)}</p>
@@ -208,24 +230,28 @@ export default async function AboutPage({ params }: Props) {
             <p className="type-body mt-5 text-inkt">{supportBody}</p>
 
             {settings.iban ? (
-              <dl className="mt-6 space-y-3 rounded-panel border border-lijn bg-mist p-6">
-                <div>
-                  <dt className="text-sm text-leisteen">{t('supportIban')}</dt>
-                  <dd className="mt-1 flex flex-wrap items-center justify-between gap-3">
-                    <span className="text-lg font-semibold text-inkt">{settings.iban}</span>
-                    <CopyButton value={settings.iban} label={t('supportIban')} />
-                  </dd>
-                </div>
-                {settings.accountHolder ? (
-                  <div className="border-t border-lijn pt-3">
-                    <dt className="text-sm text-leisteen">{t('supportHolder')}</dt>
-                    <dd className="mt-1 flex flex-wrap items-center justify-between gap-3">
-                      <span className="text-lg font-semibold text-inkt">{settings.accountHolder}</span>
-                      <CopyButton value={settings.accountHolder} label={t('supportHolder')} />
-                    </dd>
-                  </div>
-                ) : null}
-              </dl>
+              <div className="mt-6">
+                <CollapsibleSection label={t('supportMore')}>
+                  <dl className="space-y-3">
+                    <div>
+                      <dt className="text-sm text-leisteen">{t('supportIban')}</dt>
+                      <dd className="mt-1 flex flex-wrap items-center justify-between gap-3">
+                        <span className="text-lg font-semibold text-inkt">{settings.iban}</span>
+                        <CopyButton value={settings.iban} label={t('supportIban')} />
+                      </dd>
+                    </div>
+                    {settings.accountHolder ? (
+                      <div className="border-t border-lijn pt-3">
+                        <dt className="text-sm text-leisteen">{t('supportHolder')}</dt>
+                        <dd className="mt-1 flex flex-wrap items-center justify-between gap-3">
+                          <span className="text-lg font-semibold text-inkt">{settings.accountHolder}</span>
+                          <CopyButton value={settings.accountHolder} label={t('supportHolder')} />
+                        </dd>
+                      </div>
+                    ) : null}
+                  </dl>
+                </CollapsibleSection>
+              </div>
             ) : null}
           </div>
         </div>
