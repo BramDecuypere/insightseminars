@@ -326,8 +326,9 @@
     "aboutHeading": "What is this about?",
     "howHeading": "How it works",
     "forWhomHeading": "Who it's for",
-    "outcomesHeading": "What it can bring you",
-    "datesHeading": "Dates and registration",
+  "outcomesHeading": "What it can bring you",
+  "expectationsHeading": "What to expect",
+  "datesHeading": "Dates and registration",
     "practicalHeading": "Practical",
     "noDates": "No dates are scheduled yet. Sign up for the newsletter and we'll let you know.",
     "prerequisiteNote": "Requirement to take part",
@@ -342,8 +343,9 @@
   "teensPage": {
     "programsHeading": "The seminars for teens",
     "programsLead": "Teen Insight consists of several steps. You start with Teen Insight I.",
-    "parentsAnchor": "For parents",
-    "faqHeading": "Frequently asked questions from parents",
+  "parentsAnchor": "For parents",
+  "parentsMore": "More details",
+  "faqHeading": "Frequently asked questions from parents",
     "faqCta": "All frequently asked questions",
     "datesCta": "View the dates for teens",
     "consentNote": "Is your teenager under 18? Then you register as a parent or guardian and give consent online."
@@ -352,9 +354,11 @@
     "testimonialsHeading": "What participants say",
     "teamHeading": "The team",
     "facilitatorsHeading": "Our facilitators",
-    "supportIban": "Account number",
-    "supportHolder": "In the name of",
-    "infoCta": "Come to a free info session",
+  "storyMore": "Read more about our story",
+  "supportIban": "Account number",
+  "supportHolder": "In the name of",
+  "supportMore": "View the account details",
+  "infoCta": "Come to a free info session",
     "seminarsCta": "See the seminars"
   },
   "faqPage": {

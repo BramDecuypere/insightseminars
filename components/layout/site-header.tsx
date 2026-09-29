@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { buttonVariants } from '@/components/ui/button'
 import { getPrograms, pick } from '@/lib/content'
+import type { Locale } from '@/lib/content/types'
 import { cn } from '@/lib/utils'
 import { HeaderFrame } from './header-frame'
 import { LanguageSwitcher } from './language-switcher'
@@ -17,7 +18,8 @@ import { SpectrumStrip } from './spectrum-strip'
  * settles in once scrolled (HeaderFrame), a quiet cue that the page moved.
  */
 export async function SiteHeader() {
-  const [t, locale, programs] = await Promise.all([getTranslations('nav'), getLocale(), getPrograms()])
+  const [t, rawLocale, programs] = await Promise.all([getTranslations('nav'), getLocale(), getPrograms()])
+  const locale = rawLocale as Locale
   const seminarPrograms = programs
     .slice()
     .sort((a, b) => a.order - b.order)

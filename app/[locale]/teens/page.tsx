@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import { ArrowRight, Users } from "lucide-react"
 import { getTranslations, setRequestLocale } from "next-intl/server"
+import { CollapsibleSection } from "@/components/site/collapsible-section"
 import { FaqHash } from "@/components/site/faq-hash"
 import { FeatureBoxes } from "@/components/site/check-list"
 import { FaqList } from "@/components/site/faq-list"
@@ -165,14 +166,29 @@ export default async function TeensPage({ params }: Props) {
             <p className="type-lead mt-4 text-inkt">{pick(page.parents.lead, l)}</p>
           </div>
 
-          <dl className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
-            {page.parents.blocks.map((block) => (
-              <div key={block.title.nl}>
-                <dt className="text-lg font-bold text-inkt">{pick(block.title, l)}</dt>
-                <dd className="mt-1.5 text-base text-leisteen">{pick(block.text, l)}</dd>
-              </div>
-            ))}
-          </dl>
+          {page.parents.blocks.length > 4 ? (
+            <div className="mt-10">
+              <CollapsibleSection label={t("parentsMore")}>
+                <dl className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+                  {page.parents.blocks.map((block) => (
+                    <div key={block.title.nl}>
+                      <dt className="text-lg font-bold text-inkt">{pick(block.title, l)}</dt>
+                      <dd className="mt-1.5 text-base text-leisteen">{pick(block.text, l)}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </CollapsibleSection>
+            </div>
+          ) : (
+            <dl className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+              {page.parents.blocks.map((block) => (
+                <div key={block.title.nl}>
+                  <dt className="text-lg font-bold text-inkt">{pick(block.title, l)}</dt>
+                  <dd className="mt-1.5 text-base text-leisteen">{pick(block.text, l)}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
 
           <p className="mt-10 flex items-start gap-3 rounded-panel bg-mist p-5 text-base text-inkt">
             <Users className="mt-0.5 size-5 shrink-0 text-leisteen" aria-hidden />

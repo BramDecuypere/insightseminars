@@ -326,8 +326,9 @@
     "aboutHeading": "Waar gaat dit over?",
     "howHeading": "Zo werkt het",
     "forWhomHeading": "Voor wie",
-    "outcomesHeading": "Wat kan het je brengen?",
-    "datesHeading": "Data en inschrijven",
+  "outcomesHeading": "Wat kan het je brengen?",
+  "expectationsHeading": "Wat kan je verwachten",
+  "datesHeading": "Data en inschrijven",
     "practicalHeading": "Praktisch",
     "noDates": "Er staan nog geen data gepland. Schrijf je in op de nieuwsbrief, dan laten we het je weten.",
     "prerequisiteNote": "Voorwaarde om deel te nemen",
@@ -342,8 +343,9 @@
   "teensPage": {
     "programsHeading": "De seminars voor tieners",
     "programsLead": "Tiener Insight bestaat uit verschillende stappen. Je begint met Tiener Insight I.",
-    "parentsAnchor": "Voor ouders",
-    "faqHeading": "Veelgestelde vragen van ouders",
+  "parentsAnchor": "Voor ouders",
+  "parentsMore": "Meer details",
+  "faqHeading": "Veelgestelde vragen van ouders",
     "faqCta": "Alle veelgestelde vragen",
     "datesCta": "Bekijk de data voor tieners",
     "consentNote": "Is je tiener jonger dan 18? Dan schrijf je als ouder of voogd in en geef je online toestemming."
@@ -352,9 +354,11 @@
     "testimonialsHeading": "Wat deelnemers zeggen",
     "teamHeading": "Het team",
     "facilitatorsHeading": "Onze facilitators",
-    "supportIban": "Rekeningnummer",
-    "supportHolder": "Op naam van",
-    "infoCta": "Kom naar een gratis infosessie",
+  "storyMore": "Lees meer over ons verhaal",
+  "supportIban": "Rekeningnummer",
+  "supportHolder": "Op naam van",
+  "supportMore": "Bekijk de rekeninggegevens",
+  "infoCta": "Kom naar een gratis infosessie",
     "seminarsCta": "Bekijk de seminars"
   },
   "faqPage": {

@@ -4,6 +4,7 @@ import { ArrowLeft, Clock, Hourglass, Users, UserRound, Tag } from "lucide-react
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { CheckList } from "@/components/site/check-list"
+import { CollapsibleSection } from "@/components/site/collapsible-section"
 import { EventRow } from "@/components/site/event-row"
 import { FaqHash } from "@/components/site/faq-hash"
 import { FaqList } from "@/components/site/faq-list"
@@ -218,7 +219,7 @@ export default async function ProgramPage({ params }: Props) {
               ) : null}
 
               {program.expectations && program.expectations.length > 0 ? (
-                <section className="rounded-panel bg-mist p-6">
+                <CollapsibleSection label={t("expectationsHeading")}>
                   <ul className="space-y-5">
                     {program.expectations.map((e) => (
                       <li key={e.title.nl}>
@@ -227,7 +228,7 @@ export default async function ProgramPage({ params }: Props) {
                       </li>
                     ))}
                   </ul>
-                </section>
+                </CollapsibleSection>
               ) : null}
             </div>
 

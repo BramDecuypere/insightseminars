@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { CheckList } from '@/components/site/check-list'
+import { CollapsibleSection } from '@/components/site/collapsible-section'
 import { CopyButton } from '@/components/site/copy-button'
 import { JsonLd } from '@/components/site/json-ld'
 import { PersonCard } from '@/components/site/person-card'
@@ -140,11 +141,18 @@ export default async function AboutPage({ params }: Props) {
           <div className="mx-auto max-w-2xl">
             <h2 className="type-h2 text-inkt text-balance">{pick(page.story.heading, l)}</h2>
             <div className="mt-6 space-y-4">
-              {page.story.paragraphs.map((p, i) => (
-                <p key={i} className="type-body text-inkt">
-                  {pick(p, l)}
-                </p>
-              ))}
+              {page.story.paragraphs.length > 0 ? (
+                <p className="type-body text-inkt">{pick(page.story.paragraphs[0], l)}</p>
+              ) : null}
+              {page.story.paragraphs.length > 1 ? (
+                <CollapsibleSection label={t('storyMore')}>
+                  {page.story.paragraphs.slice(1).map((p, i) => (
+                    <p key={i} className="type-body text-inkt">
+                      {pick(p, l)}
+                    </p>
+                  ))}
+                </CollapsibleSection>
+              ) : null}
             </div>
           </div>
         </div>
@@ -222,24 +230,28 @@ export default async function AboutPage({ params }: Props) {
             <p className="type-body mt-5 text-inkt">{supportBody}</p>
 
             {settings.iban ? (
-              <dl className="mt-6 space-y-3 rounded-panel border border-lijn bg-mist p-6">
-                <div>
-                  <dt className="text-sm text-leisteen">{t('supportIban')}</dt>
-                  <dd className="mt-1 flex flex-wrap items-center justify-between gap-3">
-                    <span className="text-lg font-semibold text-inkt">{settings.iban}</span>
-                    <CopyButton value={settings.iban} label={t('supportIban')} />
-                  </dd>
-                </div>
-                {settings.accountHolder ? (
-                  <div className="border-t border-lijn pt-3">
-                    <dt className="text-sm text-leisteen">{t('supportHolder')}</dt>
-                    <dd className="mt-1 flex flex-wrap items-center justify-between gap-3">
-                      <span className="text-lg font-semibold text-inkt">{settings.accountHolder}</span>
-                      <CopyButton value={settings.accountHolder} label={t('supportHolder')} />
-                    </dd>
-                  </div>
-                ) : null}
-              </dl>
+              <div className="mt-6">
+                <CollapsibleSection label={t('supportMore')}>
+                  <dl className="space-y-3">
+                    <div>
+                      <dt className="text-sm text-leisteen">{t('supportIban')}</dt>
+                      <dd className="mt-1 flex flex-wrap items-center justify-between gap-3">
+                        <span className="text-lg font-semibold text-inkt">{settings.iban}</span>
+                        <CopyButton value={settings.iban} label={t('supportIban')} />
+                      </dd>
+                    </div>
+                    {settings.accountHolder ? (
+                      <div className="border-t border-lijn pt-3">
+                        <dt className="text-sm text-leisteen">{t('supportHolder')}</dt>
+                        <dd className="mt-1 flex flex-wrap items-center justify-between gap-3">
+                          <span className="text-lg font-semibold text-inkt">{settings.accountHolder}</span>
+                          <CopyButton value={settings.accountHolder} label={t('supportHolder')} />
+                        </dd>
+                      </div>
+                    ) : null}
+                  </dl>
+                </CollapsibleSection>
+              </div>
             ) : null}
           </div>
         </div>
