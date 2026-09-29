@@ -5,13 +5,12 @@ import { pick } from '@/lib/content'
 import type { HomePage, Locale } from '@/lib/content/types'
 import { cn } from '@/lib/utils'
 
-/** Hero on avondblauw (brief §9.5): title, one-sentence lead, a standalone
- * question, a primary link to the seminars overview and a secondary link
- * straight to Insight I, with a real 4:5 group photo alongside. */
+/** Hero on avondblauw (brief §9.5): title, one-sentence lead, a primary link
+ * to the seminars overview and a secondary link to the free info sessions in
+ * the agenda, with a real 4:5 group photo alongside. */
 export function HomeHero({ home, locale }: { home: HomePage; locale: Locale }) {
   const image = home.hero.image
   const alt = pick(image?.alt, locale)
-  const question = pick(home.hero.question, locale)
 
   return (
     <section className="">
@@ -20,9 +19,6 @@ export function HomeHero({ home, locale }: { home: HomePage; locale: Locale }) {
           <div>
             <h1 className="type-h1 text-balance">{pick(home.hero.title, locale)}</h1>
             <p className="type-lead mt-6 max-w-xl">{pick(home.hero.lead, locale)}</p>
-            {question ? (
-              <p className="type-h2 mt-8 max-w-xl text-balance text-accent-2-ink">{question}</p>
-            ) : null}
             <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
               <Link
                 href="/seminars"
@@ -31,7 +27,7 @@ export function HomeHero({ home, locale }: { home: HomePage; locale: Locale }) {
                 {pick(home.hero.primaryCta, locale)}
               </Link>
               <Link
-                href={{ pathname: '/seminars/[slug]', params: { slug: 'insight-1' } }}
+                href={{ pathname: '/agenda', query: { type: 'infoSessions' } }}
                 className="text-lg font-semibold underline underline-offset-4 hover:decoration-2"
               >
                 {pick(home.hero.secondaryCta, locale)}

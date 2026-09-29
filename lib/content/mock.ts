@@ -525,7 +525,7 @@ export const homePage: HomePage = {
     },
     question: { nl: 'Hoe bewust leef jij?', en: 'How consciously do you live?' },
     primaryCta: { nl: 'Ontdek de seminars', en: 'Discover the seminars' },
-    secondaryCta: { nl: 'Of schrijf je meteen in voor Insight I', en: 'Or sign up directly for Insight I' },
+    secondaryCta: { nl: 'Of kom eerst naar een gratis infosessie', en: 'Or join a free info session first' },
     image: {
       src: '/images/home-hero.png',
       alt: {
