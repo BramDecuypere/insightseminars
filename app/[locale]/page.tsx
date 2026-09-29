@@ -91,8 +91,8 @@ export default async function HomePage({ params }: Props) {
       {/* Het pad */}
       <section className="on-avondblauw bg-avondblauw">
         <Reveal className="container-site section-y">
-          <h2 className="type-h2 text-balance">{pick(home.path.heading, l)}</h2>
-          <p className="type-lead mt-4 max-w-2xl">{pick(home.path.intro, l)}</p>
+          <h2 className="type-h2 text-papier text-balance">{pick(home.path.heading, l)}</h2>
+          <p className="type-lead mt-4 max-w-2xl text-papier/85">{pick(home.path.intro, l)}</p>
 
           <div className="mt-12">
             <PathBlock programs={adultPrograms} locale={l} />
@@ -149,7 +149,7 @@ export default async function HomePage({ params }: Props) {
       <section id="nieuwsbrief" className="on-avondblauw bg-avondblauw">
         <Reveal className="container-site py-14 text-center md:py-16">
           <div className="mx-auto max-w-xl">
-            <h2 className="type-h2 text-balance">{t('meetFirstHeading')}</h2>
+            <h2 className="type-h2 text-papier text-balance">{t('meetFirstHeading')}</h2>
             {nextFreeSession ? (
               <div className="mt-8 text-left">
                 <NextDatePanel view={nextFreeSession} locale={l} />
