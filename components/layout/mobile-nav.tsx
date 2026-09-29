@@ -30,7 +30,7 @@ export function MobileNav({ seminarPrograms }: { seminarPrograms: SeminarNavLink
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
         className={cn(
-          'inline-flex size-11 items-center justify-center rounded-md text-inkt hover:bg-mist md:hidden',
+          'inline-flex size-11 items-center justify-center rounded-md text-inkt hover:bg-mist xl:hidden',
         )}
         aria-label={t('menu')}
       >

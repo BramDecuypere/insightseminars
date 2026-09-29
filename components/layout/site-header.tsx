@@ -22,7 +22,7 @@ export async function SiteHeader() {
   const locale = rawLocale as Locale
   const seminarPrograms = programs
     .slice()
-    .sort((a, b) => a.order - b.order)
+    .sort((a, b) => Number(a.track === 'teens') - Number(b.track === 'teens') || a.order - b.order)
     .map((program) => ({ slug: program.slug, title: pick(program.title, locale) }))
 
   return (
@@ -41,7 +41,7 @@ export async function SiteHeader() {
 
         <MainNav seminarPrograms={seminarPrograms} />
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 xl:flex">
           <LanguageSwitcher onLight variant="compact" />
           <Link
             href={{ pathname: '/agenda', query: { type: 'infoSessions' } }}
@@ -57,7 +57,7 @@ export async function SiteHeader() {
           </Link>
         </div>
 
-        <div className="flex items-center gap-1 md:hidden">
+        <div className="flex items-center gap-1 xl:hidden">
           <LanguageSwitcher onLight variant="compact" />
           <MobileNav seminarPrograms={seminarPrograms} />
         </div>
