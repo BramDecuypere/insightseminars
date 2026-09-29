@@ -57,6 +57,19 @@ export default async function AboutPage({ params }: Props) {
     .replace('{iban}', settings.iban ?? '')
     .replace('{accountHolder}', settings.accountHolder ?? '')
 
+  const renderedSections = [
+    'journey',
+    'benefits',
+    ...(testimonials.length > 0 ? ['testimonials'] : []),
+    'story',
+    ...(page.gallery && page.gallery.length > 0 ? ['gallery'] : []),
+    'team',
+    'facilitators',
+    'support',
+  ]
+  const tone = (key: string) =>
+    renderedSections.indexOf(key) % 2 === 0 ? 'bg-papier' : 'bg-mist'
+
   return (
     <>
       {page.videoClip ? <JsonLd data={videoJsonLd(page.videoClip, l)} /> : null}
@@ -70,7 +83,7 @@ export default async function AboutPage({ params }: Props) {
       </header>
 
       {/* Journey sections with Lees meer */}
-      <section className="bg-papier">
+      <section className={tone('journey')}>
         <div className="container-site section-y">
           <div className="mx-auto grid max-w-4xl gap-12 md:grid-cols-2">
             {page.sections.map((s) => (
@@ -91,7 +104,7 @@ export default async function AboutPage({ params }: Props) {
       </section>
 
       {/* Benefits + Voor wie */}
-      <section className="bg-mist">
+      <section className={tone('benefits')}>
         <div className="container-site section-y">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
@@ -110,7 +123,7 @@ export default async function AboutPage({ params }: Props) {
 
       {/* Testimonials */}
       {testimonials.length > 0 ? (
-        <section className="bg-papier">
+        <section className={tone('testimonials')}>
           <div className="container-site section-y">
             <h2 className="type-h2 text-inkt text-balance">
               {pick(page.testimonialsHeading, l) || t('testimonialsHeading')}
@@ -136,7 +149,7 @@ export default async function AboutPage({ params }: Props) {
       ) : null}
 
       {/* Ons verhaal */}
-      <section id="verhaal" className="scroll-mt-24 bg-papier">
+      <section id="verhaal" className={cn('scroll-mt-24', tone('story'))}>
         <div className="container-site section-y">
           <div className="mx-auto max-w-2xl">
             <h2 className="type-h2 text-inkt text-balance">{pick(page.story.heading, l)}</h2>
@@ -160,7 +173,7 @@ export default async function AboutPage({ params }: Props) {
 
       {/* Sfeerbeelden */}
       {page.gallery && page.gallery.length > 0 ? (
-        <section className="bg-mist">
+        <section className={tone('gallery')}>
           <div className="container-site section-y">
             <h2 className="type-h2 text-inkt text-balance">
               {pick({ nl: 'Een sfeerbeeld', en: 'A glimpse of the room' }, l)}
@@ -179,7 +192,7 @@ export default async function AboutPage({ params }: Props) {
       ) : null}
 
       {/* Team */}
-      <section id="team" className="scroll-mt-24 bg-papier">
+      <section id="team" className={cn('scroll-mt-24', tone('team'))}>
         <div className="container-site section-y">
           <h2 className="type-h2 text-inkt text-balance">{t('teamHeading')}</h2>
           <p className="type-body mt-5 max-w-2xl text-inkt">{pick(page.teamIntro, l)}</p>
@@ -201,7 +214,7 @@ export default async function AboutPage({ params }: Props) {
       </section>
 
       {/* Facilitators */}
-      <section id="facilitators" className="scroll-mt-24 bg-papier">
+      <section id="facilitators" className={cn('scroll-mt-24', tone('facilitators'))}>
         <div className="container-site section-y">
           <h2 className="type-h2 text-inkt text-balance">{t('facilitatorsHeading')}</h2>
           <p className="type-body mt-5 max-w-2xl text-inkt">{pick(page.facilitatorsIntro, l)}</p>
@@ -223,7 +236,7 @@ export default async function AboutPage({ params }: Props) {
       </section>
 
       {/* Steun Insight */}
-      <section id="steun" className="scroll-mt-24 bg-mist">
+      <section id="steun" className={cn('scroll-mt-24', tone('support'))}>
         <div className="container-site section-y">
           <div className="mx-auto max-w-2xl">
             <h2 className="type-h2 text-inkt text-balance">{pick(page.support.heading, l)}</h2>
