@@ -3,7 +3,13 @@ import {
   registrationState,
   type RegistrationState,
 } from '@/lib/domain/events'
-import { activeEarlyBird, isFree, lowestPrice } from '@/lib/domain/pricing'
+import {
+  activeEarlyBird,
+  isFree,
+  lowestPrice,
+  priceTiers as resolvePriceTiers,
+  type PriceTier,
+} from '@/lib/domain/pricing'
 import { getFacilitators, getPrograms, getVenues, pick } from '.'
 import type {
   Accent,
@@ -40,6 +46,10 @@ export interface EventView {
   fromPrice: number | null
   free: boolean
   earlyBirdUntil?: string
+  /** Every price option (early-bird, regular, audit, ...) shown at once; an
+   *  expired early-bird is flagged for a struck-through display rather than
+   *  being left out. */
+  priceTiers: Array<Omit<PriceTier, 'label'> & { label: string }>
   status: RegistrationStatus
   regState: RegistrationState
 }
@@ -94,6 +104,10 @@ export function toEventView(
     fromPrice: lowestPrice(event.priceOptions, now),
     free: isFree(event.priceOptions),
     earlyBirdUntil: early?.validUntil,
+    priceTiers: resolvePriceTiers(event.priceOptions, now).map((tier) => ({
+      ...tier,
+      label: pick(tier.label, locale),
+    })),
     status: event.registrationStatus,
     regState: registrationState(event, now),
   }

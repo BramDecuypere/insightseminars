@@ -86,22 +86,30 @@ export async function EventRow({
         </div>
 
         {/* Price */}
-        <div className="lg:w-40 lg:shrink-0">
+        <div className="lg:w-52 lg:shrink-0">
           {view.free ? (
             <p className="text-lg font-semibold text-inkt">{t('free')}</p>
-          ) : view.fromPrice != null ? (
-            <>
-              <p className="text-lg font-semibold text-inkt">
-                {t('priceFrom', { price: formatEuro(view.fromPrice, locale) })}
-              </p>
-              {view.earlyBirdUntil ? (
-                <p className="type-small mt-1 text-leisteen">
-                  {t('earlyBirdUntil', {
-                    date: formatDate(view.earlyBirdUntil, locale),
-                  })}
-                </p>
-              ) : null}
-            </>
+          ) : view.priceTiers.length > 0 ? (
+            <ul className="space-y-1.5">
+              {view.priceTiers.map((tier, i) => (
+                <li key={`${tier.kind}-${i}`}>
+                  <p
+                    className={cn(
+                      'text-base font-semibold',
+                      tier.expired ? 'text-leisteen line-through' : 'text-inkt',
+                    )}
+                  >
+                    {formatEuro(tier.amount, locale)}
+                    <span className="ml-1.5 font-normal">{tier.label}</span>
+                  </p>
+                  {tier.kind === 'earlyBird' && !tier.expired && tier.validUntil ? (
+                    <p className="type-small text-leisteen">
+                      {t('earlyBirdUntil', { date: formatDate(tier.validUntil, locale) })}
+                    </p>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
           ) : null}
         </div>
 

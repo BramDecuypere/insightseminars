@@ -45,11 +45,32 @@ export async function NextDatePanel({
   facts.push({
     icon: Tag,
     label: t('price'),
-    value: view.free
-      ? t('free')
-      : view.fromPrice != null
-        ? t('priceFrom', { price: formatEuro(view.fromPrice, locale) })
-        : '',
+    value: view.free ? (
+      t('free')
+    ) : view.priceTiers.length > 0 ? (
+      <ul className="space-y-1.5">
+        {view.priceTiers.map((tier, i) => (
+          <li key={`${tier.kind}-${i}`}>
+            <p
+              className={cn(
+                'text-base',
+                tier.expired ? 'text-leisteen line-through' : 'text-inkt font-semibold',
+              )}
+            >
+              {formatEuro(tier.amount, locale)}
+              <span className="ml-1.5 font-normal">{tier.label}</span>
+            </p>
+            {tier.kind === 'earlyBird' && !tier.expired && tier.validUntil ? (
+              <p className="type-small text-leisteen">
+                {t('earlyBirdUntil', { date: formatDate(tier.validUntil, locale) })}
+              </p>
+            ) : null}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      ''
+    ),
   })
 
   return (
@@ -61,11 +82,6 @@ export async function NextDatePanel({
       <div className="mt-4">
         <KeyFacts facts={facts} />
       </div>
-      {view.earlyBirdUntil ? (
-        <p className="type-small mt-4 text-leisteen">
-          {t('earlyBirdUntil', { date: formatDate(view.earlyBirdUntil, locale) })}
-        </p>
-      ) : null}
       {view.regState !== 'closed' ? (
         <Link
           href={{ pathname: '/register/[event]', params: { event: view.slug } }}

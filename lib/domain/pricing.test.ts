@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { PriceOption } from '@/lib/content/types'
-import { isFree, lowestPrice, visibleOptions } from './pricing'
+import { isFree, lowestPrice, priceTiers, visibleOptions } from './pricing'
 
 const options: PriceOption[] = [
   { kind: 'earlyBird', label: { nl: 'Vroegboek' }, amount: 775, validUntil: '2026-10-04' },
@@ -51,5 +51,34 @@ describe('lowestPrice and isFree', () => {
       { kind: 'option', label: { nl: 'Zonder overnachting' }, amount: 400 },
     ]
     expect(lowestPrice(teen, now)).toBe(400)
+  })
+})
+
+describe('priceTiers', () => {
+  it('keeps every option visible, flagging the early-bird as expired once it lapses', () => {
+    const justBefore = new Date('2026-10-04T21:59:00.000Z')
+    const justAfter = new Date('2026-10-04T22:30:00.000Z')
+
+    const before = priceTiers(options, justBefore)
+    expect(before.map((t) => [t.kind, t.expired])).toEqual([
+      ['earlyBird', false],
+      ['regular', false],
+      ['audit', false],
+    ])
+
+    const after = priceTiers(options, justAfter)
+    expect(after.map((t) => [t.kind, t.expired])).toEqual([
+      ['earlyBird', true],
+      ['regular', false],
+      ['audit', false],
+    ])
+  })
+
+  it('never flags options without a validUntil', () => {
+    const teen: PriceOption[] = [
+      { kind: 'option', label: { nl: 'Met overnachting' }, amount: 600 },
+      { kind: 'option', label: { nl: 'Zonder overnachting' }, amount: 400 },
+    ]
+    expect(priceTiers(teen, new Date()).every((t) => !t.expired)).toBe(true)
   })
 })

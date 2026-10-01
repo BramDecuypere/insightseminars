@@ -1,4 +1,4 @@
-import type { PriceOption } from '@/lib/content/types'
+import type { LocaleString, PriceKind, PriceOption } from '@/lib/content/types'
 import { endOfDayBrussels } from './dates'
 
 /**
@@ -49,4 +49,29 @@ export function activeEarlyBird(
   now: Date,
 ): PriceOption | undefined {
   return visibleOptions(options, now).find((o) => o.kind === 'earlyBird')
+}
+
+export interface PriceTier {
+  kind: PriceKind
+  label: LocaleString
+  amount: number
+  validUntil?: string
+  /** Past its validUntil cut-off; shown struck through rather than hidden. */
+  expired: boolean
+}
+
+/**
+ * All of an event's price options shown together (e.g. early-bird, regular
+ * and audit at once), instead of collapsing to a single "from" price. An
+ * option only ever carries a validUntil when it can lapse (currently just
+ * early-bird), so that's the only thing that can be `expired`.
+ */
+export function priceTiers(options: PriceOption[], now: Date): PriceTier[] {
+  return options.map((o) => ({
+    kind: o.kind,
+    label: o.label,
+    amount: o.amount,
+    validUntil: o.validUntil,
+    expired: Boolean(o.validUntil) && !isOptionValid(o, now),
+  }))
 }

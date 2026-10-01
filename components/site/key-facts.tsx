@@ -1,9 +1,9 @@
-import type { ComponentType } from 'react'
+import type { ComponentType, ReactNode } from 'react'
 
 export interface Fact {
   icon: ComponentType<{ className?: string }>
   label: string
-  value: string
+  value: ReactNode
 }
 
 /**
