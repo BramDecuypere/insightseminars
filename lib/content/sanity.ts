@@ -127,7 +127,7 @@ export async function getSettings(): Promise<SiteSettings | null> {
   return {
     ...s,
     defaultSeo: s.defaultSeo
-      ? { ...s.defaultSeo, ogImage: s.defaultSeo.ogImage ? imageUrl(s.defaultSeo.ogImage) : undefined }
+      ? { ...s.defaultSeo, ogImage: s.defaultSeo.ogImage ? imageUrl(s.defaultSeo.ogImage, 1200) : undefined }
       : undefined,
   } as SiteSettings
 }
