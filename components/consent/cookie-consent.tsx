@@ -9,7 +9,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
@@ -70,7 +69,7 @@ export function CookieConsent() {
                 </Link>
               </p>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap items-center justify-end gap-2 sm:flex-nowrap">
               <Button variant="outline" size="sm" onClick={openPreferences} disabled={isPending}>
                 {t('manage')}
               </Button>
@@ -91,26 +90,33 @@ export function CookieConsent() {
       )}
 
       <Dialog open={isPreferencesOpen} onOpenChange={(open) => !open && closePreferences()}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t('title')}</DialogTitle>
-            <DialogDescription>{t('body')}</DialogDescription>
+        <DialogContent className="max-w-md gap-6 rounded-panel border border-lijn bg-papier p-6 shadow-[0_16px_48px_rgba(28,30,51,0.14)] ring-0 sm:max-w-md">
+          <DialogHeader className="gap-1.5 pr-6">
+            <DialogTitle className="text-[1.375rem] leading-[1.3] font-semibold text-inkt">
+              {t('title')}
+            </DialogTitle>
+            <DialogDescription className="text-[0.9375rem] leading-[1.5] text-leisteen">
+              {t('body')}{' '}
+              <Link href="/privacy" className="underline underline-offset-4 hover:text-inkt">
+                {t('privacyLink')}
+              </Link>
+            </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-3">
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-3 rounded-md border border-lijn bg-mist/60 p-4">
               <Checkbox id="consent-necessary" checked disabled className="mt-0.5" />
               <label htmlFor="consent-necessary">
                 <span className="block type-small font-semibold text-inkt">{t('necessary')}</span>
                 <span className="block type-small text-leisteen">{t('necessaryHint')}</span>
               </label>
             </div>
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-3 rounded-md border border-lijn p-4">
               <Checkbox
                 id="consent-analytics"
                 checked={analyticsChecked}
                 onCheckedChange={(checked) => setAnalyticsChecked(checked === true)}
-                className="mt-0.5"
+                className="mt-0.5 data-checked:border-avondblauw data-checked:bg-avondblauw"
               />
               <label htmlFor="consent-analytics">
                 <span className="block type-small font-semibold text-inkt">{t('analytics')}</span>
@@ -119,7 +125,7 @@ export function CookieConsent() {
             </div>
           </div>
 
-          <DialogFooter>
+          <div className="flex flex-col gap-2 border-t border-lijn pt-5 sm:flex-row sm:justify-end">
             <Button
               variant="outline"
               onClick={() => commit({ analytics: false })}
@@ -130,7 +136,7 @@ export function CookieConsent() {
             <Button onClick={() => commit({ analytics: analyticsChecked })} disabled={isPending}>
               {t('save')}
             </Button>
-          </DialogFooter>
+          </div>
         </DialogContent>
       </Dialog>
     </>
