@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { HomeHero } from '@/components/home/home-hero'
 import { EventRow } from '@/components/site/event-row'
@@ -59,17 +60,38 @@ export default async function HomePage({ params }: Props) {
 
       {/* Herken je dit? */}
       <section className="bg-mist">
-        <Reveal className="container-site section-y max-w-3xl">
-          <h2 className="type-h2 text-inkt text-balance">{t('recognise')}</h2>
-          <p className="type-body mt-4 text-inkt">{pick(home.recognise.intro, l)}</p>
-          <ul className="mt-8 space-y-4">
-            {home.recognise.situations.map((s, i) => (
-              <li key={i} className="flex gap-3 text-lg text-inkt">
-                <span className="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-accent-3" aria-hidden="true" />
-                <span>{pick(s.label, l)}</span>
-              </li>
-            ))}
-          </ul>
+        <Reveal className="container-site section-y">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+            <div>
+              <h2 className="type-h2 text-inkt text-balance">{t('recognise')}</h2>
+              <p className="type-body mt-4 text-inkt">{pick(home.recognise.intro, l)}</p>
+              <ul className="mt-8 space-y-4">
+                {home.recognise.situations.map((s, i) => (
+                  <li key={i} className="flex gap-3 text-lg text-inkt">
+                    <span className="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-accent-3" aria-hidden="true" />
+                    <span>{pick(s.label, l)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {home.gallery?.[1] ? (
+              <div
+                className="mx-auto w-full max-w-sm rounded-panel p-3 lg:mx-0"
+                style={{ backgroundColor: 'color-mix(in srgb, var(--accent-3) 14%, var(--papier))' }}
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[calc(var(--radius-panel)-0.75rem)]">
+                  <Image
+                    src={home.gallery[1].src}
+                    alt={pick(home.gallery[1].alt, l)}
+                    fill
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            ) : null}
+          </div>
         </Reveal>
       </section>
 
@@ -89,8 +111,23 @@ export default async function HomePage({ params }: Props) {
       </section>
 
       {/* Het pad */}
-      <section className="on-avondblauw bg-avondblauw">
-        <Reveal className="container-site section-y">
+      <section className="on-avondblauw relative isolate overflow-hidden bg-avondblauw">
+        {home.gallery?.[0] ? (
+          <>
+            <Image
+              src={home.gallery[0].src}
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
+            <div
+              className="absolute inset-0"
+              style={{ background: 'color-mix(in srgb, var(--avondblauw) 82%, transparent)' }}
+            />
+          </>
+        ) : null}
+        <Reveal className="container-site section-y relative">
           <h2 className="type-h2 text-papier text-balance">{pick(home.path.heading, l)}</h2>
           <p className="type-lead mt-4 max-w-2xl text-papier/85">{pick(home.path.intro, l)}</p>
 
