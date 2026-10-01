@@ -68,8 +68,8 @@ export default async function TeensPage({ params }: Props) {
   const showFaq = teenFaqs.length > 0
   const renderedSections = [
     "hero",
-    showPrograms && "programs",
     showGallery && "gallery",
+    showPrograms && "programs",
     "parents",
     showFaq && "faq",
   ].filter(Boolean)
@@ -81,53 +81,78 @@ export default async function TeensPage({ params }: Props) {
     <>
       <FaqHash />
       {/* Teen hero */}
-      <header className={tone("hero")}>
-        <div className="container-site section-y">
-          <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
-            <div>
-              <span
-                className="type-eyebrow inline-block rounded-full px-3 py-1"
-                style={{
-                  backgroundColor: "color-mix(in srgb, var(--accent-4) 22%, transparent)",
-                  color: "var(--accent-4-ink)",
-                }}
-              >
-                Tiener Insight · 14–19
-              </span>
-              <h1 className="type-h1 mt-4 text-inkt text-balance">{pick(page.hero.title, l)}</h1>
-              <p className="type-lead mt-5 max-w-xl text-inkt">{pick(page.hero.lead, l)}</p>
-              <div className="mt-6">
-                <FeatureBoxes items={page.hero.points.map((point) => pick(point, l))} accent="accent4" />
-              </div>
-              <Link
-                href={{ pathname: "/agenda", query: { type: "teens" } }}
-                className={cn(buttonVariants({ variant: "primary" }), "mt-8")}
-              >
-                {t("datesCta")}
-                <ArrowRight className="size-4" aria-hidden />
-              </Link>
-            </div>
+      <header
+        className={cn("relative isolate overflow-hidden", page.media?.image ? "on-avondblauw" : tone("hero"))}
+      >
+        {page.media?.image ? (
+          <>
+            <Image
+              src={page.media.image.src || "/placeholder.svg"}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="absolute inset-0 -z-10 object-cover"
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 -z-10 bg-gradient-to-t from-avondblauw/95 via-avondblauw/70 to-avondblauw/40"
+            />
+          </>
+        ) : null}
 
-            {page.media?.image ? (
-              <div
-                className="rounded-panel p-3"
-                style={{ backgroundColor: "color-mix(in srgb, var(--accent-4) 14%, var(--papier))" }}
-              >
-                <div className="relative aspect-[4/3] overflow-hidden rounded-[calc(var(--radius-panel)-0.75rem)]">
-                  <Image
-                    src={page.media.image.src || "/placeholder.svg"}
-                    alt={pick(page.media.image.alt, l)}
-                    fill
-                    sizes="(min-width: 1024px) 45vw, 100vw"
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-              </div>
-            ) : null}
+        <div className="container-site section-y">
+          <div className="max-w-xl">
+            <span
+              className="type-eyebrow inline-block rounded-full px-3 py-1"
+              style={
+                page.media?.image
+                  ? { backgroundColor: "color-mix(in srgb, var(--papier) 20%, transparent)", color: "var(--papier)" }
+                  : { backgroundColor: "color-mix(in srgb, var(--accent-4) 22%, transparent)", color: "var(--accent-4-ink)" }
+              }
+            >
+              Tiener Insight · 14–19
+            </span>
+            <h1 className={cn("type-h1 mt-4 text-balance", page.media?.image ? "text-papier" : "text-inkt")}>
+              {pick(page.hero.title, l)}
+            </h1>
+            <p className={cn("type-lead mt-5 max-w-xl", page.media?.image ? "text-papier/90" : "text-inkt")}>
+              {pick(page.hero.lead, l)}
+            </p>
+            <div className="mt-6">
+              <FeatureBoxes items={page.hero.points.map((point) => pick(point, l))} accent="accent4" />
+            </div>
+            <Link
+              href={{ pathname: "/agenda", query: { type: "teens" } }}
+              className={cn(buttonVariants({ variant: page.media?.image ? "onDarkPrimary" : "primary" }), "mt-8")}
+            >
+              {t("datesCta")}
+              <ArrowRight className="size-4" aria-hidden />
+            </Link>
           </div>
         </div>
       </header>
+
+      {/* Sfeerbeelden */}
+      {showGallery && page.gallery ? (
+        <section className={tone("gallery")}>
+          <div className="container-site pt-[clamp(4rem,10vw,8rem)]">
+            <h2 className="type-h2 text-inkt text-balance">
+              {pick({ nl: 'Een sfeerbeeld', en: 'A glimpse of the room' }, l)}
+            </h2>
+          </div>
+          <div className="mt-8 pb-[clamp(4rem,10vw,8rem)]">
+            <PhotoGrid
+              images={page.gallery}
+              locale={l}
+              openLabel={tc('openImage')}
+              prevLabel={tc('prevImage')}
+              nextLabel={tc('nextImage')}
+              fullBleed
+            />
+          </div>
+        </section>
+      ) : null}
 
       {/* Teen programs */}
       {showPrograms ? (
@@ -150,26 +175,6 @@ export default async function TeensPage({ params }: Props) {
                   />
                 )
               })}
-            </div>
-          </div>
-        </section>
-      ) : null}
-
-      {/* Sfeerbeelden */}
-      {showGallery && page.gallery ? (
-        <section className={tone("gallery")}>
-          <div className="container-site section-y">
-            <h2 className="type-h2 text-inkt text-balance">
-              {pick({ nl: 'Een sfeerbeeld', en: 'A glimpse of the room' }, l)}
-            </h2>
-            <div className="mt-8">
-              <PhotoGrid
-                images={page.gallery}
-                locale={l}
-                openLabel={tc('openImage')}
-                prevLabel={tc('prevImage')}
-                nextLabel={tc('nextImage')}
-              />
             </div>
           </div>
         </section>

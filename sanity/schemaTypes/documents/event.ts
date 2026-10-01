@@ -29,6 +29,7 @@ export const event = defineType({
           { title: 'Seminarie (tieners)', value: 'teenSeminar' },
           { title: 'Infosessie', value: 'infoSession' },
           { title: 'Workshop', value: 'workshop' },
+          { title: 'Event', value: 'event' },
         ],
       },
       initialValue: 'seminar',
@@ -250,7 +251,7 @@ export const event = defineType({
       const name =
         programTitle ||
         title ||
-        ({ infoSession: 'Infosessie', workshop: 'Workshop' }[type as string] ?? 'Activiteit')
+        ({ infoSession: 'Infosessie', workshop: 'Workshop', event: 'Event' }[type as string] ?? 'Activiteit')
       return {
         title: name,
         subtitle: [range, STATUS_LABEL[status] ?? status].filter(Boolean).join(' · '),

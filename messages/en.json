@@ -87,12 +87,14 @@
   "agenda": {
     "title": "Calendar",
     "lead": "All seminars, info sessions and workshops on the schedule.",
+    "nextInfoSession": "Next free info session",
     "filters": {
       "all": "All",
       "seminars": "Seminars",
       "teens": "Teens",
       "infoSessions": "Info sessions",
-      "workshops": "Workshops"
+      "workshops": "Workshops",
+      "events": "Events"
     },
     "empty": "Nothing is scheduled in this category right now. Sign up for the newsletter and we'll let you know when new dates are added."
   },

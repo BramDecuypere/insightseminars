@@ -29,6 +29,7 @@ import {
 import { buildEventViews } from "@/lib/content/view"
 import { buildMetadata, eventJsonLd, videoJsonLd } from "@/lib/seo"
 import type { Faq, Locale } from "@/lib/content/types"
+import { cn } from "@/lib/utils"
 
 type Props = { params: Promise<{ locale: string; slug: string }> }
 
@@ -125,51 +126,63 @@ export default async function ProgramPage({ params }: Props) {
       {program.videoClip ? <JsonLd data={videoJsonLd(program.videoClip, l)} /> : null}
       {faqSubset.length > 0 ? <FaqHash /> : null}
 
-      <header className="text-inkt" style={{ backgroundColor: accentTint }}>
+      <header
+        className={cn("relative isolate overflow-hidden", program.heroImage ? "on-avondblauw" : "text-inkt")}
+        style={program.heroImage ? undefined : { backgroundColor: accentTint }}
+      >
+        {program.heroImage ? (
+          <>
+            <Image
+              src={program.heroImage.src || "/placeholder.svg"}
+              alt={pick(program.heroImage.alt, l)}
+              fill
+              priority
+              sizes="100vw"
+              className="absolute inset-0 -z-10 object-cover"
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 -z-10 bg-gradient-to-t from-avondblauw/95 via-avondblauw/70 to-avondblauw/40"
+            />
+          </>
+        ) : null}
+
         <div className="container-site section-y">
           <Link
             href="/seminars"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-leisteen hover:text-inkt"
+            className={cn(
+              "inline-flex items-center gap-1.5 text-sm font-semibold",
+              program.heroImage ? "text-papier/80 hover:text-papier" : "text-leisteen hover:text-inkt",
+            )}
           >
             <ArrowLeft className="size-4" aria-hidden />
             {t("backToSeminars")}
           </Link>
 
-          <div className="mt-8 grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
-            <div>
-              <div className="flex items-center gap-3">
-                <span
-                  aria-hidden
-                  className="font-display text-4xl font-bold leading-none"
-                  style={{ color: accentOnLight }}
-                >
-                  {program.numeral}
-                </span>
-                <span className="type-eyebrow text-leisteen">{pick(program.subtitle, l)}</span>
-              </div>
-              <h1 className="type-h1 mt-4 text-inkt text-balance">{pick(program.title, l)}</h1>
-              {program.officialName ? (
-                <p className="mt-2 text-lg italic text-leisteen">{program.officialName}</p>
-              ) : null}
-              <p className="type-lead mt-5 max-w-xl text-leisteen">{pick(program.lead, l)}</p>
-            </div>
-
-            {program.heroImage ? (
-              <div
-                className="rounded-panel p-3"
-                style={{ backgroundColor: `color-mix(in srgb, ${accentVar[program.accent]} 14%, var(--papier))` }}
+          <div className="mt-8 max-w-2xl">
+            <div className="flex items-center gap-3">
+              <span
+                aria-hidden
+                className="font-display text-4xl font-bold leading-none"
+                style={{ color: program.heroImage ? "var(--papier)" : accentOnLight }}
               >
-                <div className="relative aspect-[4/3] overflow-hidden rounded-[calc(var(--radius-panel)-0.75rem)]">
-                  <Image
-                    src={program.heroImage.src || "/placeholder.svg"}
-                    alt={pick(program.heroImage.alt, l)}
-                    fill
-                    sizes="(min-width: 1024px) 40vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-              </div>
+                {program.numeral}
+              </span>
+              <span className={cn("type-eyebrow", program.heroImage ? "text-papier/80" : "text-leisteen")}>
+                {pick(program.subtitle, l)}
+              </span>
+            </div>
+            <h1 className={cn("type-h1 mt-4 text-balance", program.heroImage ? "text-papier" : "text-inkt")}>
+              {pick(program.title, l)}
+            </h1>
+            {program.officialName ? (
+              <p className={cn("mt-2 text-lg italic", program.heroImage ? "text-papier/80" : "text-leisteen")}>
+                {program.officialName}
+              </p>
             ) : null}
+            <p className={cn("type-lead mt-5 max-w-xl", program.heroImage ? "text-papier/90" : "text-leisteen")}>
+              {pick(program.lead, l)}
+            </p>
           </div>
         </div>
       </header>

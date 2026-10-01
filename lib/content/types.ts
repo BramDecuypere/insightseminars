@@ -84,7 +84,7 @@ export interface Program {
   seo?: { title: LocaleString; description: LocaleString }
 }
 
-export type EventType = 'seminar' | 'teenSeminar' | 'infoSession' | 'workshop'
+export type EventType = 'seminar' | 'teenSeminar' | 'infoSession' | 'workshop' | 'event'
 export type EventLanguage = 'nl' | 'en' | 'en-nl' | 'nl-en'
 export type RegistrationStatus = 'open' | 'almostFull' | 'full' | 'closed'
 export type PaymentTiming = 'immediate' | 'later'

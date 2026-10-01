@@ -58,8 +58,8 @@ export default async function RegisterPage({ params }: Props) {
     place: await place(event, loc, tc('online')),
   }
 
-  // Info sessions & workshops use the single-step free form (§7.3).
-  const isInfo = event.type === 'infoSession' || event.type === 'workshop'
+  // Info sessions, workshops & events use the single-step free form (§7.3).
+  const isInfo = event.type === 'infoSession' || event.type === 'workshop' || event.type === 'event'
   if (isInfo) {
     return (
       <div className="container-site section-y">

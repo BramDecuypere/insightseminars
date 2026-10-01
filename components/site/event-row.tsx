@@ -13,13 +13,18 @@ import { StatusBadge } from './status-badge'
  * Agenda row (brief §9.4): a list item, not a card, with a 4px left marker in
  * the program colour. Details stack on their own lines; meta is never joined
  * with dots. Columns stack on mobile.
+ *
+ * `highlight` trades the left marker for a full accent-tinted background,
+ * used to call out a single featured row (e.g. the next free info session).
  */
 export async function EventRow({
   view,
   locale,
+  highlight = false,
 }: {
   view: EventView
   locale: Locale
+  highlight?: boolean
 }) {
   const t = await getTranslations('common')
   const tl = await getTranslations('languages')
@@ -33,10 +38,25 @@ export async function EventRow({
         ? t('registerInfoSession')
         : t('register')
 
+  // Info sessions aren't tied to a program, so they fall back to accent1
+  // (red) — too alarming for a full-tint highlight. Use the brand purple
+  // instead, reserved for this case.
+  const highlightColor = view.type === 'infoSession' ? 'var(--brand-purple)' : accentVar[view.accent]
+
   return (
     <li
-      className="relative overflow-hidden rounded-panel border border-lijn bg-papier"
-      style={{ borderLeft: `4px solid ${accentVar[view.accent]}` }}
+      className={cn(
+        "relative overflow-hidden rounded-panel border",
+        highlight ? "border-transparent" : "border-lijn bg-papier",
+      )}
+      style={
+        highlight
+          ? {
+              backgroundColor: `color-mix(in srgb, ${highlightColor} 16%, var(--papier))`,
+              borderColor: `color-mix(in srgb, ${highlightColor} 35%, transparent)`,
+            }
+          : { borderLeft: `4px solid ${accentVar[view.accent]}` }
+      }
     >
       <div className="flex flex-col gap-5 p-5 lg:flex-row lg:items-start lg:gap-6">
         {/* Date block */}

@@ -14,7 +14,7 @@ type Props = {
   searchParams: Promise<{ type?: string }>
 }
 
-const FILTERS = ["all", "seminars", "teens", "infoSessions", "workshops"] as const
+const FILTERS = ["all", "seminars", "teens", "infoSessions", "workshops", "events"] as const
 type Filter = (typeof FILTERS)[number]
 
 const MATCHERS: Record<Exclude<Filter, "all">, EventType> = {
@@ -22,6 +22,7 @@ const MATCHERS: Record<Exclude<Filter, "all">, EventType> = {
   teens: "teenSeminar",
   infoSessions: "infoSession",
   workshops: "workshop",
+  events: "event",
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -49,6 +50,9 @@ export default async function AgendaPage({ params, searchParams }: Props) {
   const upcoming = await getUpcomingEvents(now)
   const views = await buildEventViews(upcoming, l, now)
 
+  // Views are already sorted by start, so the first infoSession is the next one in line.
+  const nextInfoSession = views.find((v) => v.type === "infoSession")
+
   const filtered =
     active === "all" ? views : views.filter((v) => v.type === MATCHERS[active])
 
@@ -69,6 +73,15 @@ export default async function AgendaPage({ params, searchParams }: Props) {
 
       <section className="bg-papier">
         <div className="container-site section-y">
+          {nextInfoSession ? (
+            <div className="mb-10">
+              <h2 className="type-h3 text-inkt">{t("nextInfoSession")}</h2>
+              <ul className="mt-4">
+                <EventRow view={nextInfoSession} locale={l} highlight />
+              </ul>
+            </div>
+          ) : null}
+
           <nav aria-label={t("title")} className="flex flex-wrap gap-2">
             {visibleFilters.map((f) => {
               const isActive = f === active

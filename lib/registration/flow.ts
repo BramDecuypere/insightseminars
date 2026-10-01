@@ -68,7 +68,7 @@ export function resolveFlow(params: {
   const free = isFree(event.priceOptions ?? [])
 
   const isTeen = event.type === 'teenSeminar'
-  const isInfo = event.type === 'infoSession' || event.type === 'workshop'
+  const isInfo = event.type === 'infoSession' || event.type === 'workshop' || event.type === 'event'
   let flow: FlowKind = isTeen ? 'teen' : 'adult'
   if (isInfo) flow = 'info'
   if (state === 'waitlist') flow = 'waitlist'

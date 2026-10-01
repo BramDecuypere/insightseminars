@@ -87,12 +87,14 @@
   "agenda": {
     "title": "Agenda",
     "lead": "Alle seminars, infosessies en workshops die op de planning staan.",
+    "nextInfoSession": "Volgende gratis infosessie",
     "filters": {
       "all": "Alles",
       "seminars": "Seminars",
       "teens": "Tieners",
       "infoSessions": "Infosessies",
-      "workshops": "Workshops"
+      "workshops": "Workshops",
+      "events": "Events"
     },
     "empty": "In deze categorie staat momenteel niets gepland. Schrijf je in op de nieuwsbrief, dan laten we je weten wanneer er nieuwe data zijn."
   },
