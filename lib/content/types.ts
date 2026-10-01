@@ -288,7 +288,7 @@ export interface AboutPage {
 }
 
 export interface TeensPage {
-  hero: { title: LocaleString; lead: LocaleText; points: LocaleString[] }
+  hero: { eyebrow: LocaleString; title: LocaleString; lead: LocaleText; points: LocaleString[] }
   media?: { image?: ImageAsset; videoClip?: VideoClip }
   gallery?: ImageAsset[]
   parents: {

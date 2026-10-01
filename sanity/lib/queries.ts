@@ -112,7 +112,7 @@ export const aboutPageQuery = defineQuery(`*[_type == "aboutPage"][0]{
 }`)
 
 export const teensPageQuery = defineQuery(`*[_type == "teensPage"][0]{
-  hero{ title, lead, points },
+  hero{ eyebrow, title, lead, points },
   media{ image, videoClip ${VIDEO} },
   gallery,
   parents{ heading, lead, blocks[]{ title, text } },

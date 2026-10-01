@@ -250,7 +250,12 @@ function teensPageDoc(t: TeensPage) {
   return stripPlaceholders({
     _id: 'teensPage',
     _type: 'teensPage',
-    hero: { title: t.hero.title, lead: t.hero.lead, points: withKeys(t.hero.points) },
+    hero: {
+      eyebrow: t.hero.eyebrow,
+      title: t.hero.title,
+      lead: t.hero.lead,
+      points: withKeys(t.hero.points),
+    },
     parents: {
       heading: t.parents.heading,
       lead: t.parents.lead,

@@ -723,6 +723,7 @@ export const aboutPage: AboutPage = {
 
 export const teensPage: TeensPage = {
   hero: {
+    eyebrow: { nl: 'Tiener Insight · 14–19', en: 'Teen Insight · 14–19' },
     title: { nl: 'Jouw leven, jouw keuzes', en: 'Your life, your choices' },
     lead: { nl: 'Tiener Insight is een paar dagen samen met andere jongeren van 14 tot 19. Je leert jezelf beter kennen, zeggen wat je denkt, en kiezen wat bij jou past. Zonder preken, met veel doen.', en: 'Teen Insight is a few days together with other young people aged 14 to 19. You get to know yourself better, say what you think, and choose what suits you. No preaching, lots of doing.' },
     points: [

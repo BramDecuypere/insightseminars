@@ -160,6 +160,12 @@ export const teensPage = defineType({
       title: 'Hero',
       type: 'object',
       fields: [
+        defineField({
+          name: 'eyebrow',
+          title: 'Badge boven de titel',
+          description: 'Klein label boven de hero-titel, bv. "Tiener Insight · 14–19".',
+          type: 'localeString',
+        }),
         defineField({ name: 'title', title: 'Titel', type: 'localeString' }),
         defineField({ name: 'lead', title: 'Intro', type: 'localeText' }),
         defineField({ name: 'points', title: 'Punten', type: 'array', of: [arr('localeString')] }),

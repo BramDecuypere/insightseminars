@@ -96,7 +96,11 @@ export default async function TeensPage({ params }: Props) {
             />
             <div
               aria-hidden
-              className="absolute inset-0 -z-10 bg-gradient-to-t from-avondblauw/95 via-avondblauw/70 to-avondblauw/40"
+              className="absolute inset-0 -z-10"
+              style={{
+                background:
+                  "linear-gradient(to top, color-mix(in srgb, var(--accent-4) 90%, transparent) 0%, color-mix(in srgb, var(--accent-4) 60%, transparent) 50%, color-mix(in srgb, var(--accent-4) 25%, transparent) 100%)",
+              }}
             />
           </>
         ) : null}
@@ -111,7 +115,7 @@ export default async function TeensPage({ params }: Props) {
                   : { backgroundColor: "color-mix(in srgb, var(--accent-4) 22%, transparent)", color: "var(--accent-4-ink)" }
               }
             >
-              Tiener Insight · 14–19
+              {pick(page.hero.eyebrow, l)}
             </span>
             <h1 className={cn("type-h1 mt-4 text-balance", page.media?.image ? "text-papier" : "text-inkt")}>
               {pick(page.hero.title, l)}
