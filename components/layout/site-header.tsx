@@ -13,9 +13,9 @@ import { SpectrumStrip } from './spectrum-strip'
 
 /**
  * Header on papier (brief §4, §9.1): logo left, short nav, NL/EN text
- * switch, a "Gratis infosessie" secondary button and the "Inschrijven"
- * primary button. Spectrum strip sits directly beneath. The border only
- * settles in once scrolled (HeaderFrame), a quiet cue that the page moved.
+ * switch and a "Gratis infosessie" button. Spectrum strip sits directly
+ * beneath. The border only settles in once scrolled (HeaderFrame), a quiet
+ * cue that the page moved.
  */
 export async function SiteHeader() {
   const [t, rawLocale, programs] = await Promise.all([getTranslations('nav'), getLocale(), getPrograms()])
@@ -48,12 +48,6 @@ export async function SiteHeader() {
             className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}
           >
             {t('infoSession')}
-          </Link>
-          <Link
-            href={{ pathname: '/agenda', query: { type: 'seminars' } }}
-            className={cn(buttonVariants({ variant: 'primary', size: 'sm' }))}
-          >
-            {t('cta')}
           </Link>
         </div>
 

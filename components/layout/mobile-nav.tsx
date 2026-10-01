@@ -17,10 +17,10 @@ import { LanguageSwitcher } from './language-switcher'
 import { mainNav } from './nav-config'
 import type { SeminarNavLink } from './main-nav'
 
-/** Mobile navigation as a sheet from the right (brief §4, §9.4). The two CTAs
- *  stay visible above the menu items. "About", "Seminars" and "Agenda"
- *  expand into their sub-links via native <details>, keeping large tap
- *  targets and no extra JS for the disclosure. */
+/** Mobile navigation as a sheet from the right (brief §4, §9.4). The info
+ *  session CTA stays visible above the menu items. "About", "Seminars" and
+ *  "Agenda" expand into their sub-links via native <details>, keeping large
+ *  tap targets and no extra JS for the disclosure. */
 export function MobileNav({ seminarPrograms }: { seminarPrograms: SeminarNavLink[] }) {
   const t = useTranslations('nav')
   const pathname = usePathname()
@@ -55,13 +55,6 @@ export function MobileNav({ seminarPrograms }: { seminarPrograms: SeminarNavLink
             className={cn(buttonVariants({ variant: 'onDark' }), 'w-full')}
           >
             {t('infoSession')}
-          </Link>
-          <Link
-            href={{ pathname: '/agenda', query: { type: 'seminars' } }}
-            onClick={() => setOpen(false)}
-            className={cn(buttonVariants({ variant: 'onDarkPrimary' }), 'w-full')}
-          >
-            {t('cta')}
           </Link>
         </div>
 

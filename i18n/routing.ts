@@ -21,6 +21,7 @@ export const routing = defineRouting({
     '/seminars/[slug]': { nl: '/seminars/[slug]', en: '/seminars/[slug]' },
     '/teens': { nl: '/tieners', en: '/teens' },
     '/agenda': { nl: '/agenda', en: '/calendar' },
+    '/community': { nl: '/gemeenschap', en: '/community' },
     '/faq': { nl: '/veelgestelde-vragen', en: '/faq' },
     '/contact': { nl: '/contact', en: '/contact' },
     '/links': { nl: '/links', en: '/links' },

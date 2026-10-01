@@ -17,7 +17,7 @@ export type NavSubItem = { key: string; href: NavHref }
  *  `getPrograms()` where this config is consumed (site-header.tsx), since
  *  program slugs aren't known statically. */
 export const mainNav: {
-  key: 'about' | 'seminars' | 'teens' | 'agenda' | 'contact'
+  key: 'about' | 'seminars' | 'teens' | 'agenda' | 'community' | 'contact'
   href: StaticPathname
   children?: NavSubItem[]
 }[] = [
@@ -42,5 +42,6 @@ export const mainNav: {
       { key: 'agendaInfo', href: { pathname: '/agenda', query: { type: 'infoSessions' } } },
     ],
   },
+  { key: 'community', href: '/community' },
   { key: 'contact', href: '/contact' },
 ]

@@ -5,10 +5,10 @@
     "seminars": "Seminars",
     "teens": "Teens",
     "agenda": "Calendar",
+    "community": "Community",
     "faq": "FAQ",
     "contact": "Contact",
     "links": "Links",
-    "cta": "Register",
     "infoSession": "Free info session",
     "menu": "Menu",
     "close": "Close",
@@ -342,6 +342,16 @@
   "linksPage": {
     "title": "Links",
     "lead": "Everything you need from us, in one place."
+  },
+  "communityPage": {
+    "title": "Community",
+    "lead": "Insight is a worldwide movement. Discover the local community in Belgium and the wider international community.",
+    "belgiumHeading": "Belgium",
+    "belgiumBody": "Stay in touch with the Belgian Insight community between seminars: follow us on social media, drop by a free info session, or get in touch.",
+    "belgiumSocialsLabel": "Follow us",
+    "internationalHeading": "International",
+    "internationalBody": "Insight Seminars exists worldwide. The links below point to the international organisation and to seminars in other countries.",
+    "internationalCalendarCta": "International calendar"
   },
   "teensPage": {
     "programsHeading": "The seminars for teens",
