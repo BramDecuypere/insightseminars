@@ -145,7 +145,7 @@ export default async function ProgramPage({ params }: Props) {
               aria-hidden
               className="absolute inset-0 -z-10"
               style={{
-                background: `linear-gradient(to top, color-mix(in srgb, ${accentVar[program.accent]} 90%, transparent) 0%, color-mix(in srgb, ${accentVar[program.accent]} 60%, transparent) 50%, color-mix(in srgb, ${accentVar[program.accent]} 25%, transparent) 100%)`,
+                background: `linear-gradient(to top, color-mix(in srgb, ${accentVar[program.accent]} 55%, transparent) 0%, color-mix(in srgb, ${accentVar[program.accent]} 30%, transparent) 40%, color-mix(in srgb, ${accentVar[program.accent]} 10%, transparent) 75%, transparent 100%)`,
               }}
             />
           </>

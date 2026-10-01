@@ -99,7 +99,7 @@ export default async function TeensPage({ params }: Props) {
               className="absolute inset-0 -z-10"
               style={{
                 background:
-                  "linear-gradient(to top, color-mix(in srgb, var(--accent-4) 90%, transparent) 0%, color-mix(in srgb, var(--accent-4) 60%, transparent) 50%, color-mix(in srgb, var(--accent-4) 25%, transparent) 100%)",
+                  "linear-gradient(to top, color-mix(in srgb, var(--accent-4) 55%, transparent) 0%, color-mix(in srgb, var(--accent-4) 30%, transparent) 40%, color-mix(in srgb, var(--accent-4) 10%, transparent) 75%, transparent 100%)",
               }}
             />
           </>
