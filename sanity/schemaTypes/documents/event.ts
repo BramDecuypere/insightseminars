@@ -254,9 +254,14 @@ export const event = defineType({
         programTitle ||
         title ||
         ({ infoSession: 'Infosessie', workshop: 'Workshop', event: 'Event' }[type as string] ?? 'Activiteit')
+      // Past events show "Voorbij" instead of their (now irrelevant) registration status.
+      const today = new Date()
+      today.setHours(0, 0, 0, 0)
+      const last = end || start
+      const label = last && new Date(last) < today ? 'Voorbij' : (STATUS_LABEL[status] ?? status)
       return {
         title: name,
-        subtitle: [range, STATUS_LABEL[status] ?? status].filter(Boolean).join(' · '),
+        subtitle: [range, label].filter(Boolean).join(' · '),
         media,
       }
     },

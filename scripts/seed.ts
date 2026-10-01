@@ -126,7 +126,7 @@ function programDoc(p: Program) {
       ?.map((s) => programIdBySlug.get(s))
       .filter((id): id is string => Boolean(id))
       .map((id) => ({ _key: key(), ...ref(id) })),
-    testimonials: p.testimonials?.map((id) => ({ _key: key(), ...ref(id) })),
+    testimonials: p.testimonials?.map((t) => ({ _key: key(), ...ref(t._id) })),
     faqs: p.faqs?.map((id) => ({ _key: key(), ...ref(id) })),
     seo: p.seo,
   })
@@ -294,19 +294,35 @@ async function run() {
   docs.push(contactPageDoc(mock.contactPage))
 
   for (const v of mock.venues) docs.push(stripPlaceholders({ ...v, _type: 'venue' }))
+  // `person` merges the former facilitator/teamMember types (brief: one document per
+  // human, so a photo only needs updating in one place). Mock facilitators and team
+  // members don't overlap by name here, but a real migration should merge by name.
   for (const f of mock.facilitators)
     docs.push(
       stripPlaceholders({
         _id: f._id,
-        _type: 'facilitator',
+        _type: 'person',
         name: f.name,
+        roles: ['facilitator'],
         slug: slug(f.slug),
         role: f.role,
         bio: toBlocks(f.bio),
         website: f.website,
       }),
     )
-  for (const m of mock.team) docs.push(stripPlaceholders({ ...m, _type: 'teamMember' }))
+  for (const m of mock.team)
+    docs.push(
+      stripPlaceholders({
+        _id: m._id,
+        _type: 'person',
+        name: m.name,
+        roles: ['team'],
+        role: m.role,
+        bio: toBlocks(m.bio ? { nl: [m.bio.nl], en: m.bio.en ? [m.bio.en] : undefined } : undefined),
+        photo: m.photo,
+        order: m.order,
+      }),
+    )
   for (const f of mock.faqs)
     docs.push(
       stripPlaceholders({
