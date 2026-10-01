@@ -83,6 +83,7 @@ function mapProgram<T extends Record<string, any>>(p: T | null): T | null {
     howItWorks: rich(p.howItWorks),
     forWhom: rich(p.forWhom),
     videoClip: video(p.videoClip),
+    testimonials: Array.isArray(p.testimonials) ? p.testimonials.map((t: any) => mapTestimonial(t)) : p.testimonials,
   }
 }
 
@@ -137,6 +138,7 @@ export async function getHomePage(): Promise<HomePage | null> {
   return {
     ...h,
     hero: h.hero ? { ...h.hero, image: img(h.hero.image) } : h.hero,
+    testimonials: Array.isArray(h.testimonials) ? h.testimonials.map((t: any) => mapTestimonial(t)) : [],
     videoClip: video(h.videoClip),
     videoPoster: img(h.videoPoster),
     gallery: gallery(h.gallery),
@@ -146,7 +148,12 @@ export async function getHomePage(): Promise<HomePage | null> {
 export async function getAboutPage(): Promise<AboutPage | null> {
   const a = await sanityFetch<any>({ query: q.aboutPageQuery, tags: ['sanity:aboutPage'] })
   if (!a) return null
-  return { ...a, videoClip: video(a.videoClip), gallery: gallery(a.gallery) } as AboutPage
+  return {
+    ...a,
+    testimonials: Array.isArray(a.testimonials) ? a.testimonials.map((t: any) => mapTestimonial(t)) : [],
+    videoClip: video(a.videoClip),
+    gallery: gallery(a.gallery),
+  } as AboutPage
 }
 
 export async function getTeensPage(): Promise<TeensPage | null> {
@@ -245,11 +252,6 @@ export async function getLegalPage(kind: LegalKind): Promise<LegalPage | null> {
 export async function getTestimonials(): Promise<Testimonial[]> {
   const list = await sanityFetch<any[]>({ query: q.testimonialsQuery, tags: ['sanity:testimonial'] })
   return (list ?? []).map((t) => mapTestimonial(t)) as Testimonial[]
-}
-
-export async function getFeaturedTestimonials(): Promise<Testimonial[]> {
-  const all = await getTestimonials()
-  return all.filter((t) => t.featured)
 }
 
 export async function getInternationalEvents(now: Date = new Date()): Promise<InternationalEvent[]> {

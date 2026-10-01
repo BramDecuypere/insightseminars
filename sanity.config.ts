@@ -44,8 +44,7 @@ export default defineConfig({
           documentTypes: [
             'program',
             'event',
-            'facilitator',
-            'teamMember',
+            'person',
             'venue',
             'faq',
             'testimonial',

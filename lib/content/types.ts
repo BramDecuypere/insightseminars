@@ -71,7 +71,8 @@ export interface Program {
   hoursLabel?: LocaleString
   groupSize?: LocaleString
   expectations?: { title: LocaleString; text: LocaleText }[]
-  testimonials?: string[]
+  /** Curated for this program's page (brief: testimonials are picked, not just filtered). */
+  testimonials?: Testimonial[]
   videoClip?: VideoClip
   ageMin?: number
   ageMax?: number
@@ -170,7 +171,6 @@ export interface Testimonial {
   videoClip?: VideoClip
   programSlug?: string
   audience: TestimonialAudience
-  featured: boolean
   consentConfirmed: boolean
 }
 
@@ -250,7 +250,8 @@ export interface HomePage {
   howItWorks: { heading: LocaleString; points: { title: LocaleString; text: LocaleText }[] }
   benefits: { heading: LocaleString; items: LocaleString[] }
   testimonialsHeading: LocaleString
-  testimonialIds: string[]
+  /** Curated in Studio; the first one is shown (brief: testimonials are picked, not just filtered). */
+  testimonials: Testimonial[]
   videoClip?: VideoClip
   /** Still shown in the "Wat is Insight?" slot when no clip is uploaded yet. */
   videoPoster?: ImageAsset
@@ -276,6 +277,8 @@ export interface AboutPage {
   story: { heading: LocaleString; paragraphs: LocaleText[] }
   teamIntro: LocaleText
   testimonialsHeading: LocaleString
+  /** Curated in Studio (brief: testimonials are picked, not just the first N confirmed ones). */
+  testimonials: Testimonial[]
   facilitatorsIntro: LocaleText
   support: { heading: LocaleString; body: LocaleText }
   closing: { heading: LocaleString }

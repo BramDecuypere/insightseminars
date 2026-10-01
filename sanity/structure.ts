@@ -61,8 +61,36 @@ export const structure: StructureResolver = (S) => {
         ),
 
       S.documentTypeListItem('internationalEvent').title('Insight wereldwijd'),
-      S.documentTypeListItem('facilitator').title('Facilitators'),
-      S.documentTypeListItem('teamMember').title('Team'),
+
+      S.listItem()
+        .title('Mensen')
+        .child(
+          S.list()
+            .title('Mensen')
+            .items([
+              S.listItem()
+                .title('Alle personen')
+                .child(S.documentTypeList('person').title('Alle personen')),
+              S.listItem()
+                .title('Begeleiders')
+                .child(
+                  S.documentList()
+                    .title('Begeleiders')
+                    .schemaType('person')
+                    .filter('_type == "person" && "facilitator" in roles'),
+                ),
+              S.listItem()
+                .title('Team')
+                .child(
+                  S.documentList()
+                    .title('Team')
+                    .schemaType('person')
+                    .filter('_type == "person" && "team" in roles')
+                    .defaultOrdering([{ field: 'order', direction: 'asc' }]),
+                ),
+            ]),
+        ),
+
       S.documentTypeListItem('venue').title('Locaties'),
       S.documentTypeListItem('faq').title('Veelgestelde vragen'),
       S.documentTypeListItem('testimonial').title('Getuigenissen'),

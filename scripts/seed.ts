@@ -174,7 +174,6 @@ function testimonialDoc(t: Testimonial) {
     context: t.context,
     program: programId ? ref(programId) : undefined,
     audience: t.audience,
-    featured: t.featured,
     consentConfirmed: t.consentConfirmed,
   })
 }
@@ -224,7 +223,7 @@ function homePageDoc(h: HomePage) {
     path: h.path,
     upcomingHeading: h.upcomingHeading,
     testimonialsHeading: h.testimonialsHeading,
-    testimonials: h.testimonialIds.map((id) => ({ _key: key(), ...ref(id) })),
+    testimonials: h.testimonials.map((t) => ({ _key: key(), ...ref(t._id) })),
     seo: h.seo,
   })
 }
@@ -239,6 +238,7 @@ function aboutPageDoc(a: AboutPage) {
     forWho: a.forWho,
     story: { heading: a.story.heading, paragraphs: withKeys(a.story.paragraphs) },
     teamIntro: a.teamIntro,
+    testimonials: a.testimonials.map((t) => ({ _key: key(), ...ref(t._id) })),
     facilitatorsIntro: a.facilitatorsIntro,
     support: a.support,
     closing: a.closing,

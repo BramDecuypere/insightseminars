@@ -120,6 +120,7 @@ export const program = defineType({
     defineField({
       name: 'testimonials',
       title: 'Getuigenissen',
+      description: 'Getoond op de pagina van dit seminarie.',
       type: 'array',
       of: [defineArrayMember({ type: 'reference', to: [{ type: 'testimonial' }] })],
       group: 'related',

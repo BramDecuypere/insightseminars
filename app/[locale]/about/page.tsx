@@ -11,15 +11,7 @@ import { TestimonialCard } from '@/components/site/testimonial-card'
 import { VideoClip } from '@/components/site/video-clip'
 import { buttonVariants } from '@/components/ui/button'
 import { Link } from '@/i18n/navigation'
-import {
-  getAboutPage,
-  getFacilitators,
-  getSettings,
-  getTeam,
-  getTestimonials,
-  pick,
-  pickRich,
-} from '@/lib/content'
+import { getAboutPage, getFacilitators, getSettings, getTeam, pick, pickRich } from '@/lib/content'
 import { buildMetadata, videoJsonLd } from '@/lib/seo'
 import type { Locale } from '@/lib/content/types'
 import { cn } from '@/lib/utils'
@@ -45,13 +37,13 @@ export default async function AboutPage({ params }: Props) {
 
   const t = await getTranslations('aboutPage')
   const tc = await getTranslations('common')
-  const [page, settings, team, facilitators, testimonials] = await Promise.all([
+  const [page, settings, team, facilitators] = await Promise.all([
     getAboutPage(),
     getSettings(),
     getTeam(),
     getFacilitators(),
-    getTestimonials(),
   ])
+  const testimonials = page.testimonials
 
   const supportBody = pick(page.support.body, l)
     .replace('{iban}', settings.iban ?? '')
@@ -134,7 +126,7 @@ export default async function AboutPage({ params }: Props) {
               </div>
             ) : null}
             <ul className="mt-8 grid gap-6 md:grid-cols-3">
-              {testimonials.slice(0, 3).map((tst) => (
+              {testimonials.map((tst) => (
                 <li key={tst._id}>
                   <TestimonialCard
                     testimonial={tst}

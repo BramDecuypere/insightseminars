@@ -16,7 +16,7 @@ import { priceOption } from './objects/priceOption'
 import { videoClip } from './objects/videoClip'
 import { program } from './documents/program'
 import { event } from './documents/event'
-import { facilitator, teamMember, venue } from './documents/people'
+import { person, venue } from './documents/people'
 import { faq, internationalEvent, testimonial } from './documents/editorial'
 import { aboutPage, contactPage, homePage, teensPage } from './documents/pages'
 import { legalPage, siteSettings } from './documents/settings'
@@ -41,8 +41,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   // Documents (§5.2)
   program,
   event,
-  facilitator,
-  teamMember,
+  person,
   venue,
   faq,
   testimonial,

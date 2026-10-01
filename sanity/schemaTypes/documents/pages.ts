@@ -112,7 +112,8 @@ export const homePage = defineType({
     defineField({ name: 'testimonialsHeading', title: 'Kop getuigenissen', type: 'localeString', group: 'testimonials' }),
     defineField({
       name: 'testimonials',
-      title: 'Uitgelichte getuigenissen',
+      title: 'Getuigenissen op deze pagina',
+      description: 'De eerste getuigenis in de lijst wordt getoond.',
       type: 'array',
       of: [defineArrayMember({ type: 'reference', to: [{ type: 'testimonial' }] })],
       group: 'testimonials',
@@ -169,6 +170,12 @@ export const aboutPage = defineType({
     }),
     defineField({ name: 'teamIntro', title: 'Intro team', type: 'localeText' }),
     defineField({ name: 'testimonialsHeading', title: 'Kop getuigenissen', type: 'localeString' }),
+    defineField({
+      name: 'testimonials',
+      title: 'Getuigenissen op deze pagina',
+      type: 'array',
+      of: [defineArrayMember({ type: 'reference', to: [{ type: 'testimonial' }] })],
+    }),
     defineField({ name: 'facilitatorsIntro', title: 'Intro begeleiders', type: 'localeText' }),
     defineField({
       name: 'support',

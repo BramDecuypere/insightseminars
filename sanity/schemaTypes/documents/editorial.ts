@@ -70,7 +70,6 @@ export const testimonial = defineType({
       initialValue: 'adults',
       validation: (r) => r.required(),
     }),
-    defineField({ name: 'featured', title: 'Tonen op de startpagina', type: 'boolean', initialValue: false }),
     defineField({
       name: 'consentConfirmed',
       title: 'Toestemming bevestigd',

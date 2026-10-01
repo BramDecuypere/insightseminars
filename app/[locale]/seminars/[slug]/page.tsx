@@ -12,6 +12,7 @@ import { JsonLd } from "@/components/site/json-ld"
 import { KeyFacts, type Fact } from "@/components/site/key-facts"
 import { NewsletterBand } from "@/components/site/newsletter-band"
 import { PhotoGrid } from "@/components/site/photo-grid"
+import { TestimonialCard } from "@/components/site/testimonial-card"
 import { VideoClip } from "@/components/site/video-clip"
 import { accentInk, accentVar } from "@/components/site/accent"
 import { Link } from "@/i18n/navigation"
@@ -274,6 +275,26 @@ export default async function ProgramPage({ params }: Props) {
                 nextLabel={tc('nextImage')}
               />
             </div>
+          </div>
+        </section>
+      ) : null}
+
+      {/* Getuigenissen */}
+      {program.testimonials && program.testimonials.length > 0 ? (
+        <section className="bg-papier">
+          <div className="container-site section-y">
+            <h2 className="type-h2 text-inkt text-balance">{t("testimonialsHeading")}</h2>
+            <ul className="mt-8 grid gap-6 md:grid-cols-3">
+              {program.testimonials.map((tst) => (
+                <li key={tst._id}>
+                  <TestimonialCard
+                    testimonial={tst}
+                    locale={l}
+                    playLabel={tc("playVideo", { duration: "1 min" })}
+                  />
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       ) : null}

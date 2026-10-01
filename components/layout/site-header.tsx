@@ -45,7 +45,7 @@ export async function SiteHeader() {
           <LanguageSwitcher onLight variant="compact" />
           <Link
             href={{ pathname: '/agenda', query: { type: 'infoSessions' } }}
-            className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}
+            className={cn(buttonVariants({ variant: 'primary', size: 'sm' }))}
           >
             {t('infoSession')}
           </Link>

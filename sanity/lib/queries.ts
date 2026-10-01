@@ -23,6 +23,12 @@ const VIDEO = /* groq */ `{
   consentConfirmed
 }`
 
+const TESTIMONIAL = /* groq */ `{
+  _id, quote, situation, name, context, photo,
+  videoClip ${VIDEO},
+  "programSlug": program->slug.current, audience, consentConfirmed
+}`
+
 const PROGRAM = /* groq */ `{
   _id, title, subtitle, officialName, "slug": slug.current, track, order, numeral, accent,
   lead, outcomes, howItWorks, forWhom, durationLabel, hoursLabel, groupSize,
@@ -30,7 +36,7 @@ const PROGRAM = /* groq */ `{
   ageMin, ageMax, nextDateNote, heroImage, gallery,
   videoClip ${VIDEO},
   "prerequisites": prerequisites[]->slug.current,
-  "testimonials": testimonials[]->_id,
+  testimonials[]-> ${TESTIMONIAL},
   "faqs": faqs[]->_id,
   seo
 }`
@@ -46,14 +52,10 @@ const EVENT = /* groq */ `{
   image, notes, emailInfo
 }`
 
-const TESTIMONIAL = /* groq */ `{
-  _id, quote, situation, name, context, photo,
-  videoClip ${VIDEO},
-  "programSlug": program->slug.current, audience, featured, consentConfirmed
-}`
-
-const FACILITATOR = /* groq */ `{ _id, name, "slug": slug.current, role, bio, photo, website }`
-const TEAM = /* groq */ `{ _id, name, role, bio, photo, order }`
+// `person` covers both facilitators and team members (one document, one
+// photo, one bio per human); the facilitator/team queries below just filter
+// it by role instead of reading from two separate document types.
+const PERSON = /* groq */ `{ _id, name, "slug": slug.current, role, bio, photo, website, order }`
 const VENUE = /* groq */ `{ _id, name, street, postalCode, city, country, mapsUrl, accessibility, image }`
 const FAQ = /* groq */ `{ _id, question, answer, category, order }`
 const INTERNATIONAL = /* groq */ `{ _id, "programSlug": program->slug.current, country, city, start, end, language, url }`
@@ -87,7 +89,7 @@ export const homePageQuery = defineQuery(`*[_type == "homePage"][0]{
   path{ heading, intro, nextInsight1Heading, infoSessionLine, teenLine },
   upcomingHeading,
   testimonialsHeading,
-  "testimonialIds": testimonials[]->_id,
+  testimonials[]-> ${TESTIMONIAL},
   videoClip ${VIDEO},
   videoPoster,
   gallery,
@@ -101,6 +103,7 @@ export const aboutPageQuery = defineQuery(`*[_type == "aboutPage"][0]{
   forWho{ heading, body },
   story{ heading, paragraphs },
   teamIntro, testimonialsHeading, facilitatorsIntro,
+  testimonials[]-> ${TESTIMONIAL},
   support{ heading, body },
   closing{ heading },
   videoClip ${VIDEO},
@@ -137,8 +140,12 @@ export const eventBySlugQuery = defineQuery(
 )
 
 export const faqsQuery = defineQuery(`*[_type == "faq"] | order(order asc) ${FAQ}`)
-export const teamQuery = defineQuery(`*[_type == "teamMember"] | order(order asc) ${TEAM}`)
-export const facilitatorsQuery = defineQuery(`*[_type == "facilitator"] | order(name asc) ${FACILITATOR}`)
+export const teamQuery = defineQuery(
+  `*[_type == "person" && "team" in roles] | order(order asc) ${PERSON}`,
+)
+export const facilitatorsQuery = defineQuery(
+  `*[_type == "person" && "facilitator" in roles] | order(name asc) ${PERSON}`,
+)
 export const venuesQuery = defineQuery(`*[_type == "venue"] | order(name asc) ${VENUE}`)
 export const testimonialsQuery = defineQuery(
   `*[_type == "testimonial" && consentConfirmed == true && defined(quote.nl) && !(_id match "testimonial-mock*")] ${TESTIMONIAL}`,

@@ -1,5 +1,7 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
+import { EventTypeInput } from '../components/EventTypeInput'
+
 const STATUS_LABEL: Record<string, string> = {
   open: 'Open',
   almostFull: 'Bijna vol',
@@ -23,15 +25,9 @@ export const event = defineType({
       name: 'type',
       title: 'Soort activiteit',
       type: 'string',
-      options: {
-        list: [
-          { title: 'Seminarie (volwassenen)', value: 'seminar' },
-          { title: 'Seminarie (tieners)', value: 'teenSeminar' },
-          { title: 'Infosessie', value: 'infoSession' },
-          { title: 'Workshop', value: 'workshop' },
-          { title: 'Event', value: 'event' },
-        ],
-      },
+      description:
+        'Bij "Seminarie" wordt Volwassenen/Tieners automatisch bepaald door het hieronder gekozen seminarie.',
+      components: { input: EventTypeInput },
       initialValue: 'seminar',
       group: 'main',
       validation: (rule) => rule.required(),
@@ -120,7 +116,13 @@ export const event = defineType({
       name: 'facilitators',
       title: 'Begeleiders',
       type: 'array',
-      of: [defineArrayMember({ type: 'reference', to: [{ type: 'facilitator' }] })],
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [{ type: 'person' }],
+          options: { filter: '"facilitator" in roles' },
+        }),
+      ],
       group: 'main',
     }),
     defineField({

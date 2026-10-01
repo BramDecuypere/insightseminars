@@ -157,11 +157,6 @@ export async function getTestimonials() {
   return mock.testimonials.filter((t) => t.consentConfirmed)
 }
 
-export async function getFeaturedTestimonials() {
-  if (hasSanity) return sanity.getFeaturedTestimonials()
-  return mock.testimonials.filter((t) => t.consentConfirmed && t.featured)
-}
-
 /** Visible international events, sorted by start (past ones drop off, §5.2). */
 export async function getInternationalEvents(now: Date = new Date()) {
   if (hasSanity) return sanity.getInternationalEvents(now)

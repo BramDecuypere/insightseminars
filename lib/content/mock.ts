@@ -625,7 +625,7 @@ export const homePage: HomePage = {
     ],
   },
   testimonialsHeading: { nl: 'Wat deelnemers zeggen', en: 'What participants say' },
-  testimonialIds: [],
+  testimonials: [],
   // No clip is uploaded yet (§17). The "Wat is Insight?" section falls back to a
   // still poster; no play button is shown until a real clip exists.
   videoPoster: {
@@ -699,6 +699,7 @@ export const aboutPage: AboutPage = {
   },
   teamIntro: { nl: 'Ons team bestaat uit vrijwilligers die zelf ervaren hebben wat Insight in beweging kan zetten.', en: 'Our team consists of volunteers who have themselves experienced what Insight can set in motion.' },
   testimonialsHeading: { nl: 'Wat deelnemers zeggen', en: 'What participants say' },
+  testimonials: [],
   facilitatorsIntro: { nl: 'De seminars worden geleid door ervaren Insight-facilitators.', en: 'The seminars are led by experienced Insight facilitators.' },
   support: { heading: { nl: 'Steun Insight', en: 'Support Insight' }, body: { nl: 'Insight Seminars België werkt zonder winstoogmerk. Met een gift help je om seminars in België mogelijk te maken. Je kan een bedrag overschrijven naar {iban} op naam van {accountHolder}, met als mededeling "gift". Dank je wel!', en: 'Insight Seminars België is a non-profit. With a gift you help make seminars in Belgium possible. You can transfer an amount to {iban} in the name of {accountHolder}, with "gift" as the reference. Thank you!' } },
   closing: { heading: { nl: 'Klaar om te beginnen?', en: 'Ready to begin?' } },

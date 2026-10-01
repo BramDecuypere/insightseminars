@@ -9,13 +9,7 @@ import { PathBlock } from '@/components/site/path-block'
 import { Reveal } from '@/components/site/reveal'
 import { TestimonialCard } from '@/components/site/testimonial-card'
 import { Link } from '@/i18n/navigation'
-import {
-  getFeaturedTestimonials,
-  getHomePage,
-  getPrograms,
-  getUpcomingEvents,
-  pick,
-} from '@/lib/content'
+import { getHomePage, getPrograms, getUpcomingEvents, pick } from '@/lib/content'
 import { buildEventViews } from '@/lib/content/view'
 import { buildMetadata } from '@/lib/seo'
 import type { Locale } from '@/lib/content/types'
@@ -41,18 +35,17 @@ export default async function HomePage({ params }: Props) {
   const now = new Date()
 
   const t = await getTranslations('common')
-  const [home, programs, upcoming, featured] = await Promise.all([
+  const [home, programs, upcoming] = await Promise.all([
     getHomePage(),
     getPrograms(),
     getUpcomingEvents(now),
-    getFeaturedTestimonials(),
   ])
 
   const adultPrograms = programs.filter((p) => p.track === 'adults')
   const eventViews = await buildEventViews(upcoming, l, now)
   const nextFour = eventViews.slice(0, 4)
   const nextFreeSession = eventViews.find((v) => v.free && v.regState !== 'closed')
-  const testimonial = featured[0]
+  const testimonial = home.testimonials[0]
 
   return (
     <>
