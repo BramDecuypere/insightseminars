@@ -47,7 +47,11 @@ const nextConfig: NextConfig = {
     },
   },
   images: {
-    unoptimized: true,
+    // Next re-encodes/resizes on demand (AVIF/WebP + real srcset) from the
+    // Sanity master fetched via sanity/lib/image.ts, then caches the result.
+    // Previously `unoptimized: true` shipped one flat-width image to every
+    // viewport and skipped modern formats entirely.
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }],
   },
   // Guarantee one-hop legacy redirects: skip Next's automatic trailing-slash
