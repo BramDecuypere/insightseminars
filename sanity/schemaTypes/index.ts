@@ -3,6 +3,9 @@ import type { SchemaTypeDefinition } from 'sanity'
 import { localeRichText, localeString, localeText } from './locale'
 import {
   announcement,
+  benefitsBlock,
+  forWhoBlock,
+  heroBasic,
   imageWithAlt,
   internationalLink,
   linkItem,
@@ -38,6 +41,9 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   situationItem,
   priceOption,
   videoClip,
+  heroBasic,
+  benefitsBlock,
+  forWhoBlock,
   // Documents (§5.2)
   program,
   event,

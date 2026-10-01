@@ -14,6 +14,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "seed": "tsx scripts/seed.ts",
+    "migrate:people": "tsx scripts/migrate-people.ts",
     "typegen": "sanity schema extract --enforce-required-fields && sanity typegen generate"
   },
   "dependencies": {
@@ -26,7 +27,7 @@
     "@sanity/assist": "^6.2.0",
     "@sanity/image-url": "^2.1.1",
     "@sanity/locale-nl-nl": "^1.1.40",
-    "@sanity/ui": "4.2.1",
+    "@sanity/ui": "^4.2.1",
     "@vercel/analytics": "1.6.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

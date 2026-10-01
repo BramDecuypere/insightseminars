@@ -5,10 +5,6 @@ const SINGLETONS = ['homePage', 'aboutPage', 'teensPage', 'contactPage', 'siteSe
 
 /** Studio desk structure in Dutch (brief §5.3). */
 export const structure: StructureResolver = (S) => {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const startOfToday = today.toISOString()
-
   const singleton = (id: string, title: string, schemaType: string) =>
     S.listItem()
       .title(title)
@@ -21,30 +17,12 @@ export const structure: StructureResolver = (S) => {
       S.listItem()
         .title('Agenda')
         .child(
-          S.list()
+          // One list for all events; past ones are marked "Voorbij" in the preview.
+          S.documentList()
             .title('Agenda')
-            .items([
-              S.listItem()
-                .title('Komende activiteiten')
-                .child(
-                  S.documentList()
-                    .title('Komende activiteiten')
-                    .schemaType('event')
-                    .filter('_type == "event" && end >= $startOfToday')
-                    .params({ startOfToday })
-                    .defaultOrdering([{ field: 'start', direction: 'asc' }]),
-                ),
-              S.listItem()
-                .title('Voorbije activiteiten')
-                .child(
-                  S.documentList()
-                    .title('Voorbije activiteiten')
-                    .schemaType('event')
-                    .filter('_type == "event" && end < $startOfToday')
-                    .params({ startOfToday })
-                    .defaultOrdering([{ field: 'start', direction: 'desc' }]),
-                ),
-            ]),
+            .schemaType('event')
+            .filter('_type == "event"')
+            .defaultOrdering([{ field: 'start', direction: 'desc' }]),
         ),
 
       S.listItem()

@@ -33,6 +33,46 @@ export const imageWithAlt = defineType({
   ],
 })
 
+/** Plain {title, lead} hero, reused by pages whose header has no extra fields. */
+export const heroBasic = defineType({
+  name: 'heroBasic',
+  title: 'Hero',
+  type: 'object',
+  fields: [
+    defineField({ name: 'title', title: 'Titel', type: 'localeString' }),
+    defineField({ name: 'lead', title: 'Intro', type: 'localeText' }),
+  ],
+})
+
+/** "Wat kan het je brengen?" list, identical on the home and about pages. */
+export const benefitsBlock = defineType({
+  name: 'benefitsBlock',
+  title: '"Wat kan het je brengen?"',
+  type: 'object',
+  fields: [
+    defineField({ name: 'heading', title: 'Kop', type: 'localeString' }),
+    defineField({ name: 'items', title: 'Lijst', type: 'array', of: [defineArrayMember({ type: 'localeString' })] }),
+  ],
+})
+
+/** "Voor wie?" block, identical on the home and about pages. */
+export const forWhoBlock = defineType({
+  name: 'forWhoBlock',
+  title: '"Voor wie?"',
+  type: 'object',
+  fields: [
+    defineField({ name: 'heading', title: 'Kop', type: 'localeString' }),
+    defineField({ name: 'body', title: 'Tekst', type: 'localeText' }),
+    defineField({
+      name: 'trustLine',
+      title: 'Vertrouwensregel',
+      type: 'localeString',
+      hidden: true,
+      description: 'Verwijderd uit de weergave (tester feedback); data blijft bewaard.',
+    }),
+  ],
+})
+
 export const seo = defineType({
   name: 'seo',
   title: 'SEO',

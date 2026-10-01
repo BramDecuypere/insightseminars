@@ -68,33 +68,8 @@ export const homePage = defineType({
         defineField({ name: 'points', title: 'Punten', type: 'array', of: [arr('titledText')] }),
       ],
     }),
-    defineField({
-      name: 'benefits',
-      title: '"Wat kan het je brengen?"',
-      type: 'object',
-      group: 'sections',
-      fields: [
-        defineField({ name: 'heading', title: 'Kop', type: 'localeString' }),
-        defineField({ name: 'items', title: 'Lijst', type: 'array', of: [arr('localeString')] }),
-      ],
-    }),
-    defineField({
-      name: 'forWho',
-      title: '"Voor wie?"',
-      type: 'object',
-      group: 'sections',
-      fields: [
-        defineField({ name: 'heading', title: 'Kop', type: 'localeString' }),
-        defineField({ name: 'body', title: 'Tekst', type: 'localeText' }),
-        defineField({
-          name: 'trustLine',
-          title: 'Vertrouwensregel',
-          type: 'localeString',
-          hidden: true,
-          description: 'Verwijderd uit de weergave (tester feedback); data blijft bewaard.',
-        }),
-      ],
-    }),
+    defineField({ name: 'benefits', title: '"Wat kan het je brengen?"', type: 'benefitsBlock', group: 'sections' }),
+    defineField({ name: 'forWho', title: '"Voor wie?"', type: 'forWhoBlock', group: 'sections' }),
     defineField({
       name: 'path',
       title: '"Het pad"',
@@ -131,34 +106,10 @@ export const aboutPage = defineType({
   title: 'Over Insight',
   type: 'document',
   fields: [
-    defineField({
-      name: 'hero',
-      title: 'Hero',
-      type: 'object',
-      fields: [
-        defineField({ name: 'title', title: 'Titel', type: 'localeString' }),
-        defineField({ name: 'lead', title: 'Intro', type: 'localeText' }),
-      ],
-    }),
+    defineField({ name: 'hero', title: 'Hero', type: 'heroBasic' }),
     defineField({ name: 'sections', title: 'Secties', type: 'array', of: [arr('readMoreBlock')] }),
-    defineField({
-      name: 'benefits',
-      title: '"Wat kan het je brengen?"',
-      type: 'object',
-      fields: [
-        defineField({ name: 'heading', title: 'Kop', type: 'localeString' }),
-        defineField({ name: 'items', title: 'Lijst', type: 'array', of: [arr('localeString')] }),
-      ],
-    }),
-    defineField({
-      name: 'forWho',
-      title: '"Voor wie?"',
-      type: 'object',
-      fields: [
-        defineField({ name: 'heading', title: 'Kop', type: 'localeString' }),
-        defineField({ name: 'body', title: 'Tekst', type: 'localeText' }),
-      ],
-    }),
+    defineField({ name: 'benefits', title: '"Wat kan het je brengen?"', type: 'benefitsBlock' }),
+    defineField({ name: 'forWho', title: '"Voor wie?"', type: 'forWhoBlock' }),
     defineField({
       name: 'story',
       title: 'Het verhaal',
@@ -244,15 +195,7 @@ export const contactPage = defineType({
   title: 'Contact',
   type: 'document',
   fields: [
-    defineField({
-      name: 'hero',
-      title: 'Hero',
-      type: 'object',
-      fields: [
-        defineField({ name: 'title', title: 'Titel', type: 'localeString' }),
-        defineField({ name: 'lead', title: 'Intro', type: 'localeText' }),
-      ],
-    }),
+    defineField({ name: 'hero', title: 'Hero', type: 'heroBasic' }),
     defineField({
       name: 'sections',
       title: 'Secties',

@@ -6,6 +6,8 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { Analytics } from '@/components/analytics'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { SiteHeader } from '@/components/layout/site-header'
+import { CookieConsent } from '@/components/consent/cookie-consent'
+import { ConsentUIProvider } from '@/components/consent/consent-ui-context'
 import { FromNlNotice } from '@/components/site/from-nl-notice'
 import { JsonLd } from '@/components/site/json-ld'
 import { getSettings } from '@/lib/content'
@@ -81,18 +83,21 @@ export default async function LocaleLayout({
       <body className="flex min-h-dvh flex-col">
         <JsonLd data={organizationJsonLd(settings)} />
         <NextIntlClientProvider>
-          <a
-            href="#main"
-            className="sr-only left-4 top-4 z-50 rounded-md bg-avondblauw px-4 py-2 font-semibold text-papier focus:not-sr-only focus:absolute"
-          >
-            {t('skip')}
-          </a>
-          <FromNlNotice />
-          <SiteHeader />
-          <main id="main" className="flex-1">
-            {children}
-          </main>
-          <SiteFooter />
+          <ConsentUIProvider>
+            <a
+              href="#main"
+              className="sr-only left-4 top-4 z-50 rounded-md bg-avondblauw px-4 py-2 font-semibold text-papier focus:not-sr-only focus:absolute"
+            >
+              {t('skip')}
+            </a>
+            <FromNlNotice />
+            <SiteHeader />
+            <main id="main" className="flex-1">
+              {children}
+            </main>
+            <SiteFooter />
+            <CookieConsent />
+          </ConsentUIProvider>
         </NextIntlClientProvider>
         <Analytics />
       </body>
