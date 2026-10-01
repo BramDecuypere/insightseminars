@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { getSettings } from '@/lib/content'
 import { NewsletterForm } from '@/components/site/newsletter-form'
+import { CookiePreferencesLink } from '@/components/consent/cookie-preferences-link'
 import { LanguageSwitcher } from './language-switcher'
 import { mainNav } from './nav-config'
 
@@ -116,6 +117,7 @@ export async function SiteFooter() {
             <Link href="/safeguarding" className="hover:text-inkt">
               {t('footer.safeguarding')}
             </Link>
+            <CookiePreferencesLink />
           </div>
           {legalEntity.length > 0 && (
             <p className="type-small text-leisteen/70">{legalEntity.join(' \u00b7 ')}</p>

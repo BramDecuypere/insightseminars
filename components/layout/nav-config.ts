@@ -39,7 +39,10 @@ export const mainNav: {
     href: '/agenda',
     children: [
       { key: 'agendaSeminars', href: { pathname: '/agenda', query: { type: 'seminars' } } },
+      { key: 'agendaTeens', href: { pathname: '/agenda', query: { type: 'teens' } } },
       { key: 'agendaInfo', href: { pathname: '/agenda', query: { type: 'infoSessions' } } },
+      { key: 'agendaWorkshops', href: { pathname: '/agenda', query: { type: 'workshops' } } },
+      { key: 'agendaEvents', href: { pathname: '/agenda', query: { type: 'events' } } },
     ],
   },
   { key: 'community', href: '/community' },

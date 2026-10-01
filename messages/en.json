@@ -21,7 +21,10 @@
     "aboutFacilitators": "Facilitators",
     "aboutSteun": "Support us",
     "agendaSeminars": "Seminars",
-    "agendaInfo": "Info sessions"
+    "agendaTeens": "Teens",
+    "agendaInfo": "Info sessions",
+    "agendaWorkshops": "Workshops",
+    "agendaEvents": "Events"
   },
   "common": {
     "readMore": "More about {program}",
@@ -295,6 +298,20 @@
   "fromNl": {
     "text": "Insight Seminars Nederland is now Insight Seminars België. The seminars take place in Belgium, and participants from the Netherlands are very welcome.",
     "close": "Dismiss notice"
+  },
+  "cookies": {
+    "title": "We use cookies",
+    "body": "We only use strictly necessary cookies to run the site, and optional analytics cookies to understand how it's used. More info in our",
+    "privacyLink": "privacy policy.",
+    "manage": "Preferences",
+    "manageLink": "Cookie preferences",
+    "rejectAll": "Necessary only",
+    "acceptAll": "Accept all",
+    "necessary": "Necessary",
+    "necessaryHint": "Needed to run the site. Cannot be switched off.",
+    "analytics": "Analytics",
+    "analyticsHint": "Helps us understand how visitors use the site (Vercel Analytics).",
+    "save": "Save preferences"
   },
   "footer": {
     "world": "Insight worldwide",

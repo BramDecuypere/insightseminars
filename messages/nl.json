@@ -21,7 +21,10 @@
   "aboutFacilitators": "Facilitators",
   "aboutSteun": "Steun ons",
   "agendaSeminars": "Seminars",
-  "agendaInfo": "Infosessies"
+  "agendaTeens": "Tieners",
+  "agendaInfo": "Infosessies",
+  "agendaWorkshops": "Workshops",
+  "agendaEvents": "Events"
   },
   "common": {
     "readMore": "Meer over {program}",
@@ -295,6 +298,20 @@
   "fromNl": {
     "text": "Insight Seminars Nederland is nu Insight Seminars België. De seminars vinden plaats in België, en deelnemers uit Nederland zijn van harte welkom.",
     "close": "Melding sluiten"
+  },
+  "cookies": {
+    "title": "We gebruiken cookies",
+    "body": "We gebruiken enkel noodzakelijke cookies om de site te laten werken, en optioneel analytische cookies om te begrijpen hoe de site gebruikt wordt. Meer info in ons",
+    "privacyLink": "privacybeleid.",
+    "manage": "Voorkeuren",
+    "manageLink": "Cookievoorkeuren",
+    "rejectAll": "Enkel noodzakelijk",
+    "acceptAll": "Alles accepteren",
+    "necessary": "Noodzakelijk",
+    "necessaryHint": "Nodig om de site te laten werken. Kan niet worden uitgeschakeld.",
+    "analytics": "Analytisch",
+    "analyticsHint": "Helpt ons te begrijpen hoe bezoekers de site gebruiken (Vercel Analytics).",
+    "save": "Voorkeuren opslaan"
   },
   "footer": {
     "world": "Insight wereldwijd",
