@@ -135,13 +135,18 @@ export async function getSettings(): Promise<SiteSettings | null> {
 export async function getHomePage(): Promise<HomePage | null> {
   const h = await sanityFetch<any>({ query: q.homePageQuery, tags: ['sanity:homePage'] })
   if (!h) return null
+  // Legacy: these two photos used to be gallery positions 0 and 1. Keep reading
+  // them until the named fields are filled in Studio.
+  const { gallery: legacyGallery, ...rest } = h
+  const legacy = gallery(legacyGallery) ?? []
   return {
-    ...h,
+    ...rest,
     hero: h.hero ? { ...h.hero, image: img(h.hero.image) } : h.hero,
+    recognise: { ...h.recognise, image: img(h.recognise?.image) ?? legacy[1] },
+    path: { ...h.path, backgroundImage: img(h.path?.backgroundImage) ?? legacy[0] },
     testimonials: Array.isArray(h.testimonials) ? h.testimonials.map((t: any) => mapTestimonial(t)) : [],
     videoClip: video(h.videoClip),
     videoPoster: img(h.videoPoster),
-    gallery: gallery(h.gallery),
   } as HomePage
 }
 

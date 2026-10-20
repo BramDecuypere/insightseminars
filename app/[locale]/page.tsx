@@ -68,15 +68,15 @@ export default async function HomePage({ params }: Props) {
               </ul>
             </div>
 
-            {home.gallery?.[1] ? (
+            {home.recognise.image ? (
               <div
                 className="mx-auto w-full max-w-sm rounded-panel p-3 lg:mx-0"
                 style={{ backgroundColor: 'color-mix(in srgb, var(--accent-3) 14%, var(--papier))' }}
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[calc(var(--radius-panel)-0.75rem)]">
                   <Image
-                    src={home.gallery[1].src}
-                    alt={pick(home.gallery[1].alt, l)}
+                    src={home.recognise.image.src}
+                    alt={pick(home.recognise.image.alt, l)}
                     fill
                     sizes="(min-width: 1024px) 40vw, 100vw"
                     className="object-cover"
@@ -105,10 +105,10 @@ export default async function HomePage({ params }: Props) {
 
       {/* Het pad */}
       <section className="on-avondblauw relative isolate overflow-hidden bg-avondblauw">
-        {home.gallery?.[0] ? (
+        {home.path.backgroundImage ? (
           <>
             <Image
-              src={home.gallery[0].src}
+              src={home.path.backgroundImage.src}
               alt=""
               fill
               sizes="100vw"

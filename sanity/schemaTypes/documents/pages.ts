@@ -24,7 +24,13 @@ export const homePage = defineType({
         defineField({ name: 'question', title: 'Vraag', type: 'localeString' }),
         defineField({ name: 'primaryCta', title: 'Knop 1', type: 'localeString' }),
         defineField({ name: 'secondaryCta', title: 'Knop 2', type: 'localeString' }),
-        defineField({ name: 'image', title: 'Afbeelding', type: 'imageWithAlt' }),
+        defineField({
+          name: 'image',
+          title: 'Afbeelding',
+          description:
+            'Grote achtergrondfoto bovenaan de startpagina, achter de titel. Liefst liggend (16:9) met rustige ruimte links, waar de tekst staat. Zonder foto krijgt de hero een effen blauwe achtergrond.',
+          type: 'imageWithAlt',
+        }),
       ],
     }),
     defineField({
@@ -46,6 +52,13 @@ export const homePage = defineType({
         defineField({ name: 'intro', title: 'Intro', type: 'localeText' }),
         defineField({ name: 'situations', title: 'Situaties', type: 'array', of: [arr('situationItem')] }),
         defineField({ name: 'fallback', title: 'Afsluitende tekst', type: 'localeText' }),
+        defineField({
+          name: 'image',
+          title: 'Afbeelding',
+          description:
+            'Foto naast de lijst "Herken je dit?" (4:3, liggend). Zonder foto wordt alleen de tekst getoond.',
+          type: 'imageWithAlt',
+        }),
       ],
     }),
     defineField({
@@ -81,6 +94,13 @@ export const homePage = defineType({
         defineField({ name: 'nextInsight1Heading', title: 'Kop volgende Insight I', type: 'localeString' }),
         defineField({ name: 'infoSessionLine', title: 'Infosessie-regel', type: 'localeString' }),
         defineField({ name: 'teenLine', title: 'Tiener-regel', type: 'localeString' }),
+        defineField({
+          name: 'backgroundImage',
+          title: 'Achtergrondfoto',
+          description:
+            'Foto achter de blauwe sectie "Het pad". Ze wordt sterk donkerblauw overkleurd, dus een rustige, liggende foto werkt het best. Zonder foto blijft de sectie effen blauw.',
+          type: 'imageWithAlt',
+        }),
       ],
     }),
     defineField({ name: 'upcomingHeading', title: 'Kop "Komende activiteiten"', type: 'localeString', group: 'sections' }),
@@ -94,8 +114,25 @@ export const homePage = defineType({
       group: 'testimonials',
     }),
     defineField({ name: 'videoClip', title: 'Videofragment', type: 'videoClip', group: 'testimonials' }),
-    defineField({ name: 'videoPoster', title: 'Poster (zonder clip)', type: 'imageWithAlt', group: 'testimonials' }),
-    defineField({ name: 'gallery', title: 'Fotogalerij', type: 'array', of: [arr('imageWithAlt')], group: 'sections' }),
+    defineField({
+      name: 'videoPoster',
+      title: 'Poster (zonder clip)',
+      description: 'Wordt momenteel nergens op de startpagina getoond.',
+      type: 'imageWithAlt',
+      group: 'testimonials',
+      hidden: ({ value }) => !(value as { asset?: unknown } | undefined)?.asset,
+    }),
+    defineField({
+      name: 'gallery',
+      title: 'Fotogalerij (verouderd)',
+      description:
+        'Niet meer gebruiken. Zet de foto\'s in "Herken je dit?" → Afbeelding en "Het pad" → Achtergrondfoto. Zolang die leeg zijn, wordt foto 1 hier nog als achtergrond van "Het pad" getoond en foto 2 bij "Herken je dit?". Dit veld verdwijnt zodra het leeg is.',
+      type: 'array',
+      of: [arr('imageWithAlt')],
+      group: 'sections',
+      deprecated: { reason: 'Vervangen door de afbeeldingsvelden in "Herken je dit?" en "Het pad".' },
+      hidden: ({ value }) => !Array.isArray(value) || value.length === 0,
+    }),
     defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
   ],
   preview: { prepare: () => ({ title: 'Startpagina' }) },
