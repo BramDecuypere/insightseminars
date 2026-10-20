@@ -412,6 +412,9 @@ export async function runSubmitRegistration(payload: {
     else if (amounts.declaredCredit) registrantEmail = tpl.paymentCheck(emailBase, locale)
     else if (event.paymentTiming === 'later') registrantEmail = tpl.registrationPayLater(emailBase, locale)
     else if (betaalwijze === 'overschrijving') registrantEmail = tpl.registrationBankTransfer(emailBase, locale)
+    // Mollie unavailable: the row stays pending, so mail the personal pay link
+    // instead of leaving the registrant without any email.
+    else if (betaalwijze === 'mollie' && !mollieCheckoutUrl) registrantEmail = tpl.payLink(emailBase, locale)
     // Mollie immediate: the confirmation email is sent by the webhook on "paid" (Prompt 6).
 
     if (registrantEmail) {
