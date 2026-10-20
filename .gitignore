@@ -15,3 +15,7 @@ node_modules
 .DS_Store
 .vercel
 tsconfig.tsbuildinfo
+
+# pnpm is the package manager; keep other lockfiles out
+package-lock.json
+yarn.lock
