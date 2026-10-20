@@ -77,27 +77,55 @@ function withFallback<T>(value: unknown, fallback: T): T {
   return value as T
 }
 
+/** An image as the content layer models it (`ImageAsset`). */
+function isImage(value: unknown): boolean {
+  return typeof value === 'object' && value !== null && typeof (value as { src?: unknown }).src === 'string'
+}
+
+/**
+ * Copy of a mock document with every image removed. Once Sanity is connected,
+ * the mock's stock photos must never show up silently: an image the client
+ * left empty in Studio renders as "no image" (each section handles that), so
+ * what they see on the site always matches what they can edit. Text still
+ * falls back, so an unfinished document keeps rendering.
+ */
+function withoutImages<T>(value: T): T {
+  if (Array.isArray(value)) {
+    const kept = value.filter((v) => !isImage(v)).map((v) => withoutImages(v))
+    return (kept.length === 0 && value.length > 0 ? undefined : kept) as T
+  }
+  if (typeof value === 'object' && value !== null) {
+    const out: Record<string, unknown> = {}
+    for (const [key, v] of Object.entries(value)) {
+      if (!isImage(v)) out[key] = withoutImages(v)
+    }
+    return out as T
+  }
+  return value
+}
+
 export async function getHomePage() {
   if (hasSanity) {
     const page = await sanity.getHomePage()
-    if (!page) return mock.homePage
-    return withFallback(page, mock.homePage)
+    const fallback = withoutImages(mock.homePage)
+    if (!page) return fallback
+    return withFallback(page, fallback)
   }
   return mock.homePage
 }
 
 export async function getAboutPage() {
-  if (hasSanity) return (await sanity.getAboutPage()) ?? mock.aboutPage
+  if (hasSanity) return (await sanity.getAboutPage()) ?? withoutImages(mock.aboutPage)
   return mock.aboutPage
 }
 
 export async function getTeensPage() {
-  if (hasSanity) return (await sanity.getTeensPage()) ?? mock.teensPage
+  if (hasSanity) return (await sanity.getTeensPage()) ?? withoutImages(mock.teensPage)
   return mock.teensPage
 }
 
 export async function getContactPage() {
-  if (hasSanity) return (await sanity.getContactPage()) ?? mock.contactPage
+  if (hasSanity) return (await sanity.getContactPage()) ?? withoutImages(mock.contactPage)
   return mock.contactPage
 }
 

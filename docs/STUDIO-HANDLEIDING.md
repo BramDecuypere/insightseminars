@@ -88,6 +88,29 @@ Nederlands.
   schermlezers en zoekmachines. Die is **verplicht**.
 - Sleep na het uploaden aan het **hotspot-punt** om te bepalen welk deel van de
   foto altijd zichtbaar blijft bij het bijsnijden.
+- **Leeg = geen foto.** Laat je een afbeeldingsveld leeg, dan toont de website
+  daar geen foto (geen voorbeeldfoto). Wat je op de site ziet, staat dus altijd
+  ergens in de Studio.
+
+### Foto's op de startpagina
+
+Ga naar **Pagina's → Home**. Er zijn drie foto's, elk op een vaste plek:
+
+| Foto op de site | Waar in de Studio | Tip |
+| --- | --- | --- |
+| Grote foto bovenaan, achter de titel | tab **Hero** → **Hero** → **Afbeelding** | Liggend (16:9), met rustige ruimte links voor de tekst |
+| Foto naast "Herken je dit?" | tab **Secties** → **"Herken je dit?"** → **Afbeelding** | Liggend (4:3) |
+| Achtergrond van "Het pad" (blauw) | tab **Secties** → **"Het pad"** → **Achtergrondfoto** | Wordt sterk blauw overkleurd; kies een rustige foto |
+
+Zie je in de tab **Secties** nog een veld **Fotogalerij (verouderd)**? Zet die
+foto's dan in de velden hierboven en maak de galerij leeg. Zolang de nieuwe
+velden leeg zijn, toont de site nog foto 1 van de galerij bij "Het pad" en foto 2
+bij "Herken je dit?".
+
+Op de pagina's **Over Insight**, **Tieners** en elk **Seminar** staat de
+**Fotogalerij** als een reeks foto's onderaan; daar telt de volgorde alleen voor
+de weergave. De grote foto bovenaan de pagina Tieners zit in **Media** →
+**Afbeelding**; bij een seminar is dat **Hoofdafbeelding**.
 
 ## 8. Belangrijk om te weten
 

@@ -597,6 +597,11 @@ export const homePage: HomePage = {
       nl: 'Veel deelnemers kwamen met net deze vraag binnen. Op de gratis infosessie vertellen ze hoe het voor hen was.',
       en: 'Many participants came in with exactly this question. At the free info session they tell you how it was for them.',
     },
+    image: {
+      src: '/images/gallery/home-2.png',
+      alt: { nl: 'Twee deelnemers in gesprek tijdens een pauze', en: 'Two participants talking during a break' },
+      caption: { nl: 'Ook tijdens de pauzes gaat het gesprek verder', en: 'The conversation continues during breaks too' },
+    },
   },
   whatIsInsight: {
     heading: { nl: 'Wat is Insight?', en: 'What is Insight?' },
@@ -648,20 +653,13 @@ export const homePage: HomePage = {
     nextInsight1Heading: { nl: 'Volgende Insight I', en: 'Next Insight I' },
     infoSessionLine: { nl: 'Eerst kennismaken?', en: 'Want to get to know us first?' },
     teenLine: { nl: 'Voor jongeren van 14 tot 19 jaar is er Tiener Insight.', en: 'For young people aged 14 to 19 there is Teen Insight.' },
-  },
-  upcomingHeading: { nl: 'Binnenkort', en: 'Coming up' },
-  gallery: [
-    {
+    backgroundImage: {
       src: '/images/gallery/home-1.png',
       alt: { nl: 'Kleine groep in gesprek tijdens een seminar', en: 'Small group in conversation during a seminar' },
       caption: { nl: 'Samen in gesprek, in een veilige groep', en: 'In conversation together, in a safe group' },
     },
-    {
-      src: '/images/gallery/home-2.png',
-      alt: { nl: 'Twee deelnemers in gesprek tijdens een pauze', en: 'Two participants talking during a break' },
-      caption: { nl: 'Ook tijdens de pauzes gaat het gesprek verder', en: 'The conversation continues during breaks too' },
-    },
-  ],
+  },
+  upcomingHeading: { nl: 'Binnenkort', en: 'Coming up' },
   seo: {
     title: { nl: 'Insight Seminars België | Training voor persoonlijke groei in Antwerpen', en: 'Insight Seminars België | Personal growth training in Antwerp' },
     description: { nl: 'Intensieve, ervaringsgerichte training voor persoonlijke groei. Ontdek je patronen, maak bewustere keuzes en ervaar meer verbinding. Kom naar een gratis infosessie.', en: 'Intensive, experiential training for personal growth. Discover your patterns, make more conscious choices and experience more connection. Come to a free info session.' },

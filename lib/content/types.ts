@@ -245,6 +245,8 @@ export interface HomePage {
       programSlug?: string
     }[]
     fallback: LocaleText
+    /** Photo next to the "Herken je dit?" list. */
+    image?: ImageAsset
   }
   whatIsInsight: { heading: LocaleString; body: LocaleText }
   howItWorks: { heading: LocaleString; points: { title: LocaleString; text: LocaleText }[] }
@@ -255,7 +257,6 @@ export interface HomePage {
   videoClip?: VideoClip
   /** Still shown in the "Wat is Insight?" slot when no clip is uploaded yet. */
   videoPoster?: ImageAsset
-  gallery?: ImageAsset[]
   /** trustLine is retained in Sanity for historical data but no longer rendered (tester feedback). */
   forWho: { heading: LocaleString; body: LocaleText; trustLine?: LocaleString }
   path: {
@@ -264,6 +265,8 @@ export interface HomePage {
     nextInsight1Heading: LocaleString
     infoSessionLine: LocaleString
     teenLine: LocaleString
+    /** Photo behind the navy "Het pad" section. */
+    backgroundImage?: ImageAsset
   }
   upcomingHeading: LocaleString
   seo: { title: LocaleString; description: LocaleString }
