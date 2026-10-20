@@ -14,7 +14,9 @@
       "Bash(npm outdated)",
       "Bash(npm -v)",
       "Bash(npm pkg get *)",
-      "mcp__claude-in-chrome__tabs_context_mcp"
+      "mcp__claude-in-chrome__tabs_context_mcp",
+      "Bash(npm view *)",
+      "Bash(npx vitest run)"
     ]
   }
 }
