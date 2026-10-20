@@ -19,3 +19,6 @@ tsconfig.tsbuildinfo
 # pnpm is the package manager; keep other lockfiles out
 package-lock.json
 yarn.lock
+
+# Claude Code local worktrees
+.claude/worktrees/

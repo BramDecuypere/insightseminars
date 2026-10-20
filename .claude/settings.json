@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc --noEmit)",
+      "Bash(npx tsc --noEmit *)",
+      "Bash(npx tsc -v)",
+      "Bash(npm run lint)",
+      "Bash(npx eslint .)",
+      "Bash(supabase migration list)",
+      "Bash(supabase migration list *)",
+      "Bash(npm run test:unit)",
+      "Bash(fnm list)",
+      "Bash(supabase projects list)",
+      "Bash(npm outdated)",
+      "Bash(npm -v)",
+      "Bash(npm pkg get *)",
+      "mcp__claude-in-chrome__tabs_context_mcp"
+    ]
+  }
+}
