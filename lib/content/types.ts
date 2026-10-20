@@ -305,6 +305,14 @@ export interface ContactPage {
   seo: { title: LocaleString; description: LocaleString }
 }
 
+export interface CommunityPage {
+  hero: { title: LocaleString; lead: LocaleText }
+  image?: ImageAsset
+  belgium: { heading: LocaleString; body: LocaleText }
+  international: { heading: LocaleString; body: LocaleText; calendarCta: LocaleString }
+  seo: { title: LocaleString; description: LocaleString }
+}
+
 export type LegalKind = 'privacy' | 'terms' | 'safeguarding'
 
 export interface LegalPage {

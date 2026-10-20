@@ -101,6 +101,15 @@ export async function getContactPage() {
   return mock.contactPage
 }
 
+export async function getCommunityPage() {
+  if (hasSanity) {
+    const page = await sanity.getCommunityPage()
+    if (!page) return mock.communityPage
+    return withFallback(page, mock.communityPage)
+  }
+  return mock.communityPage
+}
+
 export async function getPrograms() {
   if (hasSanity) return sanity.getPrograms()
   return [...mock.programs].sort((a, b) => {

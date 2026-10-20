@@ -89,7 +89,20 @@ Nederlands.
 - Sleep na het uploaden aan het **hotspot-punt** om te bepalen welk deel van de
   foto altijd zichtbaar blijft bij het bijsnijden.
 
-## 8. Belangrijk om te weten
+## 8. De Community-pagina aanpassen
+
+1. Ga naar **Pagina's → Community**.
+2. Pas de **Hero** (titel en intro), het blok **België** en het blok
+   **Internationaal** aan. Bij **Internationaal** stel je ook de tekst van de
+   knop naar de internationale kalender in.
+3. Optioneel: voeg bovenaan een **afbeelding** toe (met **alt-tekst**).
+4. De **sociale kanalen**, de **internationale kalender (link)** en de
+   **internationale links** onder de blokken beheer je in
+   **Instellingen → Links**, zodat ze overal op de site gelijk blijven.
+5. **Publiceren.** Laat je een tekstveld leeg, dan toont de site de
+   standaardtekst.
+
+## 9. Belangrijk om te weten
 
 - **Privé-velden.** De **vergaderlink** van een online activiteit staat nooit op
   de website. Zet online altijd een **wachtruimte** aan.

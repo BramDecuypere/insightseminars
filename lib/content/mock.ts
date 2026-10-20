@@ -1,5 +1,6 @@
 import type {
   AboutPage,
+  CommunityPage,
   ContactPage,
   Facilitator,
   Faq,
@@ -780,6 +781,38 @@ export const contactPage: ContactPage = {
   seo: {
     title: { nl: 'Contact | Insight Seminars België', en: 'Contact | Insight Seminars België' },
     description: { nl: 'Stel je vraag over seminars, inschrijvingen of Tiener Insight.', en: 'Ask your question about seminars, registrations or Teen Insight.' },
+  },
+}
+
+export const communityPage: CommunityPage = {
+  hero: {
+    title: { nl: 'Community', en: 'Community' },
+    lead: {
+      nl: 'Insight is een wereldwijde beweging. Ontdek de lokale gemeenschap in België en de bredere internationale community.',
+      en: 'Insight is a worldwide movement. Discover the local community in Belgium and the wider international community.',
+    },
+  },
+  belgium: {
+    heading: { nl: 'België', en: 'Belgium' },
+    body: {
+      nl: 'Blijf tussen de seminars door in contact met de Belgische Insight-gemeenschap: volg ons op sociale media, kom langs op een gratis infosessie of neem contact met ons op.',
+      en: 'Stay in touch with the Belgian Insight community between seminars: follow us on social media, drop by a free info session, or get in touch.',
+    },
+  },
+  international: {
+    heading: { nl: 'Internationaal', en: 'International' },
+    body: {
+      nl: 'Insight Seminars bestaat wereldwijd. Via onderstaande links vind je de internationale organisatie en seminars in andere landen.',
+      en: 'Insight Seminars exists worldwide. The links below point to the international organisation and to seminars in other countries.',
+    },
+    calendarCta: { nl: 'Internationale kalender', en: 'International calendar' },
+  },
+  seo: {
+    title: { nl: 'Community', en: 'Community' },
+    description: {
+      nl: 'Insight is een wereldwijde beweging. Ontdek de lokale gemeenschap in België en de bredere internationale community.',
+      en: 'Insight is a worldwide movement. Discover the local community in Belgium and the wider international community.',
+    },
   },
 }
 

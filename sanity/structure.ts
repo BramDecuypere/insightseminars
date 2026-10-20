@@ -1,7 +1,7 @@
 import type { StructureResolver } from 'sanity/structure'
 
 /** Documents that exist exactly once (§5.3). */
-const SINGLETONS = ['homePage', 'aboutPage', 'teensPage', 'contactPage', 'siteSettings']
+const SINGLETONS = ['homePage', 'aboutPage', 'teensPage', 'contactPage', 'communityPage', 'siteSettings']
 
 /** Studio desk structure in Dutch (brief §5.3). */
 export const structure: StructureResolver = (S) => {
@@ -85,6 +85,7 @@ export const structure: StructureResolver = (S) => {
               singleton('aboutPage', 'Over Insight', 'aboutPage'),
               singleton('teensPage', 'Tieners', 'teensPage'),
               singleton('contactPage', 'Contact', 'contactPage'),
+              singleton('communityPage', 'Community', 'communityPage'),
             ]),
         ),
 

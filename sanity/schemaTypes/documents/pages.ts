@@ -222,3 +222,43 @@ export const contactPage = defineType({
   ],
   preview: { prepare: () => ({ title: 'Contact' }) },
 })
+
+export const communityPage = defineType({
+  name: 'communityPage',
+  title: 'Community',
+  type: 'document',
+  fields: [
+    defineField({ name: 'hero', title: 'Hero', type: 'heroBasic' }),
+    defineField({
+      name: 'image',
+      title: 'Afbeelding',
+      description: 'Optioneel. Wordt naast de titel bovenaan de pagina getoond.',
+      type: 'imageWithAlt',
+    }),
+    defineField({
+      name: 'belgium',
+      title: 'België',
+      description:
+        'De sociale kanalen onder dit blok beheer je in Instellingen → Links → "Sociale kanalen".',
+      type: 'object',
+      fields: [
+        defineField({ name: 'heading', title: 'Kop', type: 'localeString' }),
+        defineField({ name: 'body', title: 'Tekst', type: 'localeText' }),
+      ],
+    }),
+    defineField({
+      name: 'international',
+      title: 'Internationaal',
+      description:
+        'De kalenderlink en de internationale links beheer je in Instellingen → Links ("Internationale kalender" en "Internationale links").',
+      type: 'object',
+      fields: [
+        defineField({ name: 'heading', title: 'Kop', type: 'localeString' }),
+        defineField({ name: 'body', title: 'Tekst', type: 'localeText' }),
+        defineField({ name: 'calendarCta', title: 'Knop internationale kalender', type: 'localeString' }),
+      ],
+    }),
+    defineField({ name: 'seo', title: 'SEO', type: 'seo' }),
+  ],
+  preview: { prepare: () => ({ title: 'Community' }) },
+})

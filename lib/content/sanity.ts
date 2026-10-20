@@ -3,6 +3,7 @@ import { imageUrl } from '@/sanity/lib/image'
 import * as q from '@/sanity/lib/queries'
 import type {
   AboutPage,
+  CommunityPage,
   ContactPage,
   Facilitator,
   Faq,
@@ -170,6 +171,12 @@ export async function getContactPage(): Promise<ContactPage | null> {
   return (await sanityFetch<any>({ query: q.contactPageQuery, tags: ['sanity:contactPage'] })) as
     | ContactPage
     | null
+}
+
+export async function getCommunityPage(): Promise<CommunityPage | null> {
+  const c = await sanityFetch<any>({ query: q.communityPageQuery, tags: ['sanity:communityPage'] })
+  if (!c) return null
+  return { ...c, image: img(c.image) } as CommunityPage
 }
 
 export async function getPrograms(): Promise<Program[]> {

@@ -125,6 +125,14 @@ export const contactPageQuery = defineQuery(`*[_type == "contactPage"][0]{
   seo
 }`)
 
+export const communityPageQuery = defineQuery(`*[_type == "communityPage"][0]{
+  hero{ title, lead },
+  image,
+  belgium{ heading, body },
+  international{ heading, body, calendarCta },
+  seo
+}`)
+
 export const programsQuery = defineQuery(
   `*[_type == "program"] | order(track asc, order asc) ${PROGRAM}`,
 )
