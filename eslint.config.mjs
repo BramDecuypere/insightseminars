@@ -8,6 +8,7 @@ const eslintConfig = [
       'node_modules/**',
       'sanity.types.ts',
       'next-env.d.ts',
+      '.claude/**',
     ],
   },
 ]

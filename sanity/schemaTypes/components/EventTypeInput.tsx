@@ -24,31 +24,31 @@ const toBucket = (value?: string) => (value === 'teenSeminar' ? 'seminar' : valu
 export function EventTypeInput(props: StringInputProps) {
   const { value, onChange, elementProps } = props
   const programRef = useFormValue(['program']) as { _ref?: string } | undefined
+  const ref = programRef?._ref
   const client = useClient({ apiVersion: '2024-10-01' })
-  const [track, setTrack] = useState<string | undefined>()
+  // Tagged with the program it was fetched for, so a stale result is never used.
+  const [fetched, setFetched] = useState<{ ref: string; track?: string } | null>(null)
 
   useEffect(() => {
-    if (!programRef?._ref) {
-      setTrack(undefined)
-      return
-    }
+    if (!ref) return
     let active = true
-    client
-      .fetch<{ track?: string } | null>(`*[_id == $id][0]{track}`, { id: programRef._ref })
-      .then((doc) => {
-        if (active) setTrack(doc?.track)
-      })
+    client.fetch<{ track?: string } | null>(`*[_id == $id][0]{track}`, { id: ref }).then((doc) => {
+      if (active) setFetched({ ref, track: doc?.track })
+    })
     return () => {
       active = false
     }
-  }, [client, programRef?._ref])
+  }, [client, ref])
+
+  const loading = Boolean(ref) && fetched?.ref !== ref
+  const track = ref && fetched?.ref === ref ? fetched.track : undefined
 
   // Keep the stored value in sync with the program's track while "Seminarie" is selected.
   useEffect(() => {
-    if (toBucket(value) !== 'seminar') return
+    if (loading || toBucket(value) !== 'seminar') return
     const desired = track === 'teens' ? 'teenSeminar' : 'seminar'
     if (value !== desired) onChange(set(desired))
-  }, [track, value, onChange])
+  }, [loading, track, value, onChange])
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
