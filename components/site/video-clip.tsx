@@ -4,6 +4,7 @@ import { Play } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 import type { ImageAsset, Locale, VideoClip as Clip } from '@/lib/content/types'
+import { youtubeId } from '@/lib/youtube'
 
 /**
  * Click-to-load video (brief §5.2, §9.4). No YouTube or media request happens
@@ -97,6 +98,6 @@ export function VideoClip({
 }
 
 function toNoCookieEmbed(url: string): string {
-  const id = url.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/)?.[1]
+  const id = youtubeId(url)
   return `https://www.youtube-nocookie.com/embed/${id ?? ''}?autoplay=1&cc_load_policy=1`
 }
