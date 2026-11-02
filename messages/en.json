@@ -65,7 +65,9 @@
     "copy": "Copy",
     "copied": "Copied",
     "noDates": "No dates are scheduled yet.",
-    "dates": "Dates"
+    "dates": "Dates",
+    "pauseScroll": "Pause",
+    "resumeScroll": "Resume"
   },
   "chooser": {
     "nextStep": "What suits you",

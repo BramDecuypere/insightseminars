@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
+import { testimonialReference } from './editorial'
 
 /** A seminar in the path: Insight I/II/III and Tiener Insight I/II/III (§5.2). */
 export const program = defineType({
@@ -119,10 +120,21 @@ export const program = defineType({
     }),
     defineField({
       name: 'testimonials',
-      title: 'Getuigenissen',
-      description: 'Getoond op de pagina van dit seminarie.',
+      title: 'Geschreven getuigenissen',
+      description: 'Maximaal 3, getoond onder de data op de pagina van dit seminarie.',
       type: 'array',
-      of: [defineArrayMember({ type: 'reference', to: [{ type: 'testimonial' }] })],
+      of: [testimonialReference()],
+      validation: (r) => r.max(3),
+      group: 'related',
+    }),
+    defineField({
+      name: 'videoTestimonials',
+      title: 'Videogetuigenissen',
+      description:
+        'Maximaal 2, getoond onder de geschreven getuigenissen. Je kunt enkel getuigenissen kiezen met een video en bevestigde toestemming.',
+      type: 'array',
+      of: [testimonialReference({ withVideo: true })],
+      validation: (r) => r.max(2),
       group: 'related',
     }),
     defineField({

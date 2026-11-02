@@ -33,6 +33,27 @@ export const imageWithAlt = defineType({
   ],
 })
 
+/**
+ * Photo with a short title and an explanatory text underneath, for places
+ * where a one-line `caption` is not enough (e.g. team photos).
+ */
+export const captionedPhoto = defineType({
+  name: 'captionedPhoto',
+  title: 'Foto met tekst',
+  type: 'object',
+  fields: [
+    defineField({ name: 'image', title: 'Foto', type: 'imageWithAlt', validation: (r) => r.required() }),
+    defineField({ name: 'title', title: 'Titel', description: 'Bv. "Kernteam".', type: 'localeString' }),
+    defineField({ name: 'text', title: 'Tekst', type: 'localeText' }),
+  ],
+  preview: {
+    select: { title: 'title.nl', subtitle: 'text.nl', media: 'image' },
+    prepare({ title, subtitle, media }) {
+      return { title: title || 'Foto met tekst', subtitle, media }
+    },
+  },
+})
+
 /** Plain {title, lead} hero, reused by pages whose header has no extra fields. */
 export const heroBasic = defineType({
   name: 'heroBasic',

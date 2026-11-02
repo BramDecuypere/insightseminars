@@ -7,6 +7,7 @@ import type {
   LocaleRichText,
   LocaleString,
   LegalKind,
+  VideoClip,
 } from './types'
 
 /**
@@ -42,6 +43,14 @@ export function pickRich(field: LocaleRichText | undefined, locale: Locale): str
   if (!field) return []
   const value = (locale === 'en' ? field.en : field.nl) || field.nl || []
   return value.filter((p) => !isPlaceholder(p))
+}
+
+/**
+ * True when a clip can actually play. The Sanity mapper already drops clips
+ * without a file or YouTube link; this guards content from any other source.
+ */
+export function hasVideo(clip: VideoClip | undefined): clip is VideoClip {
+  return Boolean(clip && (clip.file || clip.youtubeUrl))
 }
 
 export async function getSettings() {

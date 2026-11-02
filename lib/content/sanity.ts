@@ -67,9 +67,14 @@ function rich(value: unknown): LocaleRichText | undefined {
   return { nl, ...(en && en.length ? { en } : {}) }
 }
 
+/**
+ * `source` has an initialValue, so Sanity stores a clip object even when no
+ * video was entered. Treat that as no clip, so renderers never show a play
+ * button (or video JSON-LD) for a video that doesn't exist.
+ */
 function video(value: unknown): VideoClip | undefined {
   const v = value as (VideoClip & { poster?: unknown }) | undefined
-  if (!v) return undefined
+  if (!v || !(v.file || v.youtubeUrl)) return undefined
   return { ...v, poster: img(v.poster) as ImageAsset }
 }
 
@@ -84,6 +89,9 @@ function mapProgram<T extends Record<string, any>>(p: T | null): T | null {
     forWhom: rich(p.forWhom),
     videoClip: video(p.videoClip),
     testimonials: Array.isArray(p.testimonials) ? p.testimonials.map((t: any) => mapTestimonial(t)) : p.testimonials,
+    videoTestimonials: Array.isArray(p.videoTestimonials)
+      ? p.videoTestimonials.map((t: any) => mapTestimonial(t))
+      : p.videoTestimonials,
   }
 }
 

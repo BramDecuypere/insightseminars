@@ -36,7 +36,8 @@ const PROGRAM = /* groq */ `{
   ageMin, ageMax, nextDateNote, heroImage, gallery,
   videoClip ${VIDEO},
   "prerequisites": prerequisites[]->slug.current,
-  testimonials[]-> ${TESTIMONIAL},
+  testimonials[@->consentConfirmed == true]-> ${TESTIMONIAL},
+  videoTestimonials[@->consentConfirmed == true]-> ${TESTIMONIAL},
   "faqs": faqs[]->_id,
   seo
 }`

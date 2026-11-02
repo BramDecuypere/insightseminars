@@ -37,7 +37,8 @@ export const videoClip = defineType({
     }),
     defineField({
       name: 'file',
-      title: 'Videobestand (MP4, max. ~30 MB, max. 60 sec.)',
+      title: 'Videobestand (MP4, max. ~30 MB)',
+      description: 'Voor korte fragmenten (tot ongeveer een minuut). Langere video\'s zet je best als niet-openbare video op YouTube.',
       type: 'file',
       options: { accept: 'video/mp4' },
       hidden: ({ parent }) => parent?.source !== 'upload',
@@ -85,7 +86,7 @@ export const videoClip = defineType({
       options: { accept: '.vtt,text/vtt' },
     }),
     defineField({ name: 'title', title: 'Titel', type: 'localeString' }),
-    defineField({ name: 'speaker', title: 'Spreker', type: 'string', initialValue: 'Jerko' }),
+    defineField({ name: 'speaker', title: 'Spreker', type: 'string' }),
     defineField({
       name: 'consentConfirmed',
       title: 'Toestemming van de spreker bevestigd',

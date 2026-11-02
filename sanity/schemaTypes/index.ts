@@ -4,6 +4,7 @@ import { localeRichText, localeString, localeText } from './locale'
 import {
   announcement,
   benefitsBlock,
+  captionedPhoto,
   forWhoBlock,
   heroBasic,
   imageWithAlt,
@@ -31,6 +32,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   localeRichText,
   // Shared objects
   imageWithAlt,
+  captionedPhoto,
   seo,
   social,
   linkItem,

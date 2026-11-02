@@ -65,7 +65,9 @@
     "copy": "Kopiëren",
     "copied": "Gekopieerd",
     "noDates": "Er staan nog geen data gepland.",
-    "dates": "Data"
+    "dates": "Data",
+    "pauseScroll": "Pauzeer",
+    "resumeScroll": "Verder afspelen"
   },
   "chooser": {
     "nextStep": "Wat past bij jou",

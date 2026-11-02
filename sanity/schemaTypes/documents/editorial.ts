@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 const FAQ_CATEGORIES = [
   { title: 'Algemeen', value: 'algemeen' },
@@ -87,6 +87,30 @@ export const testimonial = defineType({
     },
   },
 })
+
+type TestimonialAudience = 'adults' | 'teens' | 'parents'
+
+/**
+ * Array member for picking testimonials on a page. The picker only offers
+ * consented testimonials; `withVideo` narrows it to ones with an uploaded clip
+ * or YouTube link, `audiences` to the given target groups.
+ */
+export const testimonialReference = ({
+  withVideo = false,
+  audiences,
+}: { withVideo?: boolean; audiences?: TestimonialAudience[] } = {}) => {
+  const filters = ['consentConfirmed == true']
+  if (withVideo) filters.push('(defined(videoClip.file.asset) || defined(videoClip.youtubeUrl))')
+  if (audiences) filters.push('audience in $audiences')
+  return defineArrayMember({
+    type: 'reference',
+    to: [{ type: 'testimonial' }],
+    options: {
+      filter: filters.join(' && '),
+      ...(audiences ? { filterParams: { audiences } } : {}),
+    },
+  })
+}
 
 export const internationalEvent = defineType({
   name: 'internationalEvent',

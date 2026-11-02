@@ -24,6 +24,13 @@ export interface ImageAsset {
   caption?: LocaleString
 }
 
+/** Photo with a title and explanatory text underneath (e.g. team photos). */
+export interface CaptionedPhoto {
+  image: ImageAsset
+  title?: LocaleString
+  text?: LocaleText
+}
+
 export type Accent = 'accent1' | 'accent2' | 'accent3' | 'accent4'
 export type Track = 'adults' | 'teens'
 
@@ -73,6 +80,7 @@ export interface Program {
   expectations?: { title: LocaleString; text: LocaleText }[]
   /** Curated for this program's page (brief: testimonials are picked, not just filtered). */
   testimonials?: Testimonial[]
+  videoTestimonials?: Testimonial[]
   videoClip?: VideoClip
   ageMin?: number
   ageMax?: number
