@@ -4,7 +4,14 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 import { ProgramCard } from "@/components/site/program-card"
 import { buttonVariants } from "@/components/ui/button"
 import { Link } from "@/i18n/navigation"
-import { getPrograms, getSettings, getUpcomingEvents, highlightedLinks, pick } from "@/lib/content"
+import {
+  getInternationalLinks,
+  getPrograms,
+  getSettings,
+  getUpcomingEvents,
+  highlightedLinks,
+  pick,
+} from "@/lib/content"
 import { buildEventViews } from "@/lib/content/view"
 import { buildMetadata } from "@/lib/seo"
 import type { Locale } from "@/lib/content/types"
@@ -32,11 +39,13 @@ export default async function SeminarsPage({ params }: Props) {
 
   const t = await getTranslations("seminarsPage")
   const tc = await getTranslations("common")
-  const [programs, settings, upcoming] = await Promise.all([
+  const [programs, settings, upcoming, allWorldLinks] = await Promise.all([
     getPrograms(),
     getSettings(),
     getUpcomingEvents(now),
+    getInternationalLinks(),
   ])
+  const worldLinks = highlightedLinks(allWorldLinks)
   const views = await buildEventViews(upcoming, l, now)
 
   // Earliest upcoming, dated event per program → the card's "next date".
@@ -141,7 +150,7 @@ export default async function SeminarsPage({ params }: Props) {
               </a>
             </div>
             <ul className="divide-y divide-lijn rounded-panel border border-lijn">
-              {highlightedLinks(settings.internationalLinks).map((link) => (
+              {worldLinks.map((link) => (
                 <li key={link.label}>
                   {link.url ? (
                     <a
@@ -160,7 +169,7 @@ export default async function SeminarsPage({ params }: Props) {
                   )}
                 </li>
               ))}
-              {highlightedLinks(settings.internationalLinks).length < settings.internationalLinks.length ? (
+              {worldLinks.length < allWorldLinks.length ? (
                 <li>
                   <Link
                     href="/community"

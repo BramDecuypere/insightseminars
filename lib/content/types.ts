@@ -344,6 +344,7 @@ export interface CommunityBlock {
 export interface CommunityPage {
   belgium: CommunityBlock
   international: CommunityBlock
+  internationalLinks: InternationalLink[]
 }
 
 export interface ContactPage {

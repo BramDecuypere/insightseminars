@@ -332,7 +332,18 @@ export const communityPage = defineType({
   name: 'communityPage',
   title: 'Community',
   type: 'document',
-  fields: [communityBlock('belgium', 'België', 5), communityBlock('international', 'Wereldwijd', 3)],
+  fields: [
+    communityBlock('belgium', 'België', 5),
+    communityBlock('international', 'Wereldwijd', 3),
+    defineField({
+      name: 'internationalLinks',
+      title: 'Internationale links',
+      description:
+        'Links naar Insight in andere landen. Gegroepeerd per continent op deze pagina; de uitgelichte links verschijnen ook in de footer en op de Seminars-pagina.',
+      type: 'array',
+      of: [arr('internationalLink')],
+    }),
+  ],
   preview: { prepare: () => ({ title: 'Community' }) },
 })
 

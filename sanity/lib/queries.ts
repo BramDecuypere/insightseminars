@@ -134,7 +134,8 @@ export const teensPageQuery = defineQuery(`*[_type == "teensPage"][0]{
 
 export const communityPageQuery = defineQuery(`*[_type == "communityPage"][0]{
   belgium{ photos, "testimonials": testimonials[@->consentConfirmed == true]-> ${TESTIMONIAL} },
-  international{ photos, "testimonials": testimonials[@->consentConfirmed == true]-> ${TESTIMONIAL} }
+  international{ photos, "testimonials": testimonials[@->consentConfirmed == true]-> ${TESTIMONIAL} },
+  internationalLinks[]{ label, url, continent, highlight }
 }`)
 
 export const contactPageQuery = defineQuery(`*[_type == "contactPage"][0]{

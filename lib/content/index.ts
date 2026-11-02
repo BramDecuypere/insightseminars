@@ -140,6 +140,15 @@ export async function getCommunityPage() {
 }
 
 /**
+ * International links, managed on the Community page. Falls back to the
+ * deprecated Instellingen field until the Community page has links.
+ */
+export async function getInternationalLinks(): Promise<InternationalLink[]> {
+  const [page, settings] = await Promise.all([getCommunityPage(), getSettings()])
+  return page.internationalLinks.length > 0 ? page.internationalLinks : settings.internationalLinks
+}
+
+/**
  * International links for compact lists (footer, Seminars page): the
  * highlighted ones, or all of them while none is highlighted.
  */

@@ -5,7 +5,7 @@ import { Link } from '@/i18n/navigation'
 import { buttonVariants } from '@/components/ui/button'
 import { PhotoGrid } from '@/components/site/photo-grid'
 import { TestimonialGrid } from '@/components/site/testimonial-grid'
-import { getCommunityPage, getSettings } from '@/lib/content'
+import { getCommunityPage, getInternationalLinks, getSettings } from '@/lib/content'
 import { buildMetadata } from '@/lib/seo'
 import type { CommunityBlock, Continent, InternationalLink, Locale } from '@/lib/content/types'
 import { cn } from '@/lib/utils'
@@ -92,18 +92,19 @@ export default async function CommunityPage({ params }: Props) {
   setRequestLocale(locale)
   const l = locale as Locale
 
-  const [t, tNav, settings, page] = await Promise.all([
+  const [t, tNav, settings, page, worldLinks] = await Promise.all([
     getTranslations('communityPage'),
     getTranslations('nav'),
     getSettings(),
     getCommunityPage(),
+    getInternationalLinks(),
   ])
 
   // Links without a continent (e.g. the international organisation) come first, ungrouped.
-  const ungrouped = settings.internationalLinks.filter((link) => !link.continent)
+  const ungrouped = worldLinks.filter((link) => !link.continent)
   const groups = CONTINENT_ORDER.map((continent) => ({
     continent,
-    links: settings.internationalLinks.filter((link) => link.continent === continent),
+    links: worldLinks.filter((link) => link.continent === continent),
   })).filter((g) => g.links.length > 0)
 
   return (

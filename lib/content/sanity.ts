@@ -213,7 +213,11 @@ function mapCommunityBlock(b: any): CommunityBlock {
 export async function getCommunityPage(): Promise<CommunityPage | null> {
   const c = await sanityFetch<any>({ query: q.communityPageQuery, tags: ['sanity:communityPage'] })
   if (!c) return null
-  return { belgium: mapCommunityBlock(c.belgium), international: mapCommunityBlock(c.international) }
+  return {
+    belgium: mapCommunityBlock(c.belgium),
+    international: mapCommunityBlock(c.international),
+    internationalLinks: Array.isArray(c.internationalLinks) ? c.internationalLinks : [],
+  }
 }
 
 export async function getContactPage(): Promise<ContactPage | null> {

@@ -773,6 +773,8 @@ export const teensPage: TeensPage = {
 export const communityPage: CommunityPage = {
   belgium: { photos: [], testimonials: [] },
   international: { photos: [], testimonials: [] },
+  // Empty: getInternationalLinks() then falls back to settings.internationalLinks.
+  internationalLinks: [],
 }
 
 export const contactPage: ContactPage = {

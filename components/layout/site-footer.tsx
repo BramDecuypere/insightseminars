@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
-import { getSettings, highlightedLinks } from '@/lib/content'
+import { getInternationalLinks, getSettings, highlightedLinks } from '@/lib/content'
 import { NewsletterForm } from '@/components/site/newsletter-form'
 import { CookiePreferencesLink } from '@/components/consent/cookie-preferences-link'
 import { LanguageSwitcher } from './language-switcher'
@@ -10,12 +10,13 @@ import { mainNav } from './nav-config'
 /** Footer on a light mist background with an avondblauw top border (brief §4).
  *  Legal-entity line stays hidden until the settings fields are filled. */
 export async function SiteFooter() {
-  const [t, settings, locale] = await Promise.all([
+  const [t, settings, locale, allWorldLinks] = await Promise.all([
     getTranslations(),
     getSettings(),
     getLocale(),
+    getInternationalLinks(),
   ])
-  const worldLinks = highlightedLinks(settings.internationalLinks)
+  const worldLinks = highlightedLinks(allWorldLinks)
 
   const legalEntity = [
     settings.legalName,
@@ -87,7 +88,7 @@ export async function SiteFooter() {
               </span>
             ),
           )}
-          {worldLinks.length < settings.internationalLinks.length ? (
+          {worldLinks.length < allWorldLinks.length ? (
             <Link href="/community" className="font-semibold text-inkt hover:underline">
               {t('common.allCountries')}
             </Link>
