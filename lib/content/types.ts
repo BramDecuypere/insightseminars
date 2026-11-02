@@ -182,7 +182,7 @@ export interface Testimonial {
   context: LocaleString
   photo?: ImageAsset
   videoClip?: VideoClip
-  programSlug?: string
+  programSlugs?: string[]
   audience: TestimonialAudience
   consentConfirmed: boolean
 }

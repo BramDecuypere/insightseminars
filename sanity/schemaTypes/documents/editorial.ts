@@ -55,7 +55,14 @@ export const testimonial = defineType({
     defineField({ name: 'context', title: 'Context', description: 'Bv. "deelnemer Insight I, 2025".', type: 'localeString' }),
     defineField({ name: 'photo', title: 'Foto (optioneel)', type: 'imageWithAlt' }),
     defineField({ name: 'videoClip', title: 'Videofragment (optioneel)', type: 'videoClip' }),
-    defineField({ name: 'program', title: 'Seminarie (optioneel)', type: 'reference', to: [{ type: 'program' }] }),
+    defineField({
+      name: 'programs',
+      title: 'Seminaries (optioneel)',
+      description: 'Over welke seminaries gaat deze getuigenis? Je kunt er meerdere kiezen.',
+      type: 'array',
+      of: [defineArrayMember({ type: 'reference', to: [{ type: 'program' }] })],
+      validation: (r) => r.unique(),
+    }),
     defineField({
       name: 'audience',
       title: 'Doelgroep',

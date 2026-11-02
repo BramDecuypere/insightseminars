@@ -164,7 +164,7 @@ function eventDoc(e: InsightEvent) {
 }
 
 function testimonialDoc(t: Testimonial) {
-  const programId = t.programSlug ? programIdBySlug.get(t.programSlug) : undefined
+  const programIds = (t.programSlugs ?? []).flatMap((slug) => programIdBySlug.get(slug) ?? [])
   return stripPlaceholders({
     _id: t._id,
     _type: 'testimonial',
@@ -172,7 +172,7 @@ function testimonialDoc(t: Testimonial) {
     situation: t.situation,
     name: t.name,
     context: t.context,
-    program: programId ? ref(programId) : undefined,
+    programs: programIds.length ? programIds.map((id) => ({ _key: key(), ...ref(id) })) : undefined,
     audience: t.audience,
     consentConfirmed: t.consentConfirmed,
   })
