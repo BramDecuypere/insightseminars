@@ -132,6 +132,11 @@ export const teensPageQuery = defineQuery(`*[_type == "teensPage"][0]{
   seo
 }`)
 
+export const communityPageQuery = defineQuery(`*[_type == "communityPage"][0]{
+  belgium{ photos, "testimonials": testimonials[@->consentConfirmed == true]-> ${TESTIMONIAL} },
+  international{ photos, "testimonials": testimonials[@->consentConfirmed == true]-> ${TESTIMONIAL} }
+}`)
+
 export const contactPageQuery = defineQuery(`*[_type == "contactPage"][0]{
   hero{ title, lead },
   sections{ direct, venue, follow },

@@ -68,6 +68,7 @@
     "dates": "Dates",
     "pauseScroll": "Pause",
     "resumeScroll": "Resume",
+    "allCountries": "All countries",
     "galleryHeading": "A glimpse of the room"
   },
   "chooser": {
@@ -369,6 +370,15 @@
     "lead": "Everything you need from us, in one place."
   },
   "communityPage": {
+    "testimonialsHeading": "What participants say",
+    "continents": {
+      "europe": "Europe",
+      "northAmerica": "North America",
+      "latinAmerica": "Latin America",
+      "oceania": "Oceania",
+      "asia": "Asia",
+      "africa": "Africa"
+    },
     "title": "Community",
     "lead": "Insight is a worldwide movement. Discover the local community in Belgium and the wider international community.",
     "belgiumHeading": "Belgium",

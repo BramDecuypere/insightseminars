@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
-import { getSettings } from '@/lib/content'
+import { getSettings, highlightedLinks } from '@/lib/content'
 import { NewsletterForm } from '@/components/site/newsletter-form'
 import { CookiePreferencesLink } from '@/components/consent/cookie-preferences-link'
 import { LanguageSwitcher } from './language-switcher'
@@ -15,6 +15,7 @@ export async function SiteFooter() {
     getSettings(),
     getLocale(),
   ])
+  const worldLinks = highlightedLinks(settings.internationalLinks)
 
   const legalEntity = [
     settings.legalName,
@@ -69,7 +70,7 @@ export async function SiteFooter() {
 
         <div className="flex flex-col gap-2">
           <h2 className="type-small font-bold text-inkt">{t('footer.world')}</h2>
-          {settings.internationalLinks.map((l) =>
+          {worldLinks.map((l) =>
             l.url ? (
               <a
                 key={l.label}
@@ -86,6 +87,11 @@ export async function SiteFooter() {
               </span>
             ),
           )}
+          {worldLinks.length < settings.internationalLinks.length ? (
+            <Link href="/community" className="font-semibold text-inkt hover:underline">
+              {t('common.allCountries')}
+            </Link>
+          ) : null}
         </div>
 
         <div className="flex flex-col gap-3">

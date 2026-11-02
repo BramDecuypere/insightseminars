@@ -1,5 +1,6 @@
 import type {
   AboutPage,
+  CommunityPage,
   ContactPage,
   Facilitator,
   Faq,
@@ -766,6 +767,12 @@ export const teensPage: TeensPage = {
     title: { nl: 'Tiener Insight | Voor jongeren van 14 tot 19 jaar', en: 'Teen Insight | For young people aged 14 to 19' },
     description: { nl: 'Een paar dagen om jezelf beter te leren kennen, in een veilige en begeleide groep. Voor tieners en hun ouders.', en: 'A few days to get to know yourself better, in a safe and guided group. For teens and their parents.' },
   },
+}
+
+/** No invented photos or testimonials (§13): the blocks stay empty until filled in Studio. */
+export const communityPage: CommunityPage = {
+  belgium: { photos: [], testimonials: [] },
+  international: { photos: [], testimonials: [] },
 }
 
 export const contactPage: ContactPage = {

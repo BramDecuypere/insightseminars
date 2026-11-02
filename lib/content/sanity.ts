@@ -4,6 +4,8 @@ import * as q from '@/sanity/lib/queries'
 import type {
   AboutPage,
   CaptionedPhoto,
+  CommunityBlock,
+  CommunityPage,
   ContactPage,
   Facilitator,
   Faq,
@@ -199,6 +201,19 @@ export async function getTeensPage(): Promise<TeensPage | null> {
       ? t.videoTestimonials.map((x: any) => mapTestimonial(x))
       : [],
   } as TeensPage
+}
+
+function mapCommunityBlock(b: any): CommunityBlock {
+  return {
+    photos: gallery(b?.photos) ?? [],
+    testimonials: Array.isArray(b?.testimonials) ? b.testimonials.map((t: any) => mapTestimonial(t)) : [],
+  }
+}
+
+export async function getCommunityPage(): Promise<CommunityPage | null> {
+  const c = await sanityFetch<any>({ query: q.communityPageQuery, tags: ['sanity:communityPage'] })
+  if (!c) return null
+  return { belgium: mapCommunityBlock(c.belgium), international: mapCommunityBlock(c.international) }
 }
 
 export async function getContactPage(): Promise<ContactPage | null> {

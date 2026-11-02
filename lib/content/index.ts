@@ -6,6 +6,7 @@ import type {
   Locale,
   LocaleRichText,
   LocaleString,
+  InternationalLink,
   LegalKind,
   VideoClip,
 } from './types'
@@ -131,6 +132,20 @@ export async function getAboutPage() {
 export async function getTeensPage() {
   if (hasSanity) return (await sanity.getTeensPage()) ?? withoutImages(mock.teensPage)
   return mock.teensPage
+}
+
+export async function getCommunityPage() {
+  if (hasSanity) return (await sanity.getCommunityPage()) ?? mock.communityPage
+  return mock.communityPage
+}
+
+/**
+ * International links for compact lists (footer, Seminars page): the
+ * highlighted ones, or all of them while none is highlighted.
+ */
+export function highlightedLinks(links: InternationalLink[]): InternationalLink[] {
+  const highlighted = links.filter((l) => l.highlight)
+  return highlighted.length > 0 ? highlighted : links
 }
 
 export async function getContactPage() {

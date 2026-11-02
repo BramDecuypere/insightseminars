@@ -302,6 +302,40 @@ export const teensPage = defineType({
   preview: { prepare: () => ({ title: 'Tieners' }) },
 })
 
+/** Photos and testimonials per community; headings and texts live in the message files. */
+const communityBlock = (name: string, title: string, max: number) =>
+  defineField({
+    name,
+    title,
+    type: 'object',
+    fields: [
+      defineField({
+        name: 'photos',
+        title: "Foto's",
+        description: `Maximaal ${max}.`,
+        type: 'array',
+        of: [arr('imageWithAlt')],
+        validation: (r) => r.max(max),
+      }),
+      defineField({
+        name: 'testimonials',
+        title: 'Getuigenissen',
+        description: `Maximaal ${max}.`,
+        type: 'array',
+        of: [testimonialReference()],
+        validation: (r) => r.max(max),
+      }),
+    ],
+  })
+
+export const communityPage = defineType({
+  name: 'communityPage',
+  title: 'Community',
+  type: 'document',
+  fields: [communityBlock('belgium', 'België', 5), communityBlock('international', 'Wereldwijd', 3)],
+  preview: { prepare: () => ({ title: 'Community' }) },
+})
+
 export const contactPage = defineType({
   name: 'contactPage',
   title: 'Contact',

@@ -4,7 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 import { ProgramCard } from "@/components/site/program-card"
 import { buttonVariants } from "@/components/ui/button"
 import { Link } from "@/i18n/navigation"
-import { getPrograms, getSettings, getUpcomingEvents, pick } from "@/lib/content"
+import { getPrograms, getSettings, getUpcomingEvents, highlightedLinks, pick } from "@/lib/content"
 import { buildEventViews } from "@/lib/content/view"
 import { buildMetadata } from "@/lib/seo"
 import type { Locale } from "@/lib/content/types"
@@ -31,6 +31,7 @@ export default async function SeminarsPage({ params }: Props) {
   const now = new Date()
 
   const t = await getTranslations("seminarsPage")
+  const tc = await getTranslations("common")
   const [programs, settings, upcoming] = await Promise.all([
     getPrograms(),
     getSettings(),
@@ -140,7 +141,7 @@ export default async function SeminarsPage({ params }: Props) {
               </a>
             </div>
             <ul className="divide-y divide-lijn rounded-panel border border-lijn">
-              {settings.internationalLinks.map((link) => (
+              {highlightedLinks(settings.internationalLinks).map((link) => (
                 <li key={link.label}>
                   {link.url ? (
                     <a
@@ -159,6 +160,16 @@ export default async function SeminarsPage({ params }: Props) {
                   )}
                 </li>
               ))}
+              {highlightedLinks(settings.internationalLinks).length < settings.internationalLinks.length ? (
+                <li>
+                  <Link
+                    href="/community"
+                    className="flex items-center justify-between gap-4 px-5 py-4 font-semibold text-inkt hover:bg-mist"
+                  >
+                    {tc("allCountries")}
+                  </Link>
+                </li>
+              ) : null}
             </ul>
           </div>
         </div>

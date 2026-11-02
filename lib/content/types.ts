@@ -226,7 +226,7 @@ export interface SiteSettings {
   consentText?: LocaleText
   consentVersion?: string
   socials: Social[]
-  internationalLinks: { label: string; url?: string }[]
+  internationalLinks: InternationalLink[]
   internationalCalendarUrl?: string
   linksPage: LinkItem[]
   announcement?: { active: boolean; text: LocaleString; link?: string }
@@ -323,6 +323,27 @@ export interface TeensPage {
     blocks: { title: LocaleString; text: LocaleText }[]
   }
   seo: { title: LocaleString; description: LocaleString }
+}
+
+export type Continent = 'europe' | 'northAmerica' | 'latinAmerica' | 'oceania' | 'asia' | 'africa'
+
+export interface InternationalLink {
+  label: string
+  url?: string
+  /** Groups the link on the Community page; unset links are listed first. */
+  continent?: Continent
+  /** Shown in the footer and on the Seminars page (all links when none is highlighted). */
+  highlight?: boolean
+}
+
+export interface CommunityBlock {
+  photos: ImageAsset[]
+  testimonials: Testimonial[]
+}
+
+export interface CommunityPage {
+  belgium: CommunityBlock
+  international: CommunityBlock
 }
 
 export interface ContactPage {
