@@ -273,6 +273,21 @@ export const teensPage = defineType({
     }),
     defineField({ name: 'gallery', title: 'Fotogalerij', type: 'array', of: [arr('imageWithAlt')] }),
     defineField({
+      name: 'videoTestimonialsHeading',
+      title: 'Kop videogetuigenissen',
+      description: 'Leeg = "Wat tieners en ouders vertellen".',
+      type: 'localeString',
+    }),
+    defineField({
+      name: 'videoTestimonials',
+      title: 'Videogetuigenissen',
+      description:
+        'Maximaal 3, getoond onder de seminaries en boven "Voor ouders". Je kunt enkel getuigenissen van tieners of ouders kiezen met een video en bevestigde toestemming.',
+      type: 'array',
+      of: [testimonialReference({ withVideo: true, audiences: ['teens', 'parents'] })],
+      validation: (r) => r.max(3),
+    }),
+    defineField({
       name: 'parents',
       title: 'Voor ouders',
       type: 'object',

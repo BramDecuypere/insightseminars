@@ -193,6 +193,9 @@ export async function getTeensPage(): Promise<TeensPage | null> {
     ...t,
     media: t.media ? { image: img(t.media.image), videoClip: video(t.media.videoClip) } : undefined,
     gallery: gallery(t.gallery),
+    videoTestimonials: Array.isArray(t.videoTestimonials)
+      ? t.videoTestimonials.map((x: any) => mapTestimonial(x))
+      : [],
   } as TeensPage
 }
 

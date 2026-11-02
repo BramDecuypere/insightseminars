@@ -119,6 +119,8 @@ export const teensPageQuery = defineQuery(`*[_type == "teensPage"][0]{
   hero{ eyebrow, title, lead, points },
   media{ image, videoClip ${VIDEO} },
   gallery,
+  videoTestimonialsHeading,
+  videoTestimonials[@->consentConfirmed == true]-> ${TESTIMONIAL},
   parents{ heading, lead, blocks[]{ title, text } },
   seo
 }`)

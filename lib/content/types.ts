@@ -311,6 +311,9 @@ export interface TeensPage {
   hero: { eyebrow: LocaleString; title: LocaleString; lead: LocaleText; points: LocaleString[] }
   media?: { image?: ImageAsset; videoClip?: VideoClip }
   gallery?: ImageAsset[]
+  videoTestimonialsHeading?: LocaleString
+  /** Up to 3 teen/parent testimonials with a video. */
+  videoTestimonials?: Testimonial[]
   parents: {
     heading: LocaleString
     lead: LocaleText
