@@ -26,7 +26,8 @@ const VIDEO = /* groq */ `{
 const TESTIMONIAL = /* groq */ `{
   _id, quote, situation, name, context, photo,
   videoClip ${VIDEO},
-  "programSlug": program->slug.current, audience, consentConfirmed
+  "programSlugs": programs[]->slug.current,
+  audience, consentConfirmed
 }`
 
 const PROGRAM = /* groq */ `{

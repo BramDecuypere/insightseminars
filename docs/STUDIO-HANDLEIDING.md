@@ -62,6 +62,8 @@ verwijderen; je vindt ze terug onder **Agenda → Voorbije activiteiten**.
 2. Vul het **citaat** (1 tot 3 zinnen), de **situatie vooraf**, de **naam** en de
    **context** in. Kies de **doelgroep**.
 3. Optioneel: voeg een **foto** toe (met **alt-tekst**) of een **videofragment**.
+   Bij **Seminaries** kies je over welke seminaries de getuigenis gaat; dat
+   kunnen er meerdere zijn.
 4. **Videofragment:**
    - **Geüpload bestand:** een MP4 van maximaal ~30 MB, voor korte fragmenten
      (tot ongeveer een minuut).
