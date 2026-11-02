@@ -1,6 +1,14 @@
 import { defineField, defineType } from 'sanity'
 
-type VideoClipParent = { source?: string; file?: unknown; youtubeUrl?: unknown }
+type VideoClipParent = {
+  source?: string
+  file?: unknown
+  youtubeUrl?: unknown
+  poster?: { asset?: unknown }
+  title?: { nl?: string; en?: string }
+  captionsNl?: { asset?: unknown }
+  captionsEn?: { asset?: unknown }
+}
 
 /**
  * A clip counts as "in use" once a file or YouTube link is provided. `source`
@@ -10,6 +18,20 @@ type VideoClipParent = { source?: string; file?: unknown; youtubeUrl?: unknown }
  */
 const hasClip = (parent: VideoClipParent | undefined): boolean =>
   Boolean(parent?.file || parent?.youtubeUrl)
+
+/**
+ * The editor started a clip (poster, title or captions) but has not added the
+ * video itself yet. Only then is the file/link required, so an optional,
+ * untouched clip never blocks publishing.
+ */
+const hasOtherClipContent = (parent: VideoClipParent | undefined): boolean =>
+  Boolean(
+    parent?.poster?.asset ||
+      parent?.title?.nl ||
+      parent?.title?.en ||
+      parent?.captionsNl?.asset ||
+      parent?.captionsEn?.asset,
+  )
 
 /**
  * Short speaker clip (brief §5.2 videoClip). When a clip is provided, publishing
@@ -44,8 +66,10 @@ export const videoClip = defineType({
       hidden: ({ parent }) => parent?.source !== 'upload',
       validation: (rule) =>
         rule.custom((value, context) => {
-          const parent = context.parent as { source?: string } | undefined
-          if (parent?.source === 'upload' && !value) return 'Upload een videobestand.'
+          const parent = context.parent as VideoClipParent | undefined
+          if (parent?.source === 'upload' && !value && hasOtherClipContent(parent)) {
+            return 'Upload een videobestand, of maak de andere velden van het videofragment leeg.'
+          }
           return true
         }),
     }),
@@ -56,8 +80,10 @@ export const videoClip = defineType({
       hidden: ({ parent }) => parent?.source !== 'youtube',
       validation: (rule) =>
         rule.custom((value, context) => {
-          const parent = context.parent as { source?: string } | undefined
-          if (parent?.source === 'youtube' && !value) return 'Vul een YouTube-link in.'
+          const parent = context.parent as VideoClipParent | undefined
+          if (parent?.source === 'youtube' && !value && hasOtherClipContent(parent)) {
+            return 'Vul een YouTube-link in, of maak de andere velden van het videofragment leeg.'
+          }
           return true
         }),
     }),
