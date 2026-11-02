@@ -3,6 +3,9 @@ import { imageUrl } from '@/sanity/lib/image'
 import * as q from '@/sanity/lib/queries'
 import type {
   AboutPage,
+  CaptionedPhoto,
+  CommunityBlock,
+  CommunityPage,
   ContactPage,
   Facilitator,
   Faq,
@@ -67,9 +70,23 @@ function rich(value: unknown): LocaleRichText | undefined {
   return { nl, ...(en && en.length ? { en } : {}) }
 }
 
+/** Array of captionedPhoto objects, dropping any entry without an image asset. */
+function captionedPhotos(value: unknown): CaptionedPhoto[] {
+  if (!Array.isArray(value)) return []
+  return value.flatMap((v: { image?: unknown; title?: CaptionedPhoto['title']; text?: CaptionedPhoto['text'] }) => {
+    const image = img(v?.image)
+    return image ? [{ image, title: v.title, text: v.text }] : []
+  })
+}
+
+/**
+ * `source` has an initialValue, so Sanity stores a clip object even when no
+ * video was entered. Treat that as no clip, so renderers never show a play
+ * button (or video JSON-LD) for a video that doesn't exist.
+ */
 function video(value: unknown): VideoClip | undefined {
   const v = value as (VideoClip & { poster?: unknown }) | undefined
-  if (!v) return undefined
+  if (!v || !(v.file || v.youtubeUrl)) return undefined
   return { ...v, poster: img(v.poster) as ImageAsset }
 }
 
@@ -84,6 +101,9 @@ function mapProgram<T extends Record<string, any>>(p: T | null): T | null {
     forWhom: rich(p.forWhom),
     videoClip: video(p.videoClip),
     testimonials: Array.isArray(p.testimonials) ? p.testimonials.map((t: any) => mapTestimonial(t)) : p.testimonials,
+    videoTestimonials: Array.isArray(p.videoTestimonials)
+      ? p.videoTestimonials.map((t: any) => mapTestimonial(t))
+      : p.videoTestimonials,
   }
 }
 
@@ -94,6 +114,8 @@ function mapEvent<T extends Record<string, any>>(e: T | null): T | null {
     image: img(e.image),
     notes: rich(e.notes),
     emailInfo: rich(e.emailInfo),
+    ...(Array.isArray(e.testimonials) ? { testimonials: e.testimonials.map((t: any) => mapTestimonial(t)) } : {}),
+    ...(e.gallery ? { gallery: gallery(e.gallery) } : {}),
   }
 }
 
@@ -156,6 +178,13 @@ export async function getAboutPage(): Promise<AboutPage | null> {
   return {
     ...a,
     testimonials: Array.isArray(a.testimonials) ? a.testimonials.map((t: any) => mapTestimonial(t)) : [],
+    teamPhotos: captionedPhotos(a.teamPhotos),
+    featuredFacilitators: Array.isArray(a.featuredFacilitators)
+      ? a.featuredFacilitators.filter(Boolean).map((f: any) => mapFacilitator(f))
+      : [],
+    facilitatorVideos: Array.isArray(a.facilitatorVideos)
+      ? a.facilitatorVideos.map((v: unknown) => video(v)).filter(Boolean)
+      : [],
     videoClip: video(a.videoClip),
     gallery: gallery(a.gallery),
   } as AboutPage
@@ -168,7 +197,27 @@ export async function getTeensPage(): Promise<TeensPage | null> {
     ...t,
     media: t.media ? { image: img(t.media.image), videoClip: video(t.media.videoClip) } : undefined,
     gallery: gallery(t.gallery),
+    videoTestimonials: Array.isArray(t.videoTestimonials)
+      ? t.videoTestimonials.map((x: any) => mapTestimonial(x))
+      : [],
   } as TeensPage
+}
+
+function mapCommunityBlock(b: any): CommunityBlock {
+  return {
+    photos: gallery(b?.photos) ?? [],
+    testimonials: Array.isArray(b?.testimonials) ? b.testimonials.map((t: any) => mapTestimonial(t)) : [],
+  }
+}
+
+export async function getCommunityPage(): Promise<CommunityPage | null> {
+  const c = await sanityFetch<any>({ query: q.communityPageQuery, tags: ['sanity:communityPage'] })
+  if (!c) return null
+  return {
+    belgium: mapCommunityBlock(c.belgium),
+    international: mapCommunityBlock(c.international),
+    internationalLinks: Array.isArray(c.internationalLinks) ? c.internationalLinks : [],
+  }
 }
 
 export async function getContactPage(): Promise<ContactPage | null> {

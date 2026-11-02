@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
@@ -6,6 +7,8 @@ import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { InfoSessionForm } from '@/components/register/info-session-form'
 import { RegistrationForm } from '@/components/register/registration-form'
+import { PhotoGrid } from '@/components/site/photo-grid'
+import { TestimonialGrid } from '@/components/site/testimonial-grid'
 import type { RegistrationSummary } from '@/components/register/summary-panel'
 import {
   getEventBySlug,
@@ -14,6 +17,7 @@ import {
   getUpcomingEvents,
   getVenueById,
   pick,
+  pickRich,
 } from '@/lib/content'
 import type { Locale } from '@/lib/content/types'
 import { formatDateRange } from '@/lib/domain/dates'
@@ -61,13 +65,74 @@ export default async function RegisterPage({ params }: Props) {
   // Info sessions, workshops & events use the single-step free form (§7.3).
   const isInfo = event.type === 'infoSession' || event.type === 'workshop' || event.type === 'event'
   if (isInfo) {
+    const poster = event.image
+    const notes = pickRich(event.notes, loc)
+    const hasAside = Boolean(poster) || notes.length > 0
+    const testimonials = event.testimonials ?? []
+    const photos = (event.gallery ?? []).slice(0, 3)
+
     return (
       <div className="container-site section-y">
         <h1 className="type-h1 text-balance">{eventTitle}</h1>
         <p className="type-lead mt-4 max-w-2xl text-leisteen">{dates}</p>
-        <div className="mt-8">
-          <InfoSessionForm eventSlug={event.slug} />
+
+        {/* Poster and extra info beside the form on desktop, above it on mobile. */}
+        <div className={cn('mt-8', hasAside && 'grid gap-10 lg:grid-cols-2 lg:gap-16')}>
+          {hasAside ? (
+            <div className="space-y-6">
+              {poster ? (
+                <Image
+                  src={poster.src}
+                  alt={pick(poster.alt, loc)}
+                  width={1200}
+                  height={1500}
+                  className="h-auto w-full rounded-panel border border-lijn"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                />
+              ) : null}
+              {notes.length > 0 ? (
+                <div className="space-y-3">
+                  {notes.map((paragraph, i) => (
+                    <p key={i} className="type-body text-inkt">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+          <div>
+            <InfoSessionForm eventSlug={event.slug} />
+          </div>
         </div>
+
+        {testimonials.length > 0 ? (
+          <section className="mt-16">
+            <h2 className="type-h2 text-inkt text-balance">{t('testimonialsHeading')}</h2>
+            <TestimonialGrid
+              testimonials={testimonials}
+              locale={loc}
+              playLabel={tc('playVideo', { duration: '1 min' })}
+              className="mt-8"
+            />
+          </section>
+        ) : null}
+
+        {photos.length > 0 ? (
+          <section className="mt-16">
+            <h2 className="type-h2 text-inkt text-balance">{t('previousEditionsHeading')}</h2>
+            <div className="mt-8">
+              <PhotoGrid
+                images={photos}
+                locale={loc}
+                openLabel={tc('openImage')}
+                prevLabel={tc('prevImage')}
+                nextLabel={tc('nextImage')}
+              />
+            </div>
+          </section>
+        ) : null}
       </div>
     )
   }

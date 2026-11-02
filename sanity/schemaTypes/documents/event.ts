@@ -1,6 +1,7 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
 import { EventTypeInput } from '../components/EventTypeInput'
+import { testimonialReference } from './editorial'
 
 const STATUS_LABEL: Record<string, string> = {
   open: 'Open',
@@ -8,6 +9,9 @@ const STATUS_LABEL: Record<string, string> = {
   full: 'Volzet',
   closed: 'Gesloten',
 }
+
+/** Seminar runs show the program's testimonials and photos instead of their own. */
+const isSeminarType = (type: unknown) => type === 'seminar' || type === 'teenSeminar'
 
 /** One dated occurrence: a seminar run, an info session or a workshop (§5.2). */
 export const event = defineType({
@@ -215,8 +219,35 @@ export const event = defineType({
           return true
         }),
     }),
-    defineField({ name: 'image', title: 'Afbeelding (kaart en OG)', type: 'imageWithAlt', group: 'content' }),
+    defineField({
+      name: 'image',
+      title: 'Affiche of afbeelding',
+      description:
+        'Bij infosessies, workshops en events groot getoond op de inschrijfpagina (bv. de affiche uit Canva). Wordt ook gebruikt bij delen op sociale media.',
+      type: 'imageWithAlt',
+      group: 'content',
+    }),
     defineField({ name: 'notes', title: 'Extra info op de inschrijfpagina', type: 'localeRichText', group: 'content' }),
+    defineField({
+      name: 'testimonials',
+      title: 'Getuigenissen',
+      description: 'Maximaal 3, getoond onder het inschrijfformulier.',
+      type: 'array',
+      of: [testimonialReference()],
+      validation: (r) => r.max(3),
+      group: 'content',
+      hidden: ({ parent }) => isSeminarType(parent?.type),
+    }),
+    defineField({
+      name: 'gallery',
+      title: "Foto's van vorige edities",
+      description: 'Maximaal 3, getoond onder het inschrijfformulier.',
+      type: 'array',
+      of: [defineArrayMember({ type: 'imageWithAlt' })],
+      validation: (r) => r.max(3),
+      group: 'content',
+      hidden: ({ parent }) => isSeminarType(parent?.type),
+    }),
     defineField({ name: 'emailInfo', title: 'Praktische info in de bevestigingsmail', type: 'localeRichText', group: 'content' }),
   ],
   orderings: [

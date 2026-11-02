@@ -68,7 +68,17 @@ export const siteSettings = defineType({
     }),
 
     defineField({ name: 'socials', title: 'Sociale kanalen', type: 'array', of: [arr('social')], group: 'links' }),
-    defineField({ name: 'internationalLinks', title: 'Internationale links', type: 'array', of: [arr('internationalLink')], group: 'links' }),
+    defineField({
+      name: 'internationalLinks',
+      title: 'Internationale links (verouderd)',
+      description:
+        'Verplaatst naar Pagina\'s → Community. Zolang daar nog geen links staan, worden deze nog getoond. Dit veld verdwijnt zodra het leeg is.',
+      type: 'array',
+      of: [arr('internationalLink')],
+      group: 'links',
+      deprecated: { reason: 'Verplaatst naar de Community-pagina.' },
+      hidden: ({ value }) => !Array.isArray(value) || value.length === 0,
+    }),
     defineField({ name: 'internationalCalendarUrl', title: 'Internationale kalender (link)', type: 'url', group: 'links' }),
     defineField({ name: 'linksPage', title: 'Links-pagina', type: 'array', of: [arr('linkItem')], group: 'links' }),
 

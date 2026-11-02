@@ -24,6 +24,13 @@ export interface ImageAsset {
   caption?: LocaleString
 }
 
+/** Photo with a title and explanatory text underneath (e.g. team photos). */
+export interface CaptionedPhoto {
+  image: ImageAsset
+  title?: LocaleString
+  text?: LocaleText
+}
+
 export type Accent = 'accent1' | 'accent2' | 'accent3' | 'accent4'
 export type Track = 'adults' | 'teens'
 
@@ -73,6 +80,7 @@ export interface Program {
   expectations?: { title: LocaleString; text: LocaleText }[]
   /** Curated for this program's page (brief: testimonials are picked, not just filtered). */
   testimonials?: Testimonial[]
+  videoTestimonials?: Testimonial[]
   videoClip?: VideoClip
   ageMin?: number
   ageMax?: number
@@ -116,6 +124,9 @@ export interface InsightEvent {
   image?: ImageAsset
   notes?: LocaleRichText
   emailInfo?: LocaleRichText
+  /** Info sessions, workshops & events only; fetched on the registration page. */
+  testimonials?: Testimonial[]
+  gallery?: ImageAsset[]
 }
 
 export interface Facilitator {
@@ -124,6 +135,8 @@ export interface Facilitator {
   slug: string
   role: LocaleString
   bio?: LocaleRichText
+  /** A few sentences for the About page; falls back to `bio`. */
+  shortBio?: LocaleText
   photo?: ImageAsset
   website?: string
 }
@@ -213,7 +226,7 @@ export interface SiteSettings {
   consentText?: LocaleText
   consentVersion?: string
   socials: Social[]
-  internationalLinks: { label: string; url?: string }[]
+  internationalLinks: InternationalLink[]
   internationalCalendarUrl?: string
   linksPage: LinkItem[]
   announcement?: { active: boolean; text: LocaleString; link?: string }
@@ -282,7 +295,14 @@ export interface AboutPage {
   testimonialsHeading: LocaleString
   /** Curated in Studio (brief: testimonials are picked, not just the first N confirmed ones). */
   testimonials: Testimonial[]
+  /** 'band' scrolls an unlimited number; 'grid' (default) shows up to 3. */
+  testimonialsLayout?: 'grid' | 'band'
+  /** Up to 2, e.g. core team and leadership team. */
+  teamPhotos?: CaptionedPhoto[]
   facilitatorsIntro: LocaleText
+  /** Up to 6 picked facilitators; empty means all facilitators. */
+  featuredFacilitators?: Facilitator[]
+  facilitatorVideos?: VideoClip[]
   support: { heading: LocaleString; body: LocaleText }
   closing: { heading: LocaleString }
   videoClip?: VideoClip
@@ -294,12 +314,37 @@ export interface TeensPage {
   hero: { eyebrow: LocaleString; title: LocaleString; lead: LocaleText; points: LocaleString[] }
   media?: { image?: ImageAsset; videoClip?: VideoClip }
   gallery?: ImageAsset[]
+  videoTestimonialsHeading?: LocaleString
+  /** Up to 3 teen/parent testimonials with a video. */
+  videoTestimonials?: Testimonial[]
   parents: {
     heading: LocaleString
     lead: LocaleText
     blocks: { title: LocaleString; text: LocaleText }[]
   }
   seo: { title: LocaleString; description: LocaleString }
+}
+
+export type Continent = 'europe' | 'northAmerica' | 'latinAmerica' | 'oceania' | 'asia' | 'africa'
+
+export interface InternationalLink {
+  label: string
+  url?: string
+  /** Groups the link on the Community page; unset links are listed first. */
+  continent?: Continent
+  /** Shown in the footer and on the Seminars page (all links when none is highlighted). */
+  highlight?: boolean
+}
+
+export interface CommunityBlock {
+  photos: ImageAsset[]
+  testimonials: Testimonial[]
+}
+
+export interface CommunityPage {
+  belgium: CommunityBlock
+  international: CommunityBlock
+  internationalLinks: InternationalLink[]
 }
 
 export interface ContactPage {

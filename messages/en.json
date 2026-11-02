@@ -65,7 +65,11 @@
     "copy": "Copy",
     "copied": "Copied",
     "noDates": "No dates are scheduled yet.",
-    "dates": "Dates"
+    "dates": "Dates",
+    "pauseScroll": "Pause",
+    "resumeScroll": "Resume",
+    "allCountries": "All countries",
+    "galleryHeading": "A glimpse of the room"
   },
   "chooser": {
     "nextStep": "What suits you",
@@ -102,6 +106,8 @@
     "empty": "Nothing is scheduled in this category right now. Sign up for the newsletter and we'll let you know when new dates are added."
   },
   "form": {
+    "testimonialsHeading": "What participants say",
+    "previousEditionsHeading": "Previous editions",
     "steps": {
       "date": "Date and price",
       "you": "Your details",
@@ -364,6 +370,15 @@
     "lead": "Everything you need from us, in one place."
   },
   "communityPage": {
+    "testimonialsHeading": "What participants say",
+    "continents": {
+      "europe": "Europe",
+      "northAmerica": "North America",
+      "latinAmerica": "Latin America",
+      "oceania": "Oceania",
+      "asia": "Asia",
+      "africa": "Africa"
+    },
     "title": "Community",
     "lead": "Insight is a worldwide movement. Discover the local community in Belgium and the wider international community.",
     "belgiumHeading": "Belgium",
@@ -374,6 +389,7 @@
     "internationalCalendarCta": "International calendar"
   },
   "teensPage": {
+    "videoTestimonialsHeading": "What teens and parents say",
     "programsHeading": "The seminars for teens",
     "programsLead": "Teen Insight consists of several steps. You start with Teen Insight I.",
   "parentsAnchor": "For parents",

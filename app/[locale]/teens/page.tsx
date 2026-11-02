@@ -8,6 +8,7 @@ import { FeatureBoxes } from "@/components/site/check-list"
 import { FaqList } from "@/components/site/faq-list"
 import { PhotoGrid } from "@/components/site/photo-grid"
 import { ProgramCard } from "@/components/site/program-card"
+import { VideoTestimonials } from "@/components/site/video-testimonials"
 import { buttonVariants } from "@/components/ui/button"
 import { Link } from "@/i18n/navigation"
 import {
@@ -16,6 +17,7 @@ import {
   getPrograms,
   getTeensPage,
   getUpcomingEvents,
+  hasVideo,
   pick,
 } from "@/lib/content"
 import { buildEventViews } from "@/lib/content/view"
@@ -66,10 +68,13 @@ export default async function TeensPage({ params }: Props) {
   const showPrograms = teenPrograms.length > 0
   const showGallery = Boolean(page.gallery && page.gallery.length > 0)
   const showFaq = teenFaqs.length > 0
+  const videoTestimonials = (page.videoTestimonials ?? []).filter((tst) => hasVideo(tst.videoClip))
+  const showVideos = videoTestimonials.length > 0
   const renderedSections = [
     "hero",
     showGallery && "gallery",
     showPrograms && "programs",
+    showVideos && "videos",
     "parents",
     showFaq && "faq",
   ].filter(Boolean)
@@ -142,7 +147,7 @@ export default async function TeensPage({ params }: Props) {
         <section className={tone("gallery")}>
           <div className="container-site pt-[clamp(4rem,10vw,8rem)]">
             <h2 className="type-h2 text-inkt text-balance">
-              {pick({ nl: 'Een sfeerbeeld', en: 'A glimpse of the room' }, l)}
+              {tc("galleryHeading")}
             </h2>
           </div>
           <div className="mt-8 pb-[clamp(4rem,10vw,8rem)]">
@@ -180,6 +185,23 @@ export default async function TeensPage({ params }: Props) {
                 )
               })}
             </div>
+          </div>
+        </section>
+      ) : null}
+
+      {/* Video testimonials: between the seminars and the parents' section */}
+      {showVideos ? (
+        <section className={tone("videos")}>
+          <div className="container-site section-y">
+            <h2 className="type-h2 text-inkt text-balance">
+              {pick(page.videoTestimonialsHeading, l) || t("videoTestimonialsHeading")}
+            </h2>
+            <VideoTestimonials
+              testimonials={videoTestimonials}
+              locale={l}
+              playLabel={tc("playVideo", { duration: "1 min" })}
+              className="mt-8"
+            />
           </div>
         </section>
       ) : null}

@@ -16,7 +16,12 @@
       "Bash(npm pkg get *)",
       "mcp__claude-in-chrome__tabs_context_mcp",
       "Bash(npm view *)",
-      "Bash(npx vitest run)"
+      "Bash(npx vitest run)",
+      "Bash(npm run -s test:unit)",
+      "Bash(supabase db push --dry-run)",
+      "Bash(npx sanity documents query *)",
+      "mcp__claude-in-chrome__list_connected_browsers",
+      "Bash(npx tsx scripts/check-i18n.ts)"
     ]
   }
 }

@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
+import { testimonialReference } from './editorial'
 
 const arr = (type: string) => defineArrayMember({ type })
 
@@ -157,14 +158,67 @@ export const aboutPage = defineType({
       ],
     }),
     defineField({ name: 'teamIntro', title: 'Intro team', type: 'localeText' }),
+    defineField({
+      name: 'teamPhotos',
+      title: "Teamfoto's",
+      description: 'Maximaal 2 (bv. kernteam en leadership team), elk met een titel en uitleg eronder.',
+      type: 'array',
+      of: [arr('captionedPhoto')],
+      validation: (r) => r.max(2),
+    }),
     defineField({ name: 'testimonialsHeading', title: 'Kop getuigenissen', type: 'localeString' }),
+    defineField({
+      name: 'testimonialsLayout',
+      title: 'Weergave getuigenissen',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Raster (maximaal 3)', value: 'grid' },
+          { title: 'Rollende band (onbeperkt, vanaf 4 getuigenissen)', value: 'band' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'grid',
+    }),
     defineField({
       name: 'testimonials',
       title: 'Getuigenissen op deze pagina',
+      description: 'Getoond boven "Wat kan het je brengen?".',
       type: 'array',
-      of: [defineArrayMember({ type: 'reference', to: [{ type: 'testimonial' }] })],
+      of: [testimonialReference()],
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const layout = (context.document as { testimonialsLayout?: string } | undefined)?.testimonialsLayout
+          if (layout !== 'band' && Array.isArray(value) && value.length > 3) {
+            return 'Kies maximaal 3 getuigenissen, of zet de weergave op "Rollende band".'
+          }
+          return true
+        }),
     }),
     defineField({ name: 'facilitatorsIntro', title: 'Intro begeleiders', type: 'localeText' }),
+    defineField({
+      name: 'featuredFacilitators',
+      title: 'Uitgelichte begeleiders',
+      description:
+        'Maximaal 6, met foto en korte tekst. Leeg = alle begeleiders worden getoond (alfabetisch).',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [{ type: 'person' }],
+          options: { filter: '"facilitator" in roles' },
+        }),
+      ],
+      validation: (r) => r.max(6),
+    }),
+    defineField({
+      name: 'facilitatorVideos',
+      title: "Video's van begeleiders",
+      description: "Maximaal 2, bv. begeleiders die uitleggen wat Insight is. Langere video's zet je best op YouTube.",
+      type: 'array',
+      of: [arr('videoClip')],
+      validation: (r) => r.max(2),
+    }),
     defineField({
       name: 'support',
       title: 'Ondersteuning',
@@ -219,6 +273,21 @@ export const teensPage = defineType({
     }),
     defineField({ name: 'gallery', title: 'Fotogalerij', type: 'array', of: [arr('imageWithAlt')] }),
     defineField({
+      name: 'videoTestimonialsHeading',
+      title: 'Kop videogetuigenissen',
+      description: 'Leeg = "Wat tieners en ouders vertellen".',
+      type: 'localeString',
+    }),
+    defineField({
+      name: 'videoTestimonials',
+      title: 'Videogetuigenissen',
+      description:
+        'Maximaal 3, getoond onder de seminaries en boven "Voor ouders". Je kunt enkel getuigenissen van tieners of ouders kiezen met een video en bevestigde toestemming.',
+      type: 'array',
+      of: [testimonialReference({ withVideo: true, audiences: ['teens', 'parents'] })],
+      validation: (r) => r.max(3),
+    }),
+    defineField({
       name: 'parents',
       title: 'Voor ouders',
       type: 'object',
@@ -231,6 +300,51 @@ export const teensPage = defineType({
     defineField({ name: 'seo', title: 'SEO', type: 'seo' }),
   ],
   preview: { prepare: () => ({ title: 'Tieners' }) },
+})
+
+/** Photos and testimonials per community; headings and texts live in the message files. */
+const communityBlock = (name: string, title: string, max: number) =>
+  defineField({
+    name,
+    title,
+    type: 'object',
+    fields: [
+      defineField({
+        name: 'photos',
+        title: "Foto's",
+        description: `Maximaal ${max}.`,
+        type: 'array',
+        of: [arr('imageWithAlt')],
+        validation: (r) => r.max(max),
+      }),
+      defineField({
+        name: 'testimonials',
+        title: 'Getuigenissen',
+        description: `Maximaal ${max}.`,
+        type: 'array',
+        of: [testimonialReference()],
+        validation: (r) => r.max(max),
+      }),
+    ],
+  })
+
+export const communityPage = defineType({
+  name: 'communityPage',
+  title: 'Community',
+  type: 'document',
+  fields: [
+    communityBlock('belgium', 'België', 5),
+    communityBlock('international', 'Wereldwijd', 3),
+    defineField({
+      name: 'internationalLinks',
+      title: 'Internationale links',
+      description:
+        'Links naar Insight in andere landen. Gegroepeerd per continent op deze pagina; de uitgelichte links verschijnen ook in de footer en op de Seminars-pagina.',
+      type: 'array',
+      of: [arr('internationalLink')],
+    }),
+  ],
+  preview: { prepare: () => ({ title: 'Community' }) },
 })
 
 export const contactPage = defineType({

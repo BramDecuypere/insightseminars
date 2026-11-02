@@ -65,7 +65,11 @@
     "copy": "Kopiëren",
     "copied": "Gekopieerd",
     "noDates": "Er staan nog geen data gepland.",
-    "dates": "Data"
+    "dates": "Data",
+    "pauseScroll": "Pauzeer",
+    "resumeScroll": "Verder afspelen",
+    "allCountries": "Alle landen",
+    "galleryHeading": "Een sfeerbeeld"
   },
   "chooser": {
     "nextStep": "Wat past bij jou",
@@ -102,6 +106,8 @@
     "empty": "In deze categorie staat momenteel niets gepland. Schrijf je in op de nieuwsbrief, dan laten we je weten wanneer er nieuwe data zijn."
   },
   "form": {
+    "testimonialsHeading": "Wat deelnemers zeggen",
+    "previousEditionsHeading": "Vorige edities",
     "steps": {
       "date": "Datum en tarief",
       "you": "Jouw gegevens",
@@ -364,6 +370,15 @@
     "lead": "Alles wat je van ons nodig hebt, op één plek."
   },
   "communityPage": {
+    "testimonialsHeading": "Wat deelnemers zeggen",
+    "continents": {
+      "europe": "Europa",
+      "northAmerica": "Noord-Amerika",
+      "latinAmerica": "Latijns-Amerika",
+      "oceania": "Oceanië",
+      "asia": "Azië",
+      "africa": "Afrika"
+    },
     "title": "Community",
     "lead": "Insight is een wereldwijde beweging. Ontdek de lokale gemeenschap in België en de bredere internationale community.",
     "belgiumHeading": "België",
@@ -374,6 +389,7 @@
     "internationalCalendarCta": "Internationale kalender"
   },
   "teensPage": {
+    "videoTestimonialsHeading": "Wat tieners en ouders vertellen",
     "programsHeading": "De seminars voor tieners",
     "programsLead": "Tiener Insight bestaat uit verschillende stappen. Je begint met Tiener Insight I.",
   "parentsAnchor": "Voor ouders",

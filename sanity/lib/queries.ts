@@ -36,26 +36,34 @@ const PROGRAM = /* groq */ `{
   ageMin, ageMax, nextDateNote, heroImage, gallery,
   videoClip ${VIDEO},
   "prerequisites": prerequisites[]->slug.current,
-  testimonials[]-> ${TESTIMONIAL},
+  testimonials[@->consentConfirmed == true]-> ${TESTIMONIAL},
+  videoTestimonials[@->consentConfirmed == true]-> ${TESTIMONIAL},
   "faqs": faqs[]->_id,
   seo
 }`
 
 // No meetingUrl (§5.2).
-const EVENT = /* groq */ `{
+const EVENT_FIELDS = /* groq */ `
   _id, type, "programSlug": program->slug.current, title, "slug": slug.current,
   start, end, scheduleNote, "venueId": venue->_id, online,
   "facilitatorIds": facilitators[]->_id, language,
   priceOptions[]{ kind, label, amount, "validUntil": validUntil, requiresGraduate },
   registrationStatus, waitlistEnabled, depositAmount,
   registrationDeadline, paymentTiming, paymentDueDate,
-  image, notes, emailInfo
+  image, notes, emailInfo`
+const EVENT = /* groq */ `{${EVENT_FIELDS}
+}`
+// The registration page also shows the event's testimonials and photos;
+// kept out of EVENT so agenda listings don't fetch them for every event.
+const EVENT_DETAIL = /* groq */ `{${EVENT_FIELDS},
+  testimonials[@->consentConfirmed == true]-> ${TESTIMONIAL},
+  gallery
 }`
 
 // `person` covers both facilitators and team members (one document, one
 // photo, one bio per human); the facilitator/team queries below just filter
 // it by role instead of reading from two separate document types.
-const PERSON = /* groq */ `{ _id, name, "slug": slug.current, role, bio, photo, website, order }`
+const PERSON = /* groq */ `{ _id, name, "slug": slug.current, role, bio, shortBio, photo, website, order }`
 const VENUE = /* groq */ `{ _id, name, street, postalCode, city, country, mapsUrl, accessibility, image }`
 const FAQ = /* groq */ `{ _id, question, answer, category, order }`
 const INTERNATIONAL = /* groq */ `{ _id, "programSlug": program->slug.current, country, city, start, end, language, url }`
@@ -102,8 +110,11 @@ export const aboutPageQuery = defineQuery(`*[_type == "aboutPage"][0]{
   benefits{ heading, items },
   forWho{ heading, body },
   story{ heading, paragraphs },
-  teamIntro, testimonialsHeading, facilitatorsIntro,
-  testimonials[]-> ${TESTIMONIAL},
+  teamIntro, testimonialsHeading, testimonialsLayout, facilitatorsIntro,
+  teamPhotos[]{ image, title, text },
+  testimonials[@->consentConfirmed == true]-> ${TESTIMONIAL},
+  featuredFacilitators[]-> ${PERSON},
+  facilitatorVideos[] ${VIDEO},
   support{ heading, body },
   closing{ heading },
   videoClip ${VIDEO},
@@ -115,8 +126,16 @@ export const teensPageQuery = defineQuery(`*[_type == "teensPage"][0]{
   hero{ eyebrow, title, lead, points },
   media{ image, videoClip ${VIDEO} },
   gallery,
+  videoTestimonialsHeading,
+  videoTestimonials[@->consentConfirmed == true]-> ${TESTIMONIAL},
   parents{ heading, lead, blocks[]{ title, text } },
   seo
+}`)
+
+export const communityPageQuery = defineQuery(`*[_type == "communityPage"][0]{
+  belgium{ photos, "testimonials": testimonials[@->consentConfirmed == true]-> ${TESTIMONIAL} },
+  international{ photos, "testimonials": testimonials[@->consentConfirmed == true]-> ${TESTIMONIAL} },
+  internationalLinks[]{ label, url, continent, highlight }
 }`)
 
 export const contactPageQuery = defineQuery(`*[_type == "contactPage"][0]{
@@ -136,7 +155,7 @@ export const upcomingEventsQuery = defineQuery(
   `*[_type == "event" && end >= $now] | order(start asc) ${EVENT}`,
 )
 export const eventBySlugQuery = defineQuery(
-  `*[_type == "event" && slug.current == $slug][0] ${EVENT}`,
+  `*[_type == "event" && slug.current == $slug][0] ${EVENT_DETAIL}`,
 )
 
 export const faqsQuery = defineQuery(`*[_type == "faq"] | order(order asc) ${FAQ}`)

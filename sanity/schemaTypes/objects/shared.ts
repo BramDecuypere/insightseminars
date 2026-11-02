@@ -33,6 +33,27 @@ export const imageWithAlt = defineType({
   ],
 })
 
+/**
+ * Photo with a short title and an explanatory text underneath, for places
+ * where a one-line `caption` is not enough (e.g. team photos).
+ */
+export const captionedPhoto = defineType({
+  name: 'captionedPhoto',
+  title: 'Foto met tekst',
+  type: 'object',
+  fields: [
+    defineField({ name: 'image', title: 'Foto', type: 'imageWithAlt', validation: (r) => r.required() }),
+    defineField({ name: 'title', title: 'Titel', description: 'Bv. "Kernteam".', type: 'localeString' }),
+    defineField({ name: 'text', title: 'Tekst', type: 'localeText' }),
+  ],
+  preview: {
+    select: { title: 'title.nl', subtitle: 'text.nl', media: 'image' },
+    prepare({ title, subtitle, media }) {
+      return { title: title || 'Foto met tekst', subtitle, media }
+    },
+  },
+})
+
 /** Plain {title, lead} hero, reused by pages whose header has no extra fields. */
 export const heroBasic = defineType({
   name: 'heroBasic',
@@ -122,6 +143,15 @@ export const linkItem = defineType({
   preview: { select: { title: 'label.nl', subtitle: 'url' } },
 })
 
+export const CONTINENTS = [
+  { title: 'Europa', value: 'europe' },
+  { title: 'Noord-Amerika', value: 'northAmerica' },
+  { title: 'Latijns-Amerika', value: 'latinAmerica' },
+  { title: 'Oceanië', value: 'oceania' },
+  { title: 'Azië', value: 'asia' },
+  { title: 'Afrika', value: 'africa' },
+]
+
 export const internationalLink = defineType({
   name: 'internationalLink',
   title: 'Internationale link',
@@ -129,8 +159,29 @@ export const internationalLink = defineType({
   fields: [
     defineField({ name: 'label', title: 'Label', type: 'string', validation: (r) => r.required() }),
     defineField({ name: 'url', title: 'Link', type: 'url' }),
+    defineField({
+      name: 'continent',
+      title: 'Continent',
+      description: 'Groepeert de links op de Community-pagina. Leeg = bovenaan, zonder groep (bv. de internationale organisatie).',
+      type: 'string',
+      options: { list: CONTINENTS },
+    }),
+    defineField({
+      name: 'highlight',
+      title: 'Uitlichten',
+      description:
+        'Ook tonen in de footer en op de Seminars-pagina. Is geen enkele link uitgelicht, dan worden daar alle links getoond.',
+      type: 'boolean',
+      initialValue: false,
+    }),
   ],
-  preview: { select: { title: 'label', subtitle: 'url' } },
+  preview: {
+    select: { title: 'label', url: 'url', continent: 'continent', highlight: 'highlight' },
+    prepare({ title, url, continent, highlight }) {
+      const label = CONTINENTS.find((c) => c.value === continent)?.title
+      return { title: highlight ? `★ ${title}` : title, subtitle: [label, url].filter(Boolean).join(' · ') }
+    },
+  },
 })
 
 export const announcement = defineType({

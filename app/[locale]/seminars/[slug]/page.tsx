@@ -12,8 +12,9 @@ import { JsonLd } from "@/components/site/json-ld"
 import { KeyFacts, type Fact } from "@/components/site/key-facts"
 import { NewsletterBand } from "@/components/site/newsletter-band"
 import { PhotoGrid } from "@/components/site/photo-grid"
-import { TestimonialCard } from "@/components/site/testimonial-card"
+import { TestimonialGrid } from "@/components/site/testimonial-grid"
 import { VideoClip } from "@/components/site/video-clip"
+import { VideoTestimonials } from "@/components/site/video-testimonials"
 import { accentInk, accentVar } from "@/components/site/accent"
 import { Link } from "@/i18n/navigation"
 import { routing } from "@/i18n/routing"
@@ -24,6 +25,7 @@ import {
   getPrograms,
   getProgramBySlug,
   getVenues,
+  hasVideo,
   pick,
   pickRich,
 } from "@/lib/content"
@@ -98,6 +100,9 @@ export default async function ProgramPage({ params }: Props) {
   const accentTint = `color-mix(in srgb, ${accentVar[program.accent]} 8%, var(--papier))`
 
   const tc = await getTranslations("common")
+  const playLabel = tc("playVideo", { duration: "1 min" })
+  const writtenTestimonials = program.testimonials ?? []
+  const videoTestimonials = (program.videoTestimonials ?? []).filter((tst) => hasVideo(tst.videoClip))
   const facts: Fact[] = []
   const durationVal = pick(program.durationLabel, l)
   const hoursVal = pick(program.hoursLabel, l)
@@ -267,7 +272,7 @@ export default async function ProgramPage({ params }: Props) {
         <section className="bg-mist">
           <div className="container-site section-y">
             <h2 className="type-h2 text-inkt text-balance">
-              {pick({ nl: 'Een sfeerbeeld', en: 'A glimpse of the room' }, l)}
+              {tc("galleryHeading")}
             </h2>
             <div className="mt-8">
               <PhotoGrid
@@ -278,26 +283,6 @@ export default async function ProgramPage({ params }: Props) {
                 nextLabel={tc('nextImage')}
               />
             </div>
-          </div>
-        </section>
-      ) : null}
-
-      {/* Getuigenissen */}
-      {program.testimonials && program.testimonials.length > 0 ? (
-        <section className="bg-papier">
-          <div className="container-site section-y">
-            <h2 className="type-h2 text-inkt text-balance">{t("testimonialsHeading")}</h2>
-            <ul className="mt-8 grid gap-6 md:grid-cols-3">
-              {program.testimonials.map((tst) => (
-                <li key={tst._id}>
-                  <TestimonialCard
-                    testimonial={tst}
-                    locale={l}
-                    playLabel={tc("playVideo", { duration: "1 min" })}
-                  />
-                </li>
-              ))}
-            </ul>
           </div>
         </section>
       ) : null}
@@ -317,6 +302,28 @@ export default async function ProgramPage({ params }: Props) {
           )}
         </div>
       </section>
+
+      {/* Getuigenissen: under the dates, so they back up the choice to register */}
+      {writtenTestimonials.length > 0 || videoTestimonials.length > 0 ? (
+        <section className="bg-mist">
+          <div className="container-site section-y">
+            <h2 className="type-h2 text-inkt text-balance">{t("testimonialsHeading")}</h2>
+            <TestimonialGrid
+              testimonials={writtenTestimonials}
+              locale={l}
+              playLabel={playLabel}
+              className="mt-8"
+            />
+            <VideoTestimonials
+              testimonials={videoTestimonials}
+              locale={l}
+              playLabel={playLabel}
+              max={2}
+              className={writtenTestimonials.length > 0 ? "mt-12" : "mt-8"}
+            />
+          </div>
+        </section>
+      ) : null}
 
       {faqSubset.length > 0 ? (
         <section className="bg-papier">

@@ -6,7 +6,9 @@ import type {
   Locale,
   LocaleRichText,
   LocaleString,
+  InternationalLink,
   LegalKind,
+  VideoClip,
 } from './types'
 
 /**
@@ -42,6 +44,14 @@ export function pickRich(field: LocaleRichText | undefined, locale: Locale): str
   if (!field) return []
   const value = (locale === 'en' ? field.en : field.nl) || field.nl || []
   return value.filter((p) => !isPlaceholder(p))
+}
+
+/**
+ * True when a clip can actually play. The Sanity mapper already drops clips
+ * without a file or YouTube link; this guards content from any other source.
+ */
+export function hasVideo(clip: VideoClip | undefined): clip is VideoClip {
+  return Boolean(clip && (clip.file || clip.youtubeUrl))
 }
 
 export async function getSettings() {
@@ -122,6 +132,29 @@ export async function getAboutPage() {
 export async function getTeensPage() {
   if (hasSanity) return (await sanity.getTeensPage()) ?? withoutImages(mock.teensPage)
   return mock.teensPage
+}
+
+export async function getCommunityPage() {
+  if (hasSanity) return (await sanity.getCommunityPage()) ?? mock.communityPage
+  return mock.communityPage
+}
+
+/**
+ * International links, managed on the Community page. Falls back to the
+ * deprecated Instellingen field until the Community page has links.
+ */
+export async function getInternationalLinks(): Promise<InternationalLink[]> {
+  const [page, settings] = await Promise.all([getCommunityPage(), getSettings()])
+  return page.internationalLinks.length > 0 ? page.internationalLinks : settings.internationalLinks
+}
+
+/**
+ * International links for compact lists (footer, Seminars page): the
+ * highlighted ones, or all of them while none is highlighted.
+ */
+export function highlightedLinks(links: InternationalLink[]): InternationalLink[] {
+  const highlighted = links.filter((l) => l.highlight)
+  return highlighted.length > 0 ? highlighted : links
 }
 
 export async function getContactPage() {
