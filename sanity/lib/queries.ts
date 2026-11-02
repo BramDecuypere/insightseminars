@@ -43,14 +43,21 @@ const PROGRAM = /* groq */ `{
 }`
 
 // No meetingUrl (§5.2).
-const EVENT = /* groq */ `{
+const EVENT_FIELDS = /* groq */ `
   _id, type, "programSlug": program->slug.current, title, "slug": slug.current,
   start, end, scheduleNote, "venueId": venue->_id, online,
   "facilitatorIds": facilitators[]->_id, language,
   priceOptions[]{ kind, label, amount, "validUntil": validUntil, requiresGraduate },
   registrationStatus, waitlistEnabled, depositAmount,
   registrationDeadline, paymentTiming, paymentDueDate,
-  image, notes, emailInfo
+  image, notes, emailInfo`
+const EVENT = /* groq */ `{${EVENT_FIELDS}
+}`
+// The registration page also shows the event's testimonials and photos;
+// kept out of EVENT so agenda listings don't fetch them for every event.
+const EVENT_DETAIL = /* groq */ `{${EVENT_FIELDS},
+  testimonials[@->consentConfirmed == true]-> ${TESTIMONIAL},
+  gallery
 }`
 
 // `person` covers both facilitators and team members (one document, one
@@ -142,7 +149,7 @@ export const upcomingEventsQuery = defineQuery(
   `*[_type == "event" && end >= $now] | order(start asc) ${EVENT}`,
 )
 export const eventBySlugQuery = defineQuery(
-  `*[_type == "event" && slug.current == $slug][0] ${EVENT}`,
+  `*[_type == "event" && slug.current == $slug][0] ${EVENT_DETAIL}`,
 )
 
 export const faqsQuery = defineQuery(`*[_type == "faq"] | order(order asc) ${FAQ}`)

@@ -105,6 +105,8 @@
     "empty": "Nothing is scheduled in this category right now. Sign up for the newsletter and we'll let you know when new dates are added."
   },
   "form": {
+    "testimonialsHeading": "What participants say",
+    "previousEditionsHeading": "Previous editions",
     "steps": {
       "date": "Date and price",
       "you": "Your details",

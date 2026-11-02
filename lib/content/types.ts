@@ -124,6 +124,9 @@ export interface InsightEvent {
   image?: ImageAsset
   notes?: LocaleRichText
   emailInfo?: LocaleRichText
+  /** Info sessions, workshops & events only; fetched on the registration page. */
+  testimonials?: Testimonial[]
+  gallery?: ImageAsset[]
 }
 
 export interface Facilitator {

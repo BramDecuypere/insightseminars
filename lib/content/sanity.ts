@@ -112,6 +112,8 @@ function mapEvent<T extends Record<string, any>>(e: T | null): T | null {
     image: img(e.image),
     notes: rich(e.notes),
     emailInfo: rich(e.emailInfo),
+    ...(Array.isArray(e.testimonials) ? { testimonials: e.testimonials.map((t: any) => mapTestimonial(t)) } : {}),
+    ...(e.gallery ? { gallery: gallery(e.gallery) } : {}),
   }
 }
 
