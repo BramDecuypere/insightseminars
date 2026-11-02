@@ -56,7 +56,7 @@ const EVENT = /* groq */ `{
 // `person` covers both facilitators and team members (one document, one
 // photo, one bio per human); the facilitator/team queries below just filter
 // it by role instead of reading from two separate document types.
-const PERSON = /* groq */ `{ _id, name, "slug": slug.current, role, bio, photo, website, order }`
+const PERSON = /* groq */ `{ _id, name, "slug": slug.current, role, bio, shortBio, photo, website, order }`
 const VENUE = /* groq */ `{ _id, name, street, postalCode, city, country, mapsUrl, accessibility, image }`
 const FAQ = /* groq */ `{ _id, question, answer, category, order }`
 const INTERNATIONAL = /* groq */ `{ _id, "programSlug": program->slug.current, country, city, start, end, language, url }`
@@ -103,8 +103,11 @@ export const aboutPageQuery = defineQuery(`*[_type == "aboutPage"][0]{
   benefits{ heading, items },
   forWho{ heading, body },
   story{ heading, paragraphs },
-  teamIntro, testimonialsHeading, facilitatorsIntro,
-  testimonials[]-> ${TESTIMONIAL},
+  teamIntro, testimonialsHeading, testimonialsLayout, facilitatorsIntro,
+  teamPhotos[]{ image, title, text },
+  testimonials[@->consentConfirmed == true]-> ${TESTIMONIAL},
+  featuredFacilitators[]-> ${PERSON},
+  facilitatorVideos[] ${VIDEO},
   support{ heading, body },
   closing{ heading },
   videoClip ${VIDEO},

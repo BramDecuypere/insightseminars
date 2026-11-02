@@ -132,6 +132,8 @@ export interface Facilitator {
   slug: string
   role: LocaleString
   bio?: LocaleRichText
+  /** A few sentences for the About page; falls back to `bio`. */
+  shortBio?: LocaleText
   photo?: ImageAsset
   website?: string
 }
@@ -290,7 +292,14 @@ export interface AboutPage {
   testimonialsHeading: LocaleString
   /** Curated in Studio (brief: testimonials are picked, not just the first N confirmed ones). */
   testimonials: Testimonial[]
+  /** 'band' scrolls an unlimited number; 'grid' (default) shows up to 3. */
+  testimonialsLayout?: 'grid' | 'band'
+  /** Up to 2, e.g. core team and leadership team. */
+  teamPhotos?: CaptionedPhoto[]
   facilitatorsIntro: LocaleText
+  /** Up to 6 picked facilitators; empty means all facilitators. */
+  featuredFacilitators?: Facilitator[]
+  facilitatorVideos?: VideoClip[]
   support: { heading: LocaleString; body: LocaleText }
   closing: { heading: LocaleString }
   videoClip?: VideoClip

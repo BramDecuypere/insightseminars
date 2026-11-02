@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
+import { testimonialReference } from './editorial'
 
 const arr = (type: string) => defineArrayMember({ type })
 
@@ -157,14 +158,67 @@ export const aboutPage = defineType({
       ],
     }),
     defineField({ name: 'teamIntro', title: 'Intro team', type: 'localeText' }),
+    defineField({
+      name: 'teamPhotos',
+      title: "Teamfoto's",
+      description: 'Maximaal 2 (bv. kernteam en leadership team), elk met een titel en uitleg eronder.',
+      type: 'array',
+      of: [arr('captionedPhoto')],
+      validation: (r) => r.max(2),
+    }),
     defineField({ name: 'testimonialsHeading', title: 'Kop getuigenissen', type: 'localeString' }),
+    defineField({
+      name: 'testimonialsLayout',
+      title: 'Weergave getuigenissen',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Raster (maximaal 3)', value: 'grid' },
+          { title: 'Rollende band (onbeperkt, vanaf 4 getuigenissen)', value: 'band' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'grid',
+    }),
     defineField({
       name: 'testimonials',
       title: 'Getuigenissen op deze pagina',
+      description: 'Getoond boven "Wat kan het je brengen?".',
       type: 'array',
-      of: [defineArrayMember({ type: 'reference', to: [{ type: 'testimonial' }] })],
+      of: [testimonialReference()],
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const layout = (context.document as { testimonialsLayout?: string } | undefined)?.testimonialsLayout
+          if (layout !== 'band' && Array.isArray(value) && value.length > 3) {
+            return 'Kies maximaal 3 getuigenissen, of zet de weergave op "Rollende band".'
+          }
+          return true
+        }),
     }),
     defineField({ name: 'facilitatorsIntro', title: 'Intro begeleiders', type: 'localeText' }),
+    defineField({
+      name: 'featuredFacilitators',
+      title: 'Uitgelichte begeleiders',
+      description:
+        'Maximaal 6, met foto en korte tekst. Leeg = alle begeleiders worden getoond (alfabetisch).',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [{ type: 'person' }],
+          options: { filter: '"facilitator" in roles' },
+        }),
+      ],
+      validation: (r) => r.max(6),
+    }),
+    defineField({
+      name: 'facilitatorVideos',
+      title: "Video's van begeleiders",
+      description: "Maximaal 2, bv. begeleiders die uitleggen wat Insight is. Langere video's zet je best op YouTube.",
+      type: 'array',
+      of: [arr('videoClip')],
+      validation: (r) => r.max(2),
+    }),
     defineField({
       name: 'support',
       title: 'Ondersteuning',

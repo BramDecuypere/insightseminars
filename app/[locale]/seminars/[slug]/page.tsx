@@ -272,7 +272,7 @@ export default async function ProgramPage({ params }: Props) {
         <section className="bg-mist">
           <div className="container-site section-y">
             <h2 className="type-h2 text-inkt text-balance">
-              {pick({ nl: 'Een sfeerbeeld', en: 'A glimpse of the room' }, l)}
+              {tc("galleryHeading")}
             </h2>
             <div className="mt-8">
               <PhotoGrid

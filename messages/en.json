@@ -67,7 +67,8 @@
     "noDates": "No dates are scheduled yet.",
     "dates": "Dates",
     "pauseScroll": "Pause",
-    "resumeScroll": "Resume"
+    "resumeScroll": "Resume",
+    "galleryHeading": "A glimpse of the room"
   },
   "chooser": {
     "nextStep": "What suits you",

@@ -3,6 +3,7 @@ import { imageUrl } from '@/sanity/lib/image'
 import * as q from '@/sanity/lib/queries'
 import type {
   AboutPage,
+  CaptionedPhoto,
   ContactPage,
   Facilitator,
   Faq,
@@ -65,6 +66,15 @@ function rich(value: unknown): LocaleRichText | undefined {
   const nl = blocks(v.nl)
   const en = v.en ? blocks(v.en) : undefined
   return { nl, ...(en && en.length ? { en } : {}) }
+}
+
+/** Array of captionedPhoto objects, dropping any entry without an image asset. */
+function captionedPhotos(value: unknown): CaptionedPhoto[] {
+  if (!Array.isArray(value)) return []
+  return value.flatMap((v: { image?: unknown; title?: CaptionedPhoto['title']; text?: CaptionedPhoto['text'] }) => {
+    const image = img(v?.image)
+    return image ? [{ image, title: v.title, text: v.text }] : []
+  })
 }
 
 /**
@@ -164,6 +174,13 @@ export async function getAboutPage(): Promise<AboutPage | null> {
   return {
     ...a,
     testimonials: Array.isArray(a.testimonials) ? a.testimonials.map((t: any) => mapTestimonial(t)) : [],
+    teamPhotos: captionedPhotos(a.teamPhotos),
+    featuredFacilitators: Array.isArray(a.featuredFacilitators)
+      ? a.featuredFacilitators.filter(Boolean).map((f: any) => mapFacilitator(f))
+      : [],
+    facilitatorVideos: Array.isArray(a.facilitatorVideos)
+      ? a.facilitatorVideos.map((v: unknown) => video(v)).filter(Boolean)
+      : [],
     videoClip: video(a.videoClip),
     gallery: gallery(a.gallery),
   } as AboutPage

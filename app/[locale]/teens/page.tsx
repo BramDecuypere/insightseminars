@@ -142,7 +142,7 @@ export default async function TeensPage({ params }: Props) {
         <section className={tone("gallery")}>
           <div className="container-site pt-[clamp(4rem,10vw,8rem)]">
             <h2 className="type-h2 text-inkt text-balance">
-              {pick({ nl: 'Een sfeerbeeld', en: 'A glimpse of the room' }, l)}
+              {tc("galleryHeading")}
             </h2>
           </div>
           <div className="mt-8 pb-[clamp(4rem,10vw,8rem)]">

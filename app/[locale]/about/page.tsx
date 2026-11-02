@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { CaptionedPhotos } from '@/components/site/captioned-photos'
 import { CheckList } from '@/components/site/check-list'
 import { CollapsibleSection } from '@/components/site/collapsible-section'
 import { CopyButton } from '@/components/site/copy-button'
@@ -7,7 +8,9 @@ import { JsonLd } from '@/components/site/json-ld'
 import { PersonCard } from '@/components/site/person-card'
 import { PhotoGrid } from '@/components/site/photo-grid'
 import { ReadMore } from '@/components/site/read-more'
+import { TestimonialBand } from '@/components/site/testimonial-band'
 import { TestimonialCard } from '@/components/site/testimonial-card'
+import { TestimonialGrid } from '@/components/site/testimonial-grid'
 import { VideoClip } from '@/components/site/video-clip'
 import { buttonVariants } from '@/components/ui/button'
 import { Link } from '@/i18n/navigation'
@@ -44,6 +47,11 @@ export default async function AboutPage({ params }: Props) {
     getFacilitators(),
   ])
   const testimonials = page.testimonials
+  const playLabel = tc('playVideo', { duration: '1 min' })
+  const teamPhotos = page.teamPhotos ?? []
+  const facilitatorVideos = page.facilitatorVideos ?? []
+  const featured = page.featuredFacilitators ?? []
+  const shownFacilitators = featured.length > 0 ? featured.slice(0, 6) : facilitators
 
   const supportBody = pick(page.support.body, l)
     .replace('{iban}', settings.iban ?? '')
@@ -51,8 +59,8 @@ export default async function AboutPage({ params }: Props) {
 
   const renderedSections = [
     'journey',
-    'benefits',
     ...(testimonials.length > 0 ? ['testimonials'] : []),
+    'benefits',
     'story',
     ...(page.gallery && page.gallery.length > 0 ? ['gallery'] : []),
     'team',
@@ -95,6 +103,37 @@ export default async function AboutPage({ params }: Props) {
         </div>
       </section>
 
+      {/* Testimonials: just above "Wat kan het je brengen?" */}
+      {testimonials.length > 0 ? (
+        <section className={tone('testimonials')}>
+          <div className="container-site section-y">
+            <h2 className="type-h2 text-inkt text-balance">
+              {pick(page.testimonialsHeading, l) || t('testimonialsHeading')}
+            </h2>
+            {page.videoClip ? (
+              <div className="mt-8 max-w-3xl">
+                <VideoClip clip={page.videoClip} locale={l} playLabel={playLabel} />
+              </div>
+            ) : null}
+            <div className="mt-8">
+              {page.testimonialsLayout === 'band' ? (
+                <TestimonialBand
+                  label={pick(page.testimonialsHeading, l) || t('testimonialsHeading')}
+                  pauseLabel={tc('pauseScroll')}
+                  resumeLabel={tc('resumeScroll')}
+                  items={testimonials.map((tst) => ({
+                    key: tst._id,
+                    node: <TestimonialCard testimonial={tst} locale={l} playLabel={playLabel} />,
+                  }))}
+                />
+              ) : (
+                <TestimonialGrid testimonials={testimonials} locale={l} playLabel={playLabel} />
+              )}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       {/* Benefits + Voor wie */}
       <section className={tone('benefits')}>
         <div className="container-site section-y">
@@ -112,33 +151,6 @@ export default async function AboutPage({ params }: Props) {
           </div>
         </div>
       </section>
-
-      {/* Testimonials */}
-      {testimonials.length > 0 ? (
-        <section className={tone('testimonials')}>
-          <div className="container-site section-y">
-            <h2 className="type-h2 text-inkt text-balance">
-              {pick(page.testimonialsHeading, l) || t('testimonialsHeading')}
-            </h2>
-            {page.videoClip ? (
-              <div className="mt-8 max-w-3xl">
-                <VideoClip clip={page.videoClip} locale={l} playLabel={tc('playVideo', { duration: '1 min' })} />
-              </div>
-            ) : null}
-            <ul className="mt-8 grid gap-6 md:grid-cols-3">
-              {testimonials.map((tst) => (
-                <li key={tst._id}>
-                  <TestimonialCard
-                    testimonial={tst}
-                    locale={l}
-                    playLabel={tc('playVideo', { duration: '1 min' })}
-                  />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      ) : null}
 
       {/* Ons verhaal */}
       <section id="verhaal" className={cn('scroll-mt-24', tone('story'))}>
@@ -168,7 +180,7 @@ export default async function AboutPage({ params }: Props) {
         <section className={tone('gallery')}>
           <div className="container-site section-y">
             <h2 className="type-h2 text-inkt text-balance">
-              {pick({ nl: 'Een sfeerbeeld', en: 'A glimpse of the room' }, l)}
+              {tc('galleryHeading')}
             </h2>
             <div className="mt-8">
               <PhotoGrid
@@ -188,6 +200,7 @@ export default async function AboutPage({ params }: Props) {
         <div className="container-site section-y">
           <h2 className="type-h2 text-inkt text-balance">{t('teamHeading')}</h2>
           <p className="type-body mt-5 max-w-2xl text-inkt">{pick(page.teamIntro, l)}</p>
+          <CaptionedPhotos photos={teamPhotos.slice(0, 2)} locale={l} className="mt-10" />
           {team.length > 0 ? (
             <ul className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
               {team.map((m) => (
@@ -210,16 +223,26 @@ export default async function AboutPage({ params }: Props) {
         <div className="container-site section-y">
           <h2 className="type-h2 text-inkt text-balance">{t('facilitatorsHeading')}</h2>
           <p className="type-body mt-5 max-w-2xl text-inkt">{pick(page.facilitatorsIntro, l)}</p>
-          {facilitators.length > 0 ? (
+          {facilitatorVideos.length > 0 ? (
+            <ul className={cn('mt-10 grid gap-8', facilitatorVideos.length > 1 ? 'md:grid-cols-2' : 'max-w-3xl')}>
+              {facilitatorVideos.slice(0, 2).map((clip, i) => (
+                <li key={i}>
+                  <VideoClip clip={clip} locale={l} playLabel={playLabel} />
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          {shownFacilitators.length > 0 ? (
             <ul className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-              {facilitators.map((f) => (
+              {shownFacilitators.map((f) => (
                 <PersonCard
                   key={f._id}
                   photo={f.photo}
                   name={f.name}
                   role={pick(f.role, l)}
-                  bio={pickRich(f.bio, l)}
+                  bio={f.shortBio ? [pick(f.shortBio, l)] : pickRich(f.bio, l)}
                   locale={l}
+                  photoSize="portrait"
                 />
               ))}
             </ul>

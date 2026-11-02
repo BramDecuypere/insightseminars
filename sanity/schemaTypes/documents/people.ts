@@ -43,6 +43,19 @@ export const person = defineType({
     }),
     defineField({ name: 'role', title: 'Rol / functie', type: 'localeString' }),
     defineField({ name: 'bio', title: 'Bio', type: 'localeRichText' }),
+    defineField({
+      name: 'shortBio',
+      title: 'Korte tekst',
+      description: 'Een paar zinnen onder de foto op de pagina "Over Insight". Leeg = de volledige bio.',
+      type: 'localeText',
+      hidden: ({ parent }) => !(parent?.roles as string[] | undefined)?.includes('facilitator'),
+      validation: (rule) =>
+        rule.custom((value) => {
+          const v = value as { nl?: string; en?: string } | undefined
+          const longest = Math.max(v?.nl?.length ?? 0, v?.en?.length ?? 0)
+          return longest > 300 ? 'Hou het kort: maximaal ongeveer 300 tekens.' : true
+        }).warning(),
+    }),
     defineField({ name: 'photo', title: 'Foto', type: 'imageWithAlt' }),
     defineField({
       name: 'website',
