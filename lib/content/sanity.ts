@@ -269,12 +269,12 @@ export async function getFaqs(): Promise<Faq[]> {
 }
 
 export async function getTeam(): Promise<TeamMember[]> {
-  const list = await sanityFetch<any[]>({ query: q.teamQuery, tags: ['sanity:teamMember'] })
+  const list = await sanityFetch<any[]>({ query: q.teamQuery, tags: ['sanity:person'] })
   return (list ?? []).map((m) => mapTeamMember(m)) as TeamMember[]
 }
 
 export async function getFacilitators(): Promise<Facilitator[]> {
-  const list = await sanityFetch<any[]>({ query: q.facilitatorsQuery, tags: ['sanity:facilitator'] })
+  const list = await sanityFetch<any[]>({ query: q.facilitatorsQuery, tags: ['sanity:person'] })
   return (list ?? []).map((f) => mapFacilitator(f)) as Facilitator[]
 }
 

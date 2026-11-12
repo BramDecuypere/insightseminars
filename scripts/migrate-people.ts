@@ -7,17 +7,17 @@
  * updated the other. This merges each pair into a single `person` document.
  *
  * Strategy (safe to re-run):
- * - Documents keep their original `_id`. We use `createOrReplace`, which
- *   overwrites the document at that id with a new `_type`, so every existing
- *   reference to a facilitator (e.g. event.facilitators) keeps working without
- *   needing to touch the events themselves.
+ * - Sanity forbids changing a document's `_type`, so each old document gets a
+ *   new `person` document at `person-<oldId>`. Every reference to an old id
+ *   (e.g. event.facilitators, drafts included) is repointed to the new id in
+ *   the same transaction, guarded by the referencing document's revision.
  * - A facilitator and a team member are treated as the same human when their
  *   `name` matches exactly (trimmed, case-insensitive). Review the console
  *   output afterwards — if two different people share a name, split them
  *   manually in the Studio.
- * - The old `teamMember` documents that get merged into a matching facilitator
- *   are deleted (nothing else references a teamMember by id). Facilitator-only
- *   and team-only people are converted in place and are never deleted.
+ * - Old `facilitator`/`teamMember` documents are left in place (their types
+ *   are gone from the schema, so the Studio no longer shows them). Delete them
+ *   by hand once the migration has been checked.
  *
  * Usage:
  *   npx tsx scripts/migrate-people.ts --dry-run   # review the plan, no writes
@@ -64,6 +64,20 @@ type TeamMemberDoc = {
 }
 
 const normalize = (name: string) => name.trim().toLowerCase()
+const newId = (oldId: string) => `person-${oldId}`
+
+/** Deep-copies `value`, repointing any `_ref` found in `idMap`. */
+function remapRefs(value: unknown, idMap: Map<string, string>): unknown {
+  if (Array.isArray(value)) return value.map((v) => remapRefs(v, idMap))
+  if (value && typeof value === 'object') {
+    const out: Record<string, unknown> = {}
+    for (const [k, v] of Object.entries(value)) {
+      out[k] = k === '_ref' && typeof v === 'string' && idMap.has(v) ? idMap.get(v) : remapRefs(v, idMap)
+    }
+    return out
+  }
+  return value
+}
 
 /** Plain localeText ({nl, en} strings) -> localeRichText ({nl, en} Portable Text blocks). */
 function textToBlocks(value: unknown) {
@@ -82,14 +96,15 @@ async function run() {
   console.log(`Gevonden: ${facilitators.length} facilitators, ${teamMembers.length} teamleden.`)
 
   const matchedTeamIds = new Set<string>()
-  const toDelete: string[] = []
+  const idMap = new Map<string, string>()
   const toWrite: Record<string, unknown>[] = []
 
   for (const f of facilitators) {
     const match = teamMembers.find((m) => normalize(m.name) === normalize(f.name))
     const roles = ['facilitator', ...(match ? ['team'] : [])]
+    idMap.set(f._id, newId(f._id))
     toWrite.push({
-      _id: f._id,
+      _id: newId(f._id),
       _type: 'person',
       name: f.name,
       roles,
@@ -102,15 +117,16 @@ async function run() {
     })
     if (match) {
       matchedTeamIds.add(match._id)
-      toDelete.push(match._id)
+      idMap.set(match._id, newId(f._id))
       console.log(`Samengevoegd: "${f.name}" (facilitator ${f._id} + teamlid ${match._id})`)
     }
   }
 
   for (const m of teamMembers) {
     if (matchedTeamIds.has(m._id)) continue
+    idMap.set(m._id, newId(m._id))
     toWrite.push({
-      _id: m._id,
+      _id: newId(m._id),
       _type: 'person',
       name: m.name,
       roles: ['team'],
@@ -121,7 +137,23 @@ async function run() {
     })
   }
 
-  console.log(`\nTe schrijven: ${toWrite.length} person-documenten. Te verwijderen: ${toDelete.length} teamMember-documenten.`)
+  const referencing = await client.fetch<Record<string, unknown>[]>(
+    `*[references($ids)]`,
+    { ids: [...idMap.keys()] },
+    { perspective: 'raw' },
+  )
+  const patches = referencing.map((doc) => {
+    const changed: Record<string, unknown> = {}
+    for (const [k, v] of Object.entries(doc)) {
+      if (k.startsWith('_')) continue
+      const remapped = remapRefs(v, idMap)
+      if (JSON.stringify(remapped) !== JSON.stringify(v)) changed[k] = remapped
+    }
+    return { id: doc._id as string, rev: doc._rev as string, changed }
+  })
+
+  console.log(`\nTe schrijven: ${toWrite.length} person-documenten.`)
+  for (const p of patches) console.log(`Verwijzingen bijwerken in ${p.id}: ${Object.keys(p.changed).join(', ')}`)
 
   if (dryRun) {
     console.log('\n--dry-run: geen schrijfacties uitgevoerd.')
@@ -130,11 +162,11 @@ async function run() {
 
   let tx = client.transaction()
   for (const doc of toWrite) tx = tx.createOrReplace(doc as never)
-  for (const id of toDelete) tx = tx.delete(id)
+  for (const p of patches) tx = tx.patch(p.id, (patch) => patch.ifRevisionId(p.rev).set(p.changed))
   await tx.commit()
 
   console.log('\nKlaar. Controleer de personen in de Studio ("Mensen") en pas rollen/volgorde aan waar nodig.')
-  console.log('De oude "facilitator"/"teamMember" schema-types kunnen nu uit Sanity verwijderd worden (al gebeurd in de schema-code).')
+  console.log('De oude "facilitator"/"teamMember"-documenten staan er nog; verwijder ze na controle.')
 }
 
 run().catch((err) => {
