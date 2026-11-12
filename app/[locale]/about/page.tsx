@@ -209,7 +209,7 @@ export default async function AboutPage({ params }: Props) {
                   photo={m.photo}
                   name={m.name}
                   role={pick(m.role, l)}
-                  bio={m.bio ? [pick(m.bio, l)] : undefined}
+                  bio={pickRich(m.bio, l)}
                   locale={l}
                 />
               ))}

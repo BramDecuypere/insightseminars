@@ -127,13 +127,8 @@ function mapFaq<T extends Record<string, any>>(f: T): T {
   return { ...f, answer: rich(f.answer) }
 }
 
-/** Team member: bio is a plain localeText ({nl, en} strings) — leave it as-is. */
-function mapTeamMember<T extends Record<string, any>>(x: T): T {
-  return { ...x, photo: img(x.photo) }
-}
-
-/** Facilitator: bio is localeRichText (Portable Text) — normalise to paragraphs. */
-function mapFacilitator<T extends Record<string, any>>(x: T): T {
+/** Person (team member or facilitator): bio is localeRichText (Portable Text) — normalise to paragraphs. */
+function mapPerson<T extends Record<string, any>>(x: T): T {
   return { ...x, photo: img(x.photo), ...(x.bio ? { bio: rich(x.bio) } : {}) }
 }
 
@@ -180,7 +175,7 @@ export async function getAboutPage(): Promise<AboutPage | null> {
     testimonials: Array.isArray(a.testimonials) ? a.testimonials.map((t: any) => mapTestimonial(t)) : [],
     teamPhotos: captionedPhotos(a.teamPhotos),
     featuredFacilitators: Array.isArray(a.featuredFacilitators)
-      ? a.featuredFacilitators.filter(Boolean).map((f: any) => mapFacilitator(f))
+      ? a.featuredFacilitators.filter(Boolean).map((f: any) => mapPerson(f))
       : [],
     facilitatorVideos: Array.isArray(a.facilitatorVideos)
       ? a.facilitatorVideos.map((v: unknown) => video(v)).filter(Boolean)
@@ -270,12 +265,12 @@ export async function getFaqs(): Promise<Faq[]> {
 
 export async function getTeam(): Promise<TeamMember[]> {
   const list = await sanityFetch<any[]>({ query: q.teamQuery, tags: ['sanity:person'] })
-  return (list ?? []).map((m) => mapTeamMember(m)) as TeamMember[]
+  return (list ?? []).map((m) => mapPerson(m)) as TeamMember[]
 }
 
 export async function getFacilitators(): Promise<Facilitator[]> {
   const list = await sanityFetch<any[]>({ query: q.facilitatorsQuery, tags: ['sanity:person'] })
-  return (list ?? []).map((f) => mapFacilitator(f)) as Facilitator[]
+  return (list ?? []).map((f) => mapPerson(f)) as Facilitator[]
 }
 
 export async function getFacilitatorById(id: string): Promise<Facilitator | null> {

@@ -145,7 +145,7 @@ export interface TeamMember {
   _id: string
   name: string
   role: LocaleString
-  bio?: LocaleText
+  bio?: LocaleRichText
   photo?: ImageAsset
   order: number
 }

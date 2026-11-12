@@ -329,7 +329,7 @@ async function run() {
         name: m.name,
         roles: ['team'],
         role: m.role,
-        bio: toBlocks(m.bio ? { nl: [m.bio.nl], en: m.bio.en ? [m.bio.en] : undefined } : undefined),
+        bio: toBlocks(m.bio),
         photo: m.photo,
         order: m.order,
       }),
