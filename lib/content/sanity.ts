@@ -150,7 +150,7 @@ export async function getSettings(): Promise<SiteSettings | null> {
 }
 
 export async function getHomePage(): Promise<HomePage | null> {
-  const h = await sanityFetch<any>({ query: q.homePageQuery, tags: ['sanity:homePage'] })
+  const h = await sanityFetch<any>({ query: q.homePageQuery, tags: ['sanity:homePage', 'sanity:testimonial', 'sanity:program'] })
   if (!h) return null
   // Legacy: these two photos used to be gallery positions 0 and 1. Keep reading
   // them until the named fields are filled in Studio.
@@ -168,7 +168,7 @@ export async function getHomePage(): Promise<HomePage | null> {
 }
 
 export async function getAboutPage(): Promise<AboutPage | null> {
-  const a = await sanityFetch<any>({ query: q.aboutPageQuery, tags: ['sanity:aboutPage'] })
+  const a = await sanityFetch<any>({ query: q.aboutPageQuery, tags: ['sanity:aboutPage', 'sanity:testimonial', 'sanity:person'] })
   if (!a) return null
   return {
     ...a,
@@ -186,7 +186,7 @@ export async function getAboutPage(): Promise<AboutPage | null> {
 }
 
 export async function getTeensPage(): Promise<TeensPage | null> {
-  const t = await sanityFetch<any>({ query: q.teensPageQuery, tags: ['sanity:teensPage'] })
+  const t = await sanityFetch<any>({ query: q.teensPageQuery, tags: ['sanity:teensPage', 'sanity:testimonial'] })
   if (!t) return null
   return {
     ...t,
@@ -206,7 +206,7 @@ function mapCommunityBlock(b: any): CommunityBlock {
 }
 
 export async function getCommunityPage(): Promise<CommunityPage | null> {
-  const c = await sanityFetch<any>({ query: q.communityPageQuery, tags: ['sanity:communityPage'] })
+  const c = await sanityFetch<any>({ query: q.communityPageQuery, tags: ['sanity:communityPage', 'sanity:testimonial'] })
   if (!c) return null
   return {
     belgium: mapCommunityBlock(c.belgium),
@@ -222,7 +222,7 @@ export async function getContactPage(): Promise<ContactPage | null> {
 }
 
 export async function getPrograms(): Promise<Program[]> {
-  const list = await sanityFetch<any[]>({ query: q.programsQuery, tags: ['sanity:program'] })
+  const list = await sanityFetch<any[]>({ query: q.programsQuery, tags: ['sanity:program', 'sanity:testimonial'] })
   return (list ?? []).map((p) => mapProgram(p)) as Program[]
 }
 
@@ -230,7 +230,7 @@ export async function getProgramBySlug(slug: string): Promise<Program | null> {
   const p = await sanityFetch<any>({
     query: q.programBySlugQuery,
     params: { slug },
-    tags: ['sanity:program'],
+    tags: ['sanity:program', 'sanity:testimonial'],
   })
   return mapProgram(p) as Program | null
 }
@@ -239,7 +239,7 @@ export async function getUpcomingEvents(now: Date = new Date()): Promise<Insight
   const list = await sanityFetch<any[]>({
     query: q.upcomingEventsQuery,
     params: { now: now.toISOString() },
-    tags: ['sanity:event'],
+    tags: ['sanity:event', 'sanity:program'],
   })
   return (list ?? []).map((e) => mapEvent(e)) as InsightEvent[]
 }
@@ -248,7 +248,7 @@ export async function getEventBySlug(slug: string): Promise<InsightEvent | null>
   const e = await sanityFetch<any>({
     query: q.eventBySlugQuery,
     params: { slug },
-    tags: ['sanity:event'],
+    tags: ['sanity:event', 'sanity:program', 'sanity:testimonial'],
   })
   return mapEvent(e) as InsightEvent | null
 }
@@ -307,7 +307,7 @@ export async function getInternationalEvents(now: Date = new Date()): Promise<In
   const list = await sanityFetch<any[]>({
     query: q.internationalEventsQuery,
     params: { now: now.toISOString().slice(0, 10) },
-    tags: ['sanity:internationalEvent'],
+    tags: ['sanity:internationalEvent', 'sanity:program'],
   })
   return (list ?? []) as InternationalEvent[]
 }

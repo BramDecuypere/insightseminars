@@ -6,6 +6,8 @@ import { readToken } from '@/sanity/env'
 /**
  * Tagged fetch (brief §8.1). Every read is tagged `sanity:<type>` and the
  * revalidate webhook busts a tag on publish/delete for near-instant updates.
+ * A query that embeds content from another type (e.g. a page's testimonials)
+ * must carry that type's tag too, or publishing it won't refresh the page.
  * The short time-based revalidate is a safety net: even if the webhook is
  * misconfigured (e.g. pointing at the wrong host), content still propagates
  * within ~1 minute instead of being stuck in the persisted Vercel Data Cache.

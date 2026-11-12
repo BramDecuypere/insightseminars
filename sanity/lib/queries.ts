@@ -98,7 +98,7 @@ export const homePageQuery = defineQuery(`*[_type == "homePage"][0]{
   path{ heading, intro, nextInsight1Heading, infoSessionLine, teenLine, backgroundImage },
   upcomingHeading,
   testimonialsHeading,
-  testimonials[]-> ${TESTIMONIAL},
+  testimonials[@->consentConfirmed == true]-> ${TESTIMONIAL},
   videoClip ${VIDEO},
   videoPoster,
   gallery,
