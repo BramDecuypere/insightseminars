@@ -23,7 +23,6 @@ export const person = defineType({
           { title: 'Begeleider (seminaries)', value: 'facilitator' },
           { title: 'Team', value: 'team' },
         ],
-        layout: 'tags',
       },
       validation: (r) => r.required().min(1).error('Kies minstens één rol.'),
     }),
