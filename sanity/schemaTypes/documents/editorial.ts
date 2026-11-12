@@ -53,7 +53,12 @@ export const testimonial = defineType({
     }),
     defineField({ name: 'name', title: 'Naam of initialen', type: 'string', validation: (r) => r.required() }),
     defineField({ name: 'context', title: 'Context', description: 'Bv. "deelnemer Insight I, 2025".', type: 'localeString' }),
-    defineField({ name: 'photo', title: 'Foto (optioneel)', type: 'imageWithAlt' }),
+    defineField({
+      name: 'photo',
+      title: 'Foto (optioneel)',
+      description: 'Klein rond portret naast de naam. Vierkant, minstens 400 × 400 px; stel het focuspunt in op het gezicht.',
+      type: 'imageWithAlt',
+    }),
     defineField({ name: 'videoClip', title: 'Videofragment (optioneel)', type: 'videoClip' }),
     defineField({
       name: 'programs',

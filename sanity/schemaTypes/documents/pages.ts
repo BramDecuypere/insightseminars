@@ -29,7 +29,7 @@ export const homePage = defineType({
           name: 'image',
           title: 'Afbeelding',
           description:
-            'Grote achtergrondfoto bovenaan de startpagina, achter de titel. Liefst liggend (16:9) met rustige ruimte links, waar de tekst staat. Zonder foto krijgt de hero een effen blauwe achtergrond.',
+            'Grote achtergrondfoto bovenaan de startpagina, achter de titel. Liggend, ideaal 2400 × 1350 px (16:9), met rustige ruimte links, waar de tekst staat. Zonder foto krijgt de hero een effen blauwe achtergrond.',
           type: 'imageWithAlt',
         }),
       ],
@@ -57,7 +57,7 @@ export const homePage = defineType({
           name: 'image',
           title: 'Afbeelding',
           description:
-            'Foto naast de lijst "Herken je dit?" (4:3, liggend). Zonder foto wordt alleen de tekst getoond.',
+            'Foto naast de lijst "Herken je dit?". Liggend, ideaal 1600 × 1200 px (4:3). Zonder foto wordt alleen de tekst getoond.',
           type: 'imageWithAlt',
         }),
       ],
@@ -99,7 +99,7 @@ export const homePage = defineType({
           name: 'backgroundImage',
           title: 'Achtergrondfoto',
           description:
-            'Foto achter de blauwe sectie "Het pad". Ze wordt sterk donkerblauw overkleurd, dus een rustige, liggende foto werkt het best. Zonder foto blijft de sectie effen blauw.',
+            'Foto achter de blauwe sectie "Het pad". Ze wordt sterk donkerblauw overkleurd, dus een rustige, liggende foto werkt het best, ideaal 2000 × 1125 px (16:9). Zonder foto blijft de sectie effen blauw.',
           type: 'imageWithAlt',
         }),
       ],
@@ -235,7 +235,13 @@ export const aboutPage = defineType({
       fields: [defineField({ name: 'heading', title: 'Kop', type: 'localeString' })],
     }),
     defineField({ name: 'videoClip', title: 'Videofragment', type: 'videoClip' }),
-    defineField({ name: 'gallery', title: 'Fotogalerij', type: 'array', of: [arr('imageWithAlt')] }),
+    defineField({
+      name: 'gallery',
+      title: 'Fotogalerij',
+      description: "Liggende foto's, ideaal 2000 × 1500 px (4:3). Ze worden bijgesneden tot 4:3; hou het onderwerp in het midden.",
+      type: 'array',
+      of: [arr('imageWithAlt')],
+    }),
     defineField({ name: 'seo', title: 'SEO', type: 'seo' }),
   ],
   preview: { prepare: () => ({ title: 'Over Insight' }) },
@@ -267,11 +273,23 @@ export const teensPage = defineType({
       title: 'Media',
       type: 'object',
       fields: [
-        defineField({ name: 'image', title: 'Afbeelding', type: 'imageWithAlt' }),
+        defineField({
+          name: 'image',
+          title: 'Afbeelding',
+          description:
+            'Grote achtergrondfoto bovenaan de tienerpagina. Liggend, ideaal 2400 × 1350 px (16:9), met het onderwerp in de bovenste helft. Stel het focuspunt in op het belangrijkste deel.',
+          type: 'imageWithAlt',
+        }),
         defineField({ name: 'videoClip', title: 'Videofragment', type: 'videoClip' }),
       ],
     }),
-    defineField({ name: 'gallery', title: 'Fotogalerij', type: 'array', of: [arr('imageWithAlt')] }),
+    defineField({
+      name: 'gallery',
+      title: 'Fotogalerij',
+      description: "Liggende foto's, ideaal 2000 × 1500 px (4:3). Ze worden bijgesneden tot 4:3; hou het onderwerp in het midden.",
+      type: 'array',
+      of: [arr('imageWithAlt')],
+    }),
     defineField({
       name: 'videoTestimonialsHeading',
       title: 'Kop videogetuigenissen',

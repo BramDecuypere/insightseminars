@@ -55,7 +55,13 @@ export const person = defineType({
           return longest > 300 ? 'Hou het kort: maximaal ongeveer 300 tekens.' : true
         }).warning(),
     }),
-    defineField({ name: 'photo', title: 'Foto', type: 'imageWithAlt' }),
+    defineField({
+      name: 'photo',
+      title: 'Foto',
+      description:
+        'Staand portret, ideaal 1200 × 1500 px (4:5), met het gezicht in het bovenste derde. Soms ook rond getoond als kleine avatar; stel het focuspunt in op het gezicht.',
+      type: 'imageWithAlt',
+    }),
     defineField({
       name: 'website',
       title: 'Website',

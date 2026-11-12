@@ -42,7 +42,13 @@ export const captionedPhoto = defineType({
   title: 'Foto met tekst',
   type: 'object',
   fields: [
-    defineField({ name: 'image', title: 'Foto', type: 'imageWithAlt', validation: (r) => r.required() }),
+    defineField({
+      name: 'image',
+      title: 'Foto',
+      description: 'Liggend, ideaal 1600 × 1200 px (4:3). De foto wordt bijgesneden tot 4:3.',
+      type: 'imageWithAlt',
+      validation: (r) => r.required(),
+    }),
     defineField({ name: 'title', title: 'Titel', description: 'Bv. "Kernteam".', type: 'localeString' }),
     defineField({ name: 'text', title: 'Tekst', type: 'localeText' }),
   ],

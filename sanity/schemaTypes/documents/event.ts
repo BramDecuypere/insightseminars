@@ -223,7 +223,7 @@ export const event = defineType({
       name: 'image',
       title: 'Affiche of afbeelding',
       description:
-        'Bij infosessies, workshops en events groot getoond op de inschrijfpagina (bv. de affiche uit Canva). Wordt ook gebruikt bij delen op sociale media.',
+        'Bij infosessies, workshops en events groot getoond op de inschrijfpagina (bv. de affiche uit Canva). Wordt niet bijgesneden; ideaal 1200 × 1500 px (4:5, staand). Wordt ook gebruikt bij delen op sociale media.',
       type: 'imageWithAlt',
       group: 'content',
     }),
@@ -241,7 +241,7 @@ export const event = defineType({
     defineField({
       name: 'gallery',
       title: "Foto's van vorige edities",
-      description: 'Maximaal 3, getoond onder het inschrijfformulier.',
+      description: "Maximaal 3, getoond onder het inschrijfformulier. Liggende foto's, ideaal 2000 × 1500 px (4:3). Ze worden bijgesneden tot 4:3; hou het onderwerp in het midden.",
       type: 'array',
       of: [defineArrayMember({ type: 'imageWithAlt' })],
       validation: (r) => r.max(3),

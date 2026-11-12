@@ -91,7 +91,8 @@ export const videoClip = defineType({
       name: 'poster',
       title: 'Posterafbeelding',
       type: 'imageWithAlt',
-      description: 'Verplicht wanneer er een videofragment is. Wordt getoond vóór het afspelen.',
+      description:
+        'Verplicht wanneer er een videofragment is. Wordt getoond vóór het afspelen. Liggend, ideaal 1920 × 1080 px (16:9).',
       validation: (rule) =>
         rule.custom((value, context) => {
           const parent = context.parent as VideoClipParent | undefined

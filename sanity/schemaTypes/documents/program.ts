@@ -97,7 +97,14 @@ export const program = defineType({
     defineField({ name: 'ageMin', title: 'Minimumleeftijd', type: 'number', group: 'practical', hidden: ({ parent }) => parent?.track !== 'teens' }),
     defineField({ name: 'ageMax', title: 'Maximumleeftijd', type: 'number', group: 'practical', hidden: ({ parent }) => parent?.track !== 'teens' }),
     defineField({ name: 'nextDateNote', title: 'Nog geen datum? Notitie', description: 'Bv. "Verwacht in de zomer van 2028".', type: 'localeString', group: 'practical' }),
-    defineField({ name: 'heroImage', title: 'Hoofdafbeelding', type: 'imageWithAlt', group: 'content' }),
+    defineField({
+      name: 'heroImage',
+      title: 'Hoofdafbeelding',
+      description:
+        'Grote achtergrondfoto bovenaan de seminariepagina. Liggend, ideaal 2400 × 1350 px (16:9), met het onderwerp in de bovenste helft. Stel het focuspunt in op het belangrijkste deel.',
+      type: 'imageWithAlt',
+      group: 'content',
+    }),
     defineField({
       name: 'videoClip',
       title: 'Videofragment',
@@ -107,6 +114,7 @@ export const program = defineType({
     defineField({
       name: 'gallery',
       title: 'Fotogalerij',
+      description: "Liggende foto's, ideaal 2000 × 1500 px (4:3). Ze worden bijgesneden tot 4:3; hou het onderwerp in het midden.",
       type: 'array',
       of: [defineArrayMember({ type: 'imageWithAlt' })],
       group: 'content',

@@ -91,7 +91,12 @@ export const siteSettings = defineType({
       fields: [
         defineField({ name: 'title', title: 'Titel', type: 'localeString' }),
         defineField({ name: 'description', title: 'Omschrijving', type: 'localeText' }),
-        defineField({ name: 'ogImage', title: 'OG-afbeelding', type: 'imageWithAlt' }),
+        defineField({
+          name: 'ogImage',
+          title: 'OG-afbeelding',
+          description: 'Voorbeeldafbeelding bij delen op sociale media. Ideaal 1200 × 630 px.',
+          type: 'imageWithAlt',
+        }),
       ],
     }),
   ],
