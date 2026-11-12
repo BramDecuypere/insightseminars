@@ -111,7 +111,7 @@ export default async function TeensPage({ params }: Props) {
         ) : null}
 
         <div className="container-site section-y">
-          <div className="max-w-xl">
+          <div className="">
             <span
               className="type-eyebrow inline-block rounded-full px-3 py-1"
               style={

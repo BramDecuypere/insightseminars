@@ -4,6 +4,10 @@
 - [ ] Ensure Mollie and Brevo are functional
 - [ ] Go through the payment flow together
 - [ ] Link it to the Google Drive process
+- [ ] Youtube kanaal aanmaken met nieuwe 
+- [ ] vrijwilligers sectie op community pagina
+- [ ] Homepage
+  
 
 ## To confirm with the client
 
