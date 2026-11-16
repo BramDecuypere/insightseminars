@@ -771,10 +771,41 @@ export const teensPage: TeensPage = {
 
 /** No invented photos or testimonials (§13): the blocks stay empty until filled in Studio. */
 export const communityPage: CommunityPage = {
-  belgium: { photos: [], testimonials: [] },
-  international: { photos: [], testimonials: [] },
+  hero: {
+    title: { nl: 'Community', en: 'Community' },
+    lead: {
+      nl: 'Insight is een wereldwijde beweging. Ontdek de lokale gemeenschap in België en de bredere internationale community.',
+      en: 'Insight is a worldwide movement. Discover the local community in Belgium and the wider international community.',
+    },
+  },
+  belgium: {
+    heading: { nl: 'België', en: 'Belgium' },
+    body: {
+      nl: 'Blijf tussen de seminars door in contact met de Belgische Insight-gemeenschap: volg ons op sociale media, kom langs op een gratis infosessie of neem contact met ons op.',
+      en: 'Stay in touch with the Belgian Insight community between seminars: follow us on social media, drop by a free info session, or get in touch.',
+    },
+    photos: [],
+    testimonials: [],
+  },
+  international: {
+    heading: { nl: 'Internationaal', en: 'International' },
+    body: {
+      nl: 'Insight Seminars bestaat wereldwijd. Via onderstaande links vind je de internationale organisatie en seminars in andere landen.',
+      en: 'Insight Seminars exists worldwide. The links below point to the international organisation and to seminars in other countries.',
+    },
+    calendarCta: { nl: 'Internationale kalender', en: 'International calendar' },
+    photos: [],
+    testimonials: [],
+  },
   // Empty: getInternationalLinks() then falls back to settings.internationalLinks.
   internationalLinks: [],
+  seo: {
+    title: { nl: 'Community', en: 'Community' },
+    description: {
+      nl: 'Insight is een wereldwijde beweging. Ontdek de lokale gemeenschap in België en de bredere internationale community.',
+      en: 'Insight is a worldwide movement. Discover the local community in Belgium and the wider international community.',
+    },
+  },
 }
 
 export const contactPage: ContactPage = {

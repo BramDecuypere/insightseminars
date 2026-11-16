@@ -15,6 +15,7 @@ import { createClient } from 'next-sanity'
 import * as mock from '../lib/content/mock'
 import type {
   AboutPage,
+  CommunityPage,
   ContactPage,
   HomePage,
   InsightEvent,
@@ -281,6 +282,21 @@ function contactPageDoc(c: ContactPage) {
   })
 }
 
+function communityPageDoc(c: CommunityPage) {
+  return stripPlaceholders({
+    _id: 'communityPage',
+    _type: 'communityPage',
+    hero: c.hero,
+    belgium: { heading: c.belgium.heading, body: c.belgium.body },
+    international: {
+      heading: c.international.heading,
+      body: c.international.body,
+      calendarCta: c.international.calendarCta,
+    },
+    seo: c.seo,
+  })
+}
+
 function settingsDoc() {
   return stripPlaceholders({
     _id: 'siteSettings',
@@ -303,6 +319,7 @@ async function run() {
   docs.push(aboutPageDoc(mock.aboutPage))
   docs.push(teensPageDoc(mock.teensPage))
   docs.push(contactPageDoc(mock.contactPage))
+  docs.push(communityPageDoc(mock.communityPage))
 
   for (const v of mock.venues) docs.push(stripPlaceholders({ ...v, _type: 'venue' }))
   // `person` merges the former facilitator/teamMember types (brief: one document per

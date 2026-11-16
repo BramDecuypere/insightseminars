@@ -135,7 +135,11 @@ export async function getTeensPage() {
 }
 
 export async function getCommunityPage() {
-  if (hasSanity) return (await sanity.getCommunityPage()) ?? mock.communityPage
+  if (hasSanity) {
+    const page = await sanity.getCommunityPage()
+    if (!page) return mock.communityPage
+    return withFallback(page, mock.communityPage)
+  }
   return mock.communityPage
 }
 

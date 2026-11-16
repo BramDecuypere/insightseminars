@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { ArrowUpRight } from 'lucide-react'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { buttonVariants } from '@/components/ui/button'
 import { PhotoGrid } from '@/components/site/photo-grid'
 import { TestimonialGrid } from '@/components/site/testimonial-grid'
-import { getCommunityPage, getInternationalLinks, getSettings } from '@/lib/content'
+import { getCommunityPage, getInternationalLinks, getSettings, pick } from '@/lib/content'
 import { buildMetadata } from '@/lib/seo'
 import type { CommunityBlock, Continent, InternationalLink, Locale } from '@/lib/content/types'
 import { cn } from '@/lib/utils'
@@ -15,10 +16,10 @@ type Props = { params: Promise<{ locale: string }> }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const l = locale as Locale
-  const t = await getTranslations({ locale, namespace: 'communityPage' })
+  const page = await getCommunityPage()
   return buildMetadata({
-    title: t('title'),
-    description: t('lead'),
+    title: pick(page.seo.title, l) || pick(page.hero.title, l),
+    description: pick(page.seo.description, l) || pick(page.hero.lead, l),
     href: '/community',
     locale: l,
   })
@@ -110,9 +111,28 @@ export default async function CommunityPage({ params }: Props) {
   return (
     <>
       <header className="bg-mist text-inkt">
-        <div className="container-site section-y">
-          <h1 className="type-h1 text-inkt text-balance">{t('title')}</h1>
-          <p className="type-lead mt-5 max-w-2xl text-leisteen">{t('lead')}</p>
+        <div
+          className={cn(
+            'container-site section-y',
+            page.image && 'grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16',
+          )}
+        >
+          <div>
+            <h1 className="type-h1 text-inkt text-balance">{pick(page.hero.title, l)}</h1>
+            <p className="type-lead mt-5 max-w-2xl text-leisteen">{pick(page.hero.lead, l)}</p>
+          </div>
+          {page.image ? (
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-panel">
+              <Image
+                src={page.image.src}
+                alt={pick(page.image.alt, l)}
+                fill
+                priority
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          ) : null}
         </div>
       </header>
 
@@ -120,8 +140,8 @@ export default async function CommunityPage({ params }: Props) {
       <section className="bg-papier">
         <div className="container-site section-y">
           <div className="mx-auto max-w-2xl">
-            <h2 className="type-h2 text-inkt text-balance">{t('belgiumHeading')}</h2>
-            <p className="type-body mt-5 text-inkt">{t('belgiumBody')}</p>
+            <h2 className="type-h2 text-inkt text-balance">{pick(page.belgium.heading, l)}</h2>
+            <p className="type-body mt-5 text-inkt">{pick(page.belgium.body, l)}</p>
 
             <ul className="mt-8 flex flex-col gap-3">
               <li>
@@ -161,8 +181,8 @@ export default async function CommunityPage({ params }: Props) {
       <section className="bg-mist">
         <div className="container-site section-y">
           <div className="mx-auto max-w-2xl">
-            <h2 className="type-h2 text-inkt text-balance">{t('internationalHeading')}</h2>
-            <p className="type-body mt-5 text-inkt">{t('internationalBody')}</p>
+            <h2 className="type-h2 text-inkt text-balance">{pick(page.international.heading, l)}</h2>
+            <p className="type-body mt-5 text-inkt">{pick(page.international.body, l)}</p>
 
             {settings.internationalCalendarUrl ? (
               <a
@@ -171,7 +191,7 @@ export default async function CommunityPage({ params }: Props) {
                 rel="noreferrer"
                 className={cn(buttonVariants({ variant: 'primary' }), 'mt-8 inline-flex')}
               >
-                {t('internationalCalendarCta')}
+                {pick(page.international.calendarCta, l)}
               </a>
             ) : null}
 

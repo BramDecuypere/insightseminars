@@ -337,14 +337,19 @@ export interface InternationalLink {
 }
 
 export interface CommunityBlock {
+  heading: LocaleString
+  body: LocaleText
   photos: ImageAsset[]
   testimonials: Testimonial[]
 }
 
 export interface CommunityPage {
+  hero: { title: LocaleString; lead: LocaleText }
+  image?: ImageAsset
   belgium: CommunityBlock
-  international: CommunityBlock
+  international: CommunityBlock & { calendarCta: LocaleString }
   internationalLinks: InternationalLink[]
+  seo: { title: LocaleString; description: LocaleString }
 }
 
 export interface ContactPage {

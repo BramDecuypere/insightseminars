@@ -320,13 +320,22 @@ export const teensPage = defineType({
   preview: { prepare: () => ({ title: 'Tieners' }) },
 })
 
-/** Photos and testimonials per community; headings and texts live in the message files. */
-const communityBlock = (name: string, title: string, max: number) =>
+/** Heading, text, photos and testimonials per community. */
+const communityBlock = (
+  name: string,
+  title: string,
+  max: number,
+  options: { description?: string; extraFields?: ReturnType<typeof defineField>[] } = {},
+) =>
   defineField({
     name,
     title,
+    description: options.description,
     type: 'object',
     fields: [
+      defineField({ name: 'heading', title: 'Kop', type: 'localeString' }),
+      defineField({ name: 'body', title: 'Tekst', type: 'localeText' }),
+      ...(options.extraFields ?? []),
       defineField({
         name: 'photos',
         title: "Foto's",
@@ -351,8 +360,22 @@ export const communityPage = defineType({
   title: 'Community',
   type: 'document',
   fields: [
-    communityBlock('belgium', 'België', 5),
-    communityBlock('international', 'Wereldwijd', 3),
+    defineField({ name: 'hero', title: 'Hero', type: 'heroBasic' }),
+    defineField({
+      name: 'image',
+      title: 'Afbeelding',
+      description: 'Optioneel. Wordt naast de titel bovenaan de pagina getoond.',
+      type: 'imageWithAlt',
+    }),
+    communityBlock('belgium', 'België', 5, {
+      description: 'De sociale kanalen onder dit blok beheer je in Instellingen → Links → "Sociale kanalen".',
+    }),
+    communityBlock('international', 'Wereldwijd', 3, {
+      description: 'De link van de internationale kalender beheer je in Instellingen → Links.',
+      extraFields: [
+        defineField({ name: 'calendarCta', title: 'Knop internationale kalender', type: 'localeString' }),
+      ],
+    }),
     defineField({
       name: 'internationalLinks',
       title: 'Internationale links',
@@ -361,6 +384,7 @@ export const communityPage = defineType({
       type: 'array',
       of: [arr('internationalLink')],
     }),
+    defineField({ name: 'seo', title: 'SEO', type: 'seo' }),
   ],
   preview: { prepare: () => ({ title: 'Community' }) },
 })

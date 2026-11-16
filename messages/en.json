@@ -378,15 +378,7 @@
       "oceania": "Oceania",
       "asia": "Asia",
       "africa": "Africa"
-    },
-    "title": "Community",
-    "lead": "Insight is a worldwide movement. Discover the local community in Belgium and the wider international community.",
-    "belgiumHeading": "Belgium",
-    "belgiumBody": "Stay in touch with the Belgian Insight community between seminars: follow us on social media, drop by a free info session, or get in touch.",
-    "belgiumSocialsLabel": "Follow us",
-    "internationalHeading": "International",
-    "internationalBody": "Insight Seminars exists worldwide. The links below point to the international organisation and to seminars in other countries.",
-    "internationalCalendarCta": "International calendar"
+    }
   },
   "teensPage": {
     "videoTestimonialsHeading": "What teens and parents say",

@@ -200,6 +200,7 @@ export async function getTeensPage(): Promise<TeensPage | null> {
 
 function mapCommunityBlock(b: any): CommunityBlock {
   return {
+    ...b,
     photos: gallery(b?.photos) ?? [],
     testimonials: Array.isArray(b?.testimonials) ? b.testimonials.map((t: any) => mapTestimonial(t)) : [],
   }
@@ -209,8 +210,10 @@ export async function getCommunityPage(): Promise<CommunityPage | null> {
   const c = await sanityFetch<any>({ query: q.communityPageQuery, tags: ['sanity:communityPage', 'sanity:testimonial'] })
   if (!c) return null
   return {
+    ...c,
+    image: img(c.image),
     belgium: mapCommunityBlock(c.belgium),
-    international: mapCommunityBlock(c.international),
+    international: mapCommunityBlock(c.international) as CommunityPage['international'],
     internationalLinks: Array.isArray(c.internationalLinks) ? c.internationalLinks : [],
   }
 }

@@ -160,7 +160,22 @@ Op de pagina's **Over Insight**, **Tieners** en elk **Seminar** staat de
 de weergave. De grote foto bovenaan de pagina Tieners zit in **Media** →
 **Afbeelding**; bij een seminar is dat **Hoofdafbeelding**.
 
-## 10. Belangrijk om te weten
+## 10. De Community-pagina aanpassen
+
+1. Ga naar **Pagina's → Community**.
+2. Pas de **Hero** (titel en intro) aan. Optioneel: voeg een **afbeelding** toe
+   (met **alt-tekst**); die staat naast de titel.
+3. Pas in de blokken **België** en **Wereldwijd** de **kop** en de **tekst**
+   aan. Bij **Wereldwijd** stel je ook de tekst van de knop naar de
+   internationale kalender in. Foto's en getuigenissen in die blokken: zie
+   sectie 6.
+4. De **internationale links** staan onderaan dezelfde pagina (zie sectie 7).
+   De **sociale kanalen** en de link van de **internationale kalender** beheer
+   je in **Instellingen → Links**.
+5. **Publiceren.** Laat je een tekstveld leeg, dan toont de site de
+   standaardtekst.
+
+## 11. Belangrijk om te weten
 
 - **Privé-velden.** De **vergaderlink** van een online activiteit staat nooit op
   de website. Zet online altijd een **wachtruimte** aan.
